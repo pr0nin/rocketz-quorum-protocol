@@ -1,0 +1,79 @@
+{
+  "description": "Machine-readable index mapping RFC section 5 deterministic simulation headings to executable bootstrap fixtures.",
+  "protocol": "rqp/1.0-draft.1",
+  "sections": [
+    {
+      "fixtures": [
+        "inertial-3-rounds.json",
+        "one-action-thrust.json"
+      ],
+      "heading": "5.1 Numeric Model",
+      "notes": "All fixtures use integer-only canonical state, sorted-key JSON, SHA-256, integer fuel burns, integer HP, and integer coordinates. Thrust and weapon fixtures also exercise integer cost formulas."
+    },
+    {
+      "fixtures": [
+        "gravity-7r-both-armed.json",
+        "gravity-7r-los-blocked.json"
+      ],
+      "heading": "5.2 Coordinate System",
+      "notes": "Both fixtures use axial coordinates and line-of-sight/range checks over a same-r row with distance 3 between agents."
+    },
+    {
+      "fixtures": [
+        "gravity-4r-asteroid-collision.json",
+        "gravity-4r-asteroid-velocity-collision.json"
+      ],
+      "heading": "5.3 Map and Condition Profiles",
+      "notes": "Both fixtures include map definitions, explicit objects, constant-drift gravity, and map-level collision/gravity parameter overrides."
+    },
+    {
+      "fixtures": [
+        "gravity-4r-asteroid-collision.json",
+        "gravity-4r-asteroid-velocity-collision.json"
+      ],
+      "heading": "5.3.1 Seed-Derived Map Generation",
+      "notes": "Both fixtures use explicit-materialized-v1 map definitions with seeds recorded as generation provenance. This gives deterministic seed/profile metadata while materializing generated objects for early clients."
+    },
+    {
+      "fixtures": [
+        "gravity-4r-asteroid-collision.json",
+        "gravity-4r-asteroid-velocity-collision.json"
+      ],
+      "heading": "5.3.2 Parameter Overrides",
+      "notes": "Flat and velocity-based collision fixtures override gravity and collision parameters through map_definition.parameter_overrides."
+    },
+    {
+      "fixtures": [
+        "gravity-7r-los-blocked.json",
+        "gravity-4r-asteroid-collision.json"
+      ],
+      "heading": "5.4 Object State",
+      "notes": "The LOS fixture has opaque blocker objects. The asteroid fixture has a colliding stationary object. Both also include agent object state."
+    },
+    {
+      "fixtures": [
+        "inertial-3-rounds.json",
+        "one-action-thrust.json",
+        "gravity-7r-no-weapons.json"
+      ],
+      "heading": "5.5 Movement",
+      "notes": "These cover inertial no-motion, active thrust changing velocity/position, and constant-drift gravity movement."
+    },
+    {
+      "fixtures": [
+        "gravity-4r-asteroid-collision.json",
+        "gravity-4r-asteroid-velocity-collision.json"
+      ],
+      "heading": "5.6 Collision Resolution",
+      "notes": "These cover flat stationary collision damage and velocity-based stationary collision damage."
+    },
+    {
+      "fixtures": [
+        "gravity-7r-both-armed.json",
+        "gravity-7r-los-blocked.json"
+      ],
+      "heading": "5.7 Bootstrap Line-of-Sight Weapons",
+      "notes": "The both-armed fixture covers unblocked LOS damage. The blocked fixture covers opaque intermediate hexes preventing damage."
+    }
+  ]
+}
