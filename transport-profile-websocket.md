@@ -1,7 +1,7 @@
 # RQP WebSocket Transport Profile
 
 **Status:** Draft profile  
-**Applies to:** `rqp/1.0-draft`  
+**Applies to:** `rqp/1.0-draft.1`
 **Purpose:** Define a practical non-authoritative WebSocket relay for early RQP implementations.
 
 ## 1. Role of the Hub
@@ -44,7 +44,7 @@ All messages should be sent in an envelope:
 ```json
 {
   "envelope_type": "rqp_message",
-  "protocol": "rqp/1.0-draft",
+  "protocol": "rqp/1.0-draft.1",
   "match_id": "match-001",
   "phase": "commit",
   "round": 42,

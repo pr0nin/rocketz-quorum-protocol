@@ -1,7 +1,7 @@
 # RQP Tournament Profile
 
 **Status:** Draft profile  
-**Applies to:** `rqp/1.0-draft`  
+**Applies to:** `rqp/1.0-draft.1`
 **Purpose:** Define persistence, reputation, rewards, and sanctions for organized RQP play.
 
 ## 1. Goals
@@ -109,7 +109,7 @@ Tournament audit reports should use:
 ```json
 {
   "type": "audit_report",
-  "protocol": "rqp/1.0-draft",
+  "protocol": "rqp/1.0-draft.1",
   "match_id": "match-001",
   "result": "pass",
   "agent_results": [

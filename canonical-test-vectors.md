@@ -3,6 +3,7 @@
 **Status:** Draft test suite  
 **Encoding:** Sorted-key UTF-8 JSON with no insignificant whitespace  
 **Hash:** SHA-256
+**Applies to:** `rqp/1.0-draft.1`
 
 These vectors are small interoperability fixtures. They are not balance examples.
 
@@ -21,13 +22,13 @@ For these vectors:
 Canonical JSON:
 
 ```json
-{"agents":[{"agent_id":"0xA","fuel":1000,"hp":100,"position":{"q":0,"r":0},"velocity":{"dq":0,"dr":0}},{"agent_id":"0xB","fuel":1000,"hp":100,"position":{"q":2,"r":-2},"velocity":{"dq":0,"dr":0}}],"match_id":"vector-001","protocol":"rqp/1.0-draft","round":0,"seed":"seed-alpha"}
+{"agents":[{"agent_id":"0xA","fuel":1000,"hp":100,"position":{"q":0,"r":0},"velocity":{"dq":0,"dr":0}},{"agent_id":"0xB","fuel":1000,"hp":100,"position":{"q":2,"r":-2},"velocity":{"dq":0,"dr":0}}],"match_id":"vector-001","protocol":"rqp/1.0-draft.1","round":0,"seed":"seed-alpha"}
 ```
 
 Expected SHA-256:
 
 ```text
-c0a774e05765246845bd074f05b416dd122d9b27db846462d5e15943794e7b87
+0a06a2b545eea573951cb185080d489e56ccd5ceb0790791ab0cfbe95ac42a3e
 ```
 
 ## 3. Commit Payload Vector

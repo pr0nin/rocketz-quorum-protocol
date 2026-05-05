@@ -1,7 +1,7 @@
 # RQP Default Ruleset Profile
 
 **Status:** Draft profile  
-**Applies to:** `rqp/1.0-draft`  
+**Applies to:** `rqp/1.0-draft.1`
 **Purpose:** Provide concrete default values for early interoperable matches.
 
 This profile is intentionally conservative. It favors deterministic behavior, simple implementation, and easy replay over deep balance.

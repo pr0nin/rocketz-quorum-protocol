@@ -294,7 +294,7 @@ Recommended schema:
 ```json
 {
   "type": "audit_report",
-  "protocol": "rqp/1.0-draft",
+  "protocol": "rqp/1.0-draft.1",
   "match_id": "match-001",
   "auditor_id": "auditor-001",
   "result": "fail",
