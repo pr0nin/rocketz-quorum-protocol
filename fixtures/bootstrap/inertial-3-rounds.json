@@ -1,0 +1,477 @@
+{
+  "canonicalization": {
+    "encoding": "sorted-key-json-v1",
+    "hash": "sha-256"
+  },
+  "description": "Two-agent three-round inertial local replay bootstrap fixture.",
+  "match_id": "bootstrap-2p-inertial-3r",
+  "protocol": "rqp/1.0-draft.1",
+  "ruleset": {
+    "gravity_mode": "none",
+    "name": "rqp-bootstrap-inertial",
+    "quorum": "strict-2-of-2",
+    "signatures": "omitted-for-local-replay"
+  },
+  "genesis": {
+    "initial_ledger_payloads": [
+      {
+        "agent_id": "agent-a",
+        "expected_hash": "4750aa06a356e63d734e7aa742ac45b6bdf52c7f68b534afba2237a4c0554413",
+        "payload": {
+          "agent_id": "agent-a",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout"
+          },
+          "salt": "ledger-a-0"
+        }
+      },
+      {
+        "agent_id": "agent-b",
+        "expected_hash": "0e90ddbb6ba18963e038fe0abbcfdb128f4d07fcae34e677c6548cb36acddef0",
+        "payload": {
+          "agent_id": "agent-b",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout"
+          },
+          "salt": "ledger-b-0"
+        }
+      }
+    ],
+    "world_state": {
+      "agents": [
+        {
+          "agent_id": "agent-a",
+          "eliminated": false,
+          "fuel_ledger_hash": "4750aa06a356e63d734e7aa742ac45b6bdf52c7f68b534afba2237a4c0554413",
+          "hp": 100,
+          "position": {
+            "q": 0,
+            "r": 0
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "eliminated": false,
+          "fuel_ledger_hash": "0e90ddbb6ba18963e038fe0abbcfdb128f4d07fcae34e677c6548cb36acddef0",
+          "hp": 100,
+          "position": {
+            "q": 2,
+            "r": -2
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          }
+        }
+      ],
+      "audit_flags": [],
+      "hex_potential": [],
+      "match_id": "bootstrap-2p-inertial-3r",
+      "protocol": "rqp/1.0-draft.1",
+      "round": 0,
+      "seed": "bootstrap-seed-001"
+    },
+    "world_state_hash": "6feaaa0dabfb86e478934491902eae204427ede07e4ca544af549f8cc1197ac9"
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "74974559a1c31b24bf39159c84ce360ccbd63ca1e0b56490c0cd9647a068bbea",
+            "match_id": "bootstrap-2p-inertial-3r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "commit-a-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "a9cd84d94f61698d3106ae392bdf653fcb9de4f4a890ec449bf1fa4e805c2d99",
+          "expected_ledger_hash": "74974559a1c31b24bf39159c84ce360ccbd63ca1e0b56490c0cd9647a068bbea",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "4750aa06a356e63d734e7aa742ac45b6bdf52c7f68b534afba2237a4c0554413",
+            "round": 1,
+            "salt": "ledger-a-1"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "5068dd30ce0f4f46c3dbacbfe7dba47cd2011cad422b89fd834837c3bd9e086e",
+            "match_id": "bootstrap-2p-inertial-3r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "commit-b-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "544f218d696dd42bb6f39a587662414333eb52ef40198ace7f399b189ae628ca",
+          "expected_ledger_hash": "5068dd30ce0f4f46c3dbacbfe7dba47cd2011cad422b89fd834837c3bd9e086e",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "0e90ddbb6ba18963e038fe0abbcfdb128f4d07fcae34e677c6548cb36acddef0",
+            "round": 1,
+            "salt": "ledger-b-1"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "93075adb802d1b1ee1e54e0941eee06b759af55346973d6c8f41ec3dca5b89cf",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-inertial-3r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "93075adb802d1b1ee1e54e0941eee06b759af55346973d6c8f41ec3dca5b89cf"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-inertial-3r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "93075adb802d1b1ee1e54e0941eee06b759af55346973d6c8f41ec3dca5b89cf"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "74974559a1c31b24bf39159c84ce360ccbd63ca1e0b56490c0cd9647a068bbea",
+            "hp": 100,
+            "position": {
+              "q": 0,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            }
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "5068dd30ce0f4f46c3dbacbfe7dba47cd2011cad422b89fd834837c3bd9e086e",
+            "hp": 100,
+            "position": {
+              "q": 2,
+              "r": -2
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            }
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "match_id": "bootstrap-2p-inertial-3r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 1,
+        "seed": "bootstrap-seed-001"
+      },
+      "world_state_hash": "93075adb802d1b1ee1e54e0941eee06b759af55346973d6c8f41ec3dca5b89cf"
+    },
+    {
+      "round": 2,
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "84228fffbf29f61dd8856e01523a619a0843250f9a1150309b4fbf2c9e2f0c3d",
+            "match_id": "bootstrap-2p-inertial-3r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "commit-a-2",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "5b517ee22d8606eb702f719400191e83805a01b4bf79b2973d801ea5892a1094",
+          "expected_ledger_hash": "84228fffbf29f61dd8856e01523a619a0843250f9a1150309b4fbf2c9e2f0c3d",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "74974559a1c31b24bf39159c84ce360ccbd63ca1e0b56490c0cd9647a068bbea",
+            "round": 2,
+            "salt": "ledger-a-2"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "b70b2ce4f527166afa0a264802ee9c7f88e6f74bacae408ad08d28d2b6a7ac64",
+            "match_id": "bootstrap-2p-inertial-3r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "commit-b-2",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "e3ca9264a7bc9ba92fbf047d1cebb73899708b01399d364e4713e8f5498221c4",
+          "expected_ledger_hash": "b70b2ce4f527166afa0a264802ee9c7f88e6f74bacae408ad08d28d2b6a7ac64",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "5068dd30ce0f4f46c3dbacbfe7dba47cd2011cad422b89fd834837c3bd9e086e",
+            "round": 2,
+            "salt": "ledger-b-2"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "efa840edf800f42bd812ac98402bd0fc458b76d8665c1aaaab999c97f26f5bee",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-inertial-3r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "efa840edf800f42bd812ac98402bd0fc458b76d8665c1aaaab999c97f26f5bee"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-inertial-3r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "efa840edf800f42bd812ac98402bd0fc458b76d8665c1aaaab999c97f26f5bee"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "84228fffbf29f61dd8856e01523a619a0843250f9a1150309b4fbf2c9e2f0c3d",
+            "hp": 100,
+            "position": {
+              "q": 0,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            }
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "b70b2ce4f527166afa0a264802ee9c7f88e6f74bacae408ad08d28d2b6a7ac64",
+            "hp": 100,
+            "position": {
+              "q": 2,
+              "r": -2
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            }
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "match_id": "bootstrap-2p-inertial-3r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 2,
+        "seed": "bootstrap-seed-001"
+      },
+      "world_state_hash": "efa840edf800f42bd812ac98402bd0fc458b76d8665c1aaaab999c97f26f5bee"
+    },
+    {
+      "round": 3,
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "6eaff7f1ec78ab9fa0bfc964bfb3ae7d4983326dc58cbd04b243abd1f6efc631",
+            "match_id": "bootstrap-2p-inertial-3r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "commit-a-3",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "b3268b12b84d689b3d14de74ab811cdfaefce7c06009a89f6efd9c4e44b670d6",
+          "expected_ledger_hash": "6eaff7f1ec78ab9fa0bfc964bfb3ae7d4983326dc58cbd04b243abd1f6efc631",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "84228fffbf29f61dd8856e01523a619a0843250f9a1150309b4fbf2c9e2f0c3d",
+            "round": 3,
+            "salt": "ledger-a-3"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "c87fe13fed1cafe68d966d6e3d37c56d74e5f25397ec13a139b6dff52ba99797",
+            "match_id": "bootstrap-2p-inertial-3r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "commit-b-3",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "627dd7897dfe10675893c7fd7719e9108aa2876f43b343c45f1f6332b25ff48d",
+          "expected_ledger_hash": "c87fe13fed1cafe68d966d6e3d37c56d74e5f25397ec13a139b6dff52ba99797",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "b70b2ce4f527166afa0a264802ee9c7f88e6f74bacae408ad08d28d2b6a7ac64",
+            "round": 3,
+            "salt": "ledger-b-3"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "813d70a3f4fdcf8d3a7304a551a6f0a8e69c86c123184405a58d057cb798a3fc",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-inertial-3r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "813d70a3f4fdcf8d3a7304a551a6f0a8e69c86c123184405a58d057cb798a3fc"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-inertial-3r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "813d70a3f4fdcf8d3a7304a551a6f0a8e69c86c123184405a58d057cb798a3fc"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "6eaff7f1ec78ab9fa0bfc964bfb3ae7d4983326dc58cbd04b243abd1f6efc631",
+            "hp": 100,
+            "position": {
+              "q": 0,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            }
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "c87fe13fed1cafe68d966d6e3d37c56d74e5f25397ec13a139b6dff52ba99797",
+            "hp": 100,
+            "position": {
+              "q": 2,
+              "r": -2
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            }
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "match_id": "bootstrap-2p-inertial-3r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 3,
+        "seed": "bootstrap-seed-001"
+      },
+      "world_state_hash": "813d70a3f4fdcf8d3a7304a551a6f0a8e69c86c123184405a58d057cb798a3fc"
+    }
+  ]
+}

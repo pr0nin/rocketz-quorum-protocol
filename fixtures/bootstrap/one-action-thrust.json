@@ -1,0 +1,219 @@
+{
+  "canonicalization": {
+    "encoding": "sorted-key-json-v1",
+    "hash": "sha-256"
+  },
+  "description": "Two-agent one-round active thrust bootstrap fixture.",
+  "match_id": "bootstrap-2p-thrust-1r",
+  "protocol": "rqp/1.0-draft.1",
+  "ruleset": {
+    "action_costs": {
+      "active_base": 1,
+      "thrust_per_unit": 2
+    },
+    "gravity_mode": "none",
+    "name": "rqp-bootstrap-thrust",
+    "quorum": "strict-2-of-2",
+    "signatures": "omitted-for-local-replay"
+  },
+  "genesis": {
+    "initial_ledger_payloads": [
+      {
+        "agent_id": "agent-a",
+        "expected_hash": "9d1338b7be079050179f77fe3855ab1a1fa180367c14fa95329803a5d37bc291",
+        "payload": {
+          "agent_id": "agent-a",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout"
+          },
+          "salt": "thrust-ledger-a-0"
+        }
+      },
+      {
+        "agent_id": "agent-b",
+        "expected_hash": "518e89d88ec47b7677bdf6797d877e0431ad05c34adfd69ecf0f2673f9ae7719",
+        "payload": {
+          "agent_id": "agent-b",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout"
+          },
+          "salt": "thrust-ledger-b-0"
+        }
+      }
+    ],
+    "world_state": {
+      "agents": [
+        {
+          "agent_id": "agent-a",
+          "eliminated": false,
+          "fuel_ledger_hash": "9d1338b7be079050179f77fe3855ab1a1fa180367c14fa95329803a5d37bc291",
+          "hp": 100,
+          "position": {
+            "q": 0,
+            "r": 0
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "eliminated": false,
+          "fuel_ledger_hash": "518e89d88ec47b7677bdf6797d877e0431ad05c34adfd69ecf0f2673f9ae7719",
+          "hp": 100,
+          "position": {
+            "q": 2,
+            "r": -2
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          }
+        }
+      ],
+      "audit_flags": [],
+      "hex_potential": [],
+      "match_id": "bootstrap-2p-thrust-1r",
+      "protocol": "rqp/1.0-draft.1",
+      "round": 0,
+      "seed": "bootstrap-seed-thrust-001"
+    },
+    "world_state_hash": "f34a8f74f716fb7d7e2c308ce104aa95e80d13a9b4cb34321fa976b5438024d9"
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 3,
+            "fuel_ledger_hash": "2f14c7de54cdc0f9faf515dbae5ce8a520f0ee745a676986985a4da46ae5fe75",
+            "match_id": "bootstrap-2p-thrust-1r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                1,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "thrust-commit-a-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "bbd1173ceb55a749008bda41f2f930818c41a26ee681e17b6037b8f02724d440",
+          "expected_ledger_hash": "2f14c7de54cdc0f9faf515dbae5ce8a520f0ee745a676986985a4da46ae5fe75",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 3,
+            "fuel_remaining": 997,
+            "previous_fuel_ledger_hash": "9d1338b7be079050179f77fe3855ab1a1fa180367c14fa95329803a5d37bc291",
+            "round": 1,
+            "salt": "thrust-ledger-a-1"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "0a1662617220a7af339fac4afb025967cff64ac902f14ea4b5d19ef6db05c3ae",
+            "match_id": "bootstrap-2p-thrust-1r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "thrust-commit-b-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "fa49cfa3abb4a0339091568f2595d9c20b220877686fcb8e02d10ffead32bd20",
+          "expected_ledger_hash": "0a1662617220a7af339fac4afb025967cff64ac902f14ea4b5d19ef6db05c3ae",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "518e89d88ec47b7677bdf6797d877e0431ad05c34adfd69ecf0f2673f9ae7719",
+            "round": 1,
+            "salt": "thrust-ledger-b-1"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "d8cf52c59055e7d45232785b638d066ce4311cdb90afb193658f9d14fe94cfb1",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-thrust-1r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "d8cf52c59055e7d45232785b638d066ce4311cdb90afb193658f9d14fe94cfb1"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-thrust-1r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "d8cf52c59055e7d45232785b638d066ce4311cdb90afb193658f9d14fe94cfb1"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "2f14c7de54cdc0f9faf515dbae5ce8a520f0ee745a676986985a4da46ae5fe75",
+            "hp": 100,
+            "position": {
+              "q": 1,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            }
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "0a1662617220a7af339fac4afb025967cff64ac902f14ea4b5d19ef6db05c3ae",
+            "hp": 100,
+            "position": {
+              "q": 2,
+              "r": -2
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            }
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "match_id": "bootstrap-2p-thrust-1r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 1,
+        "seed": "bootstrap-seed-thrust-001"
+      },
+      "world_state_hash": "d8cf52c59055e7d45232785b638d066ce4311cdb90afb193658f9d14fe94cfb1"
+    }
+  ]
+}
