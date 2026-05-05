@@ -1,0 +1,313 @@
+{
+  "canonicalization": {
+    "encoding": "sorted-key-json-v1",
+    "hash": "sha-256"
+  },
+  "description": "One-round firing arc fixture: both forward. Ships start 10 hexes apart with a 360 micro mazer out of range and a forward fixed railgun at range limit.",
+  "genesis": {
+    "initial_ledger_payloads": [
+      {
+        "agent_id": "agent-a",
+        "expected_hash": "5108c83f7ce6e87e1c4bac14dd52a312d2816257595b671e7c277afabe1e240c",
+        "payload": {
+          "agent_id": "agent-a",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout",
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          "salt": "firing-arc-both-forward-ledger-a-0"
+        }
+      },
+      {
+        "agent_id": "agent-b",
+        "expected_hash": "f8f58d2acf5379bf722f72758e37daf6a19d61f8750b7913bcbe38fee9b4e7ca",
+        "payload": {
+          "agent_id": "agent-b",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout",
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          "salt": "firing-arc-both-forward-ledger-b-0"
+        }
+      }
+    ],
+    "world_state": {
+      "agents": [
+        {
+          "agent_id": "agent-a",
+          "eliminated": false,
+          "facing": {
+            "dq": 1,
+            "dr": 0
+          },
+          "fuel_ledger_hash": "5108c83f7ce6e87e1c4bac14dd52a312d2816257595b671e7c277afabe1e240c",
+          "hp": 60,
+          "position": {
+            "q": 0,
+            "r": 0
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          },
+          "weapons": [
+            "micro-micro-mazer",
+            "fixed-railgun"
+          ]
+        },
+        {
+          "agent_id": "agent-b",
+          "eliminated": false,
+          "facing": {
+            "dq": -1,
+            "dr": 0
+          },
+          "fuel_ledger_hash": "f8f58d2acf5379bf722f72758e37daf6a19d61f8750b7913bcbe38fee9b4e7ca",
+          "hp": 60,
+          "position": {
+            "q": 10,
+            "r": 0
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          },
+          "weapons": [
+            "micro-micro-mazer",
+            "fixed-railgun"
+          ]
+        }
+      ],
+      "audit_flags": [],
+      "hex_potential": [],
+      "map": {
+        "q_max": 10,
+        "q_min": 0,
+        "r_max": 4,
+        "r_min": -4
+      },
+      "match_id": "bootstrap-2p-firing-arc-both-forward",
+      "protocol": "rqp/1.0-draft.1",
+      "round": 0,
+      "seed": "bootstrap-seed-firing-arc-both-forward"
+    },
+    "world_state_hash": "690563ad1895e0e1c45e2eeb17dc085da20904aa744905143bc04f5b524c26e9"
+  },
+  "match_id": "bootstrap-2p-firing-arc-both-forward",
+  "protocol": "rqp/1.0-draft.1",
+  "rounds": [
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "e8cd527323fcec0656c45146cdc3288812e910f5f538711e930d0d118756cb1e",
+            "match_id": "bootstrap-2p-firing-arc-both-forward",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "firing-arc-both-forward-commit-a-1",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "61f56fb760bc06cebdb0d98eb5919a20a9a699e3d608ec8087edaeef794c0b16",
+          "expected_ledger_hash": "e8cd527323fcec0656c45146cdc3288812e910f5f538711e930d0d118756cb1e",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_remaining": 994,
+            "previous_fuel_ledger_hash": "5108c83f7ce6e87e1c4bac14dd52a312d2816257595b671e7c277afabe1e240c",
+            "round": 1,
+            "salt": "firing-arc-both-forward-ledger-a-1"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "1ffaa68f45909d8461ea760cc0bdac76a5144079b26a01340f3c06fc2f012a9a",
+            "match_id": "bootstrap-2p-firing-arc-both-forward",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "firing-arc-both-forward-commit-b-1",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "c3749f604300a6d320de3288e4ef43197cf9ba737e95dd2f2a1f241375e87924",
+          "expected_ledger_hash": "1ffaa68f45909d8461ea760cc0bdac76a5144079b26a01340f3c06fc2f012a9a",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_remaining": 994,
+            "previous_fuel_ledger_hash": "f8f58d2acf5379bf722f72758e37daf6a19d61f8750b7913bcbe38fee9b4e7ca",
+            "round": 1,
+            "salt": "firing-arc-both-forward-ledger-b-1"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "f8f8610edc91e2f67048a562bbb097e88bc813fefa10af9138bcb77d6da55c9e",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 1,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-firing-arc-both-forward",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "f8f8610edc91e2f67048a562bbb097e88bc813fefa10af9138bcb77d6da55c9e"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-firing-arc-both-forward",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "f8f8610edc91e2f67048a562bbb097e88bc813fefa10af9138bcb77d6da55c9e"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "e8cd527323fcec0656c45146cdc3288812e910f5f538711e930d0d118756cb1e",
+            "hp": 40,
+            "position": {
+              "q": 0,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "1ffaa68f45909d8461ea760cc0bdac76a5144079b26a01340f3c06fc2f012a9a",
+            "hp": 40,
+            "position": {
+              "q": 10,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 10,
+          "q_min": 0,
+          "r_max": 4,
+          "r_min": -4
+        },
+        "match_id": "bootstrap-2p-firing-arc-both-forward",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 1,
+        "seed": "bootstrap-seed-firing-arc-both-forward"
+      },
+      "world_state_hash": "f8f8610edc91e2f67048a562bbb097e88bc813fefa10af9138bcb77d6da55c9e"
+    }
+  ],
+  "ruleset": {
+    "action_costs": {
+      "active_base": 1,
+      "thrust_per_unit": 2
+    },
+    "gravity_mode": "none",
+    "map": {
+      "q_max": 10,
+      "q_min": 0,
+      "r_max": 4,
+      "r_min": -4
+    },
+    "name": "rqp-bootstrap-firing-arc-both-forward",
+    "quorum": "strict-2-of-2",
+    "signatures": "omitted-for-local-replay",
+    "weapons": {
+      "fixed-railgun": {
+        "arc": "forward",
+        "damage": 20,
+        "fuel_cost": 4,
+        "range": 10
+      },
+      "micro-micro-mazer": {
+        "arc": "360",
+        "damage": 5,
+        "fuel_cost": 1,
+        "range": 3
+      }
+    }
+  },
+  "visual_notes": {
+    "distance": 10,
+    "summary": "Both ships fire micro-micro mazer and fixed railgun. The mazer is 360 degrees but range 3, so it is out of range. The railgun has range 10 but only hits along facing."
+  }
+}

@@ -45,19 +45,22 @@
     {
       "fixtures": [
         "gravity-7r-los-blocked.json",
-        "gravity-4r-asteroid-collision.json"
+        "gravity-4r-asteroid-collision.json",
+        "firing-arc-both-away.json",
+        "firing-arc-pass-by-7r.json"
       ],
       "heading": "5.4 Object State",
-      "notes": "The LOS fixture has opaque blocker objects. The asteroid fixture has a colliding stationary object. Both also include agent object state."
+      "notes": "The LOS fixture has opaque blocker objects. The asteroid fixture has a colliding stationary object. The firing arc fixtures include ship facing for directional weapons."
     },
     {
       "fixtures": [
         "inertial-3-rounds.json",
         "one-action-thrust.json",
-        "gravity-7r-no-weapons.json"
+        "gravity-7r-no-weapons.json",
+        "firing-arc-pass-by-7r.json"
       ],
       "heading": "5.5 Movement",
-      "notes": "These cover inertial no-motion, active thrust changing velocity/position, and constant-drift gravity movement."
+      "notes": "These cover inertial no-motion, active thrust changing velocity/position, constant-drift gravity movement, and a pass-by race with opposing velocities plus corrective thrust."
     },
     {
       "fixtures": [
@@ -70,10 +73,14 @@
     {
       "fixtures": [
         "gravity-7r-both-armed.json",
-        "gravity-7r-los-blocked.json"
+        "gravity-7r-los-blocked.json",
+        "firing-arc-both-away.json",
+        "firing-arc-agent-a-forward.json",
+        "firing-arc-both-forward.json",
+        "firing-arc-pass-by-7r.json"
       ],
       "heading": "5.7 Bootstrap Line-of-Sight Weapons",
-      "notes": "The both-armed fixture covers unblocked LOS damage. The blocked fixture covers opaque intermediate hexes preventing damage."
+      "notes": "The both-armed fixture covers unblocked LOS damage. The blocked fixture covers opaque intermediate hexes preventing damage. The firing arc fixtures cover 360-degree out-of-range misses, fixed forward arc hits/misses, and a pass-by sequence where front, side, and rear engagement windows differ."
     }
   ]
 }

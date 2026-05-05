@@ -253,13 +253,16 @@ ObjectState = {
   type,
   position: (q, r),
   velocity: (dq, dr),
+  facing: (dq, dr),
   hp,
   mass,
   owner_agent_id
 }
 ```
 
-Rulesets MAY add object-specific fields, but those fields MUST be included in canonical serialization if they affect simulation. Stationary map objects MAY omit velocity and owner fields if the map profile defines them as immobile and unowned.
+`facing` is optional for objects that cannot aim, rotate, or have directional effects. If a ruleset uses firing arcs, directional shields, thrust orientation, sensors, or any facing-dependent effect, every affected object MUST include canonical facing. Bootstrap fixtures encode facing as one of the six axial unit directions.
+
+Rulesets MAY add object-specific fields, but those fields MUST be included in canonical serialization if they affect simulation. Stationary map objects MAY omit velocity, facing, and owner fields if the map profile defines them as immobile and unowned.
 
 ### 5.5 Movement
 
@@ -370,7 +373,16 @@ For this profile:
 7. HP is reduced by integer damage and clamped at `0`.
 8. An agent with `hp = 0` is marked eliminated.
 
-Rulesets that use line-of-sight weapons MUST define weapon range, damage, fuel cost, blocker semantics, and whether line-of-sight is checked before movement or after movement. The bootstrap profile checks line of sight after movement.
+Bootstrap line-of-sight weapons MAY define firing arcs:
+
+| Arc | Semantics |
+| --- | --- |
+| `360` | Any straight axial line within range may hit. |
+| `forward` | The target must lie exactly along the attacker's facing vector. |
+
+An out-of-range or out-of-arc shot MAY still appear in a reveal payload as a spent action, but it deals no damage. This allows fixtures and clients to visualize misses without treating the reveal as invalid.
+
+Rulesets that use line-of-sight weapons MUST define weapon range, damage, fuel cost, arc semantics, blocker semantics, and whether line-of-sight is checked before movement or after movement. The bootstrap profile checks line of sight after movement.
 
 ## 6. Fuel Economy
 

@@ -20,7 +20,15 @@ Files:
 14. `gravity-4r-asteroid-collision-audit.json` - post-game disclosure and expected audit result for the asteroid collision fixture.
 15. `gravity-4r-asteroid-velocity-collision.json` - four visual rounds where the same asteroid impact uses velocity-based collision damage.
 16. `gravity-4r-asteroid-velocity-collision-audit.json` - post-game disclosure and expected audit result for the velocity collision fixture.
-17. `rfc5-fixture-index.json` - machine-readable index mapping RFC section 5 headings to executable fixtures.
+17. `firing-arc-both-away.json` - one round where both ships start 10 hexes apart, face away, and both weapons miss.
+18. `firing-arc-both-away-audit.json` - post-game disclosure and expected audit result for the both-away arc fixture.
+19. `firing-arc-agent-a-forward.json` - one round where only `agent-a` faces the target, so only `agent-a`'s fixed railgun hits.
+20. `firing-arc-agent-a-forward-audit.json` - post-game disclosure and expected audit result for the one-forward arc fixture.
+21. `firing-arc-both-forward.json` - one round where both ships face each other, so both fixed railguns hit.
+22. `firing-arc-both-forward-audit.json` - post-game disclosure and expected audit result for the both-forward arc fixture.
+23. `firing-arc-pass-by-7r.json` - seven rounds where two ships race past each other, railguns hit from the front, then only 360-degree mazers hit during side/backward pass windows.
+24. `firing-arc-pass-by-7r-audit.json` - post-game disclosure and expected audit result for the pass-by arc fixture.
+25. `rfc5-fixture-index.json` - machine-readable index mapping RFC section 5 headings to executable fixtures.
 
 ## Fixture Scope
 
@@ -77,6 +85,26 @@ The velocity collision fixture uses the same visual setup as the asteroid collis
 3. Damage is `min(40, speed * 40) = 40`.
 4. Final HP is therefore the same as the flat fixture, but it is produced by a different map/ruleset condition profile.
 
+The firing arc fixtures add facing and two equipped weapons:
+
+1. `agent-a` starts at `(0, 0)`, `agent-b` starts at `(10, 0)`.
+2. Both ships equip `micro-micro-mazer` and `fixed-railgun`.
+3. `micro-micro-mazer` has range `3`, damage `5`, and arc `360`; it is always out of range at distance `10`.
+4. `fixed-railgun` has range `10`, damage `20`, and arc `forward`; it only hits when the target lies exactly along the attacker's facing vector.
+5. In `firing-arc-both-away`, `agent-a` faces `(-1, 0)` and `agent-b` faces `(1, 0)`, so both railguns miss.
+6. In `firing-arc-agent-a-forward`, `agent-a` faces `(1, 0)` and hits `agent-b`; `agent-b` still faces away.
+7. In `firing-arc-both-forward`, both ships face each other and both railguns hit.
+
+The pass-by firing arc fixture extends this into a 7-round visual sequence:
+
+1. `agent-a` starts at `(0, 0)` facing `(1, 0)` with velocity `(1, 0)`.
+2. `agent-b` starts at `(10, 0)` facing `(-1, 0)` with velocity `(-1, 0)`.
+3. Rounds 1-3 are front-facing approach shots: fixed railguns hit and micro-micro mazers are out of range.
+4. Round 4 offsets the pass; fixed arcs cannot hit.
+5. Round 5 is a side close pass at distance `2`; only the 360-degree micro-micro mazers hit.
+6. Round 6 is a behind close pass at distance `2`; fixed railguns still miss and only the 360-degree mazers hit.
+7. Round 7 separates the ships again; no weapon hits.
+
 ## Canonicalization
 
 Every expected hash uses `sorted-key-json-v1`:
@@ -118,6 +146,10 @@ python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/gravity-7r-both-armed.j
 python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/gravity-7r-los-blocked.json fixtures/bootstrap/gravity-7r-los-blocked-audit.json
 python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/gravity-4r-asteroid-collision.json fixtures/bootstrap/gravity-4r-asteroid-collision-audit.json
 python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/gravity-4r-asteroid-velocity-collision.json fixtures/bootstrap/gravity-4r-asteroid-velocity-collision-audit.json
+python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-both-away.json fixtures/bootstrap/firing-arc-both-away-audit.json
+python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-agent-a-forward.json fixtures/bootstrap/firing-arc-agent-a-forward-audit.json
+python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-both-forward.json fixtures/bootstrap/firing-arc-both-forward-audit.json
+python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-pass-by-7r.json fixtures/bootstrap/firing-arc-pass-by-7r-audit.json
 ```
 
 1. Load `inertial-3-rounds.json`.
@@ -166,6 +198,15 @@ python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/gravity-4r-asteroid-vel
 | Asteroid collision | `43cee0bb3a9a81789c3987724f015faf8ad7409f4e4c5ebf6c324bd255eb8361` | `48f025c11e366d413becf85cdaec49fc7e26c998fa1916cedaaf8127873bc984` | `agent-a: 20`, `agent-b: 60` |
 | Velocity asteroid collision | `cd884a5a48d8797930c0037f8bc1dd465f46db50d72ded6e336a8211e7b0e28c` | `7b493f6b8a2fedbadb0a87a7a819f77beca07db045bf7328a53af172f68fe5d1` | `agent-a: 20`, `agent-b: 60` |
 
+### Firing arc fixtures
+
+| Fixture | Genesis hash | Round 1 hash | Final HP |
+| --- | --- | --- | --- |
+| Both away | `b9f63cc1b7cc6e5629caca6daad8ab613e6d3d660a8971c3af2515971937594b` | `fcc111743e29a3937ddfcdf321a2cc8b67c27377a9b5be7d3f99651a02f589ba` | `agent-a: 60`, `agent-b: 60` |
+| Agent A forward | `cad1601950daa802c6ca482e74a9d56687f8d5159b30e1e499113ebcc7be30d4` | `16d3402c0d1240c24f719724424c02ab2e97be81559107f0618beb1f93399d5b` | `agent-a: 60`, `agent-b: 40` |
+| Both forward | `690563ad1895e0e1c45e2eeb17dc085da20904aa744905143bc04f5b524c26e9` | `f8f8610edc91e2f67048a562bbb097e88bc813fefa10af9138bcb77d6da55c9e` | `agent-a: 40`, `agent-b: 40` |
+| Pass-by race | `df0ebd4d00e7625b44455ab967e3495b5ab758509ecfa64de74edd0a8fecb986` | `b3b178e4b21337e853d9cb748ba616977673cdfec9ff39ab26e99f346c880cf4` | `agent-a: 20`, `agent-b: 20` |
+
 ## RFC Section 5 Coverage
 
 `rfc5-fixture-index.json` maps every RFC section 5 heading to executable fixtures. Headings with meaningful variation have at least two fixture examples:
@@ -177,7 +218,7 @@ python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/gravity-4r-asteroid-vel
 | 5.3 Map and Condition Profiles | flat and velocity-based asteroid map definitions |
 | 5.3.1 Seed-Derived Map Generation | two `explicit-materialized-v1` seed/profile map fixtures |
 | 5.3.2 Parameter Overrides | flat and velocity-based collision override fixtures |
-| 5.4 Object State | opaque LOS blocker objects and colliding asteroid objects |
+| 5.4 Object State | opaque LOS blocker objects, colliding asteroid objects, and ship facing |
 | 5.5 Movement | inertial, active thrust, and constant-drift gravity fixtures |
 | 5.6 Collision Resolution | flat and velocity-based stationary collision fixtures |
-| 5.7 Bootstrap Line-of-Sight Weapons | unblocked and blocked LOS weapon fixtures |
+| 5.7 Bootstrap Line-of-Sight Weapons | unblocked LOS, blocked LOS, out-of-range 360, and fixed forward arc fixtures |

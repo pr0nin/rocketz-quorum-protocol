@@ -1,0 +1,76 @@
+{
+  "agent_disclosures": [
+    {
+      "agent_id": "agent-a",
+      "commit_salts": [
+        "firing-arc-agent-a-forward-commit-a-1"
+      ],
+      "final_fuel": 994,
+      "fuel_burns": [
+        6
+      ],
+      "initial_fuel": 1000,
+      "initial_ledger_salt": "firing-arc-agent-a-forward-ledger-a-0",
+      "ledger_salts": [
+        "firing-arc-agent-a-forward-ledger-a-1"
+      ],
+      "loadout": {
+        "ship": "bootstrap-scout",
+        "weapons": [
+          "micro-micro-mazer",
+          "fixed-railgun"
+        ]
+      }
+    },
+    {
+      "agent_id": "agent-b",
+      "commit_salts": [
+        "firing-arc-agent-a-forward-commit-b-1"
+      ],
+      "final_fuel": 994,
+      "fuel_burns": [
+        6
+      ],
+      "initial_fuel": 1000,
+      "initial_ledger_salt": "firing-arc-agent-a-forward-ledger-b-0",
+      "ledger_salts": [
+        "firing-arc-agent-a-forward-ledger-b-1"
+      ],
+      "loadout": {
+        "ship": "bootstrap-scout",
+        "weapons": [
+          "micro-micro-mazer",
+          "fixed-railgun"
+        ]
+      }
+    }
+  ],
+  "agent_results": [
+    {
+      "agent_id": "agent-a",
+      "audit": "pass",
+      "final_fuel": 994,
+      "final_hp": 60,
+      "fuel_burn_total": 6,
+      "initial_fuel": 1000,
+      "violations": []
+    },
+    {
+      "agent_id": "agent-b",
+      "audit": "pass",
+      "final_fuel": 994,
+      "final_hp": 40,
+      "fuel_burn_total": 6,
+      "initial_fuel": 1000,
+      "violations": []
+    }
+  ],
+  "match_id": "bootstrap-2p-firing-arc-agent-a-forward",
+  "protocol": "rqp/1.0-draft.1",
+  "quorum_mode": "strict-2-of-2",
+  "result": "pass",
+  "type": "audit_report",
+  "verified_rounds": [
+    1
+  ]
+}

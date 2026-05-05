@@ -1,0 +1,1354 @@
+{
+  "canonicalization": {
+    "encoding": "sorted-key-json-v1",
+    "hash": "sha-256"
+  },
+  "description": "Seven-round pass-by firing arc fixture where ships race past each other: railguns hit from the front, then fixed arcs miss while 360-degree mazers hit during close side/backward pass windows.",
+  "genesis": {
+    "initial_ledger_payloads": [
+      {
+        "agent_id": "agent-a",
+        "expected_hash": "d5915a0f64d3cfb40e6d59e3f43cbc528eaba028ddd4a2b182af3923bd968d6c",
+        "payload": {
+          "agent_id": "agent-a",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout",
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          "salt": "firing-arc-pass-ledger-a-0"
+        }
+      },
+      {
+        "agent_id": "agent-b",
+        "expected_hash": "be7c381c0958fc3b1f3b29efa765a4f68459a289a3709e4791df00f323c2b858",
+        "payload": {
+          "agent_id": "agent-b",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout",
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          "salt": "firing-arc-pass-ledger-b-0"
+        }
+      }
+    ],
+    "world_state": {
+      "agents": [
+        {
+          "agent_id": "agent-a",
+          "eliminated": false,
+          "facing": {
+            "dq": 1,
+            "dr": 0
+          },
+          "fuel_ledger_hash": "d5915a0f64d3cfb40e6d59e3f43cbc528eaba028ddd4a2b182af3923bd968d6c",
+          "hp": 60,
+          "position": {
+            "q": 0,
+            "r": 0
+          },
+          "velocity": {
+            "dq": 1,
+            "dr": 0
+          },
+          "weapons": [
+            "micro-micro-mazer",
+            "fixed-railgun"
+          ]
+        },
+        {
+          "agent_id": "agent-b",
+          "eliminated": false,
+          "facing": {
+            "dq": -1,
+            "dr": 0
+          },
+          "fuel_ledger_hash": "be7c381c0958fc3b1f3b29efa765a4f68459a289a3709e4791df00f323c2b858",
+          "hp": 60,
+          "position": {
+            "q": 10,
+            "r": 0
+          },
+          "velocity": {
+            "dq": -1,
+            "dr": 0
+          },
+          "weapons": [
+            "micro-micro-mazer",
+            "fixed-railgun"
+          ]
+        }
+      ],
+      "audit_flags": [],
+      "hex_potential": [],
+      "map": {
+        "q_max": 10,
+        "q_min": 0,
+        "r_max": 4,
+        "r_min": -2
+      },
+      "match_id": "bootstrap-2p-firing-arc-pass-7r",
+      "protocol": "rqp/1.0-draft.1",
+      "round": 0,
+      "seed": "bootstrap-seed-firing-arc-pass"
+    },
+    "world_state_hash": "df0ebd4d00e7625b44455ab967e3495b5ab758509ecfa64de74edd0a8fecb986"
+  },
+  "match_id": "bootstrap-2p-firing-arc-pass-7r",
+  "protocol": "rqp/1.0-draft.1",
+  "rounds": [
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "80c91d4b5d9b78ba08f7b858134ee94641ddf543f686f122a8c229c8dd47da8e",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "firing-arc-pass-commit-a-1",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "2752588349e30089e1053bcd8dfe78787246971dd27e6ede959e9d2201af5710",
+          "expected_ledger_hash": "80c91d4b5d9b78ba08f7b858134ee94641ddf543f686f122a8c229c8dd47da8e",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_remaining": 994,
+            "previous_fuel_ledger_hash": "d5915a0f64d3cfb40e6d59e3f43cbc528eaba028ddd4a2b182af3923bd968d6c",
+            "round": 1,
+            "salt": "firing-arc-pass-ledger-a-1"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "132e552927293fffbaa95b66d586ec155cd20043bea5f33cdfb3ae1662d9b0ab",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "firing-arc-pass-commit-b-1",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "f2485ba17248ace9c55db01da35fd773e42c8e8db1f0e9f3111c2d68ccc2a2dc",
+          "expected_ledger_hash": "132e552927293fffbaa95b66d586ec155cd20043bea5f33cdfb3ae1662d9b0ab",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_remaining": 994,
+            "previous_fuel_ledger_hash": "be7c381c0958fc3b1f3b29efa765a4f68459a289a3709e4791df00f323c2b858",
+            "round": 1,
+            "salt": "firing-arc-pass-ledger-b-1"
+          }
+        }
+      ],
+      "phase_note": "front railgun hit window",
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "b274d71de59b74c52541593a64ff33d705ebf8afa99580ac4452901284e63053",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 1,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "b274d71de59b74c52541593a64ff33d705ebf8afa99580ac4452901284e63053"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "b274d71de59b74c52541593a64ff33d705ebf8afa99580ac4452901284e63053"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "80c91d4b5d9b78ba08f7b858134ee94641ddf543f686f122a8c229c8dd47da8e",
+            "hp": 50,
+            "position": {
+              "q": 1,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "132e552927293fffbaa95b66d586ec155cd20043bea5f33cdfb3ae1662d9b0ab",
+            "hp": 50,
+            "position": {
+              "q": 9,
+              "r": 0
+            },
+            "velocity": {
+              "dq": -1,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 10,
+          "q_min": 0,
+          "r_max": 4,
+          "r_min": -2
+        },
+        "match_id": "bootstrap-2p-firing-arc-pass-7r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 1,
+        "seed": "bootstrap-seed-firing-arc-pass"
+      },
+      "world_state_hash": "b274d71de59b74c52541593a64ff33d705ebf8afa99580ac4452901284e63053"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "28d0095844ac321d0812743d1b2730213609c5e7afd85625e996602940cc1859",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "firing-arc-pass-commit-a-2",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "b513bceac720f11bd4099d94d7c97d90b5877a30afe0fe40c7b50bea7b44c755",
+          "expected_ledger_hash": "28d0095844ac321d0812743d1b2730213609c5e7afd85625e996602940cc1859",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_remaining": 988,
+            "previous_fuel_ledger_hash": "80c91d4b5d9b78ba08f7b858134ee94641ddf543f686f122a8c229c8dd47da8e",
+            "round": 2,
+            "salt": "firing-arc-pass-ledger-a-2"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "83d5b5663ec9005fdd621a96dbe162e1adab646afba0eee0807d376651c0815b",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "firing-arc-pass-commit-b-2",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "203bf1b1de60f58f4a422d59163e56e573c771fc3e1708037cb48e49439ca383",
+          "expected_ledger_hash": "83d5b5663ec9005fdd621a96dbe162e1adab646afba0eee0807d376651c0815b",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_remaining": 988,
+            "previous_fuel_ledger_hash": "132e552927293fffbaa95b66d586ec155cd20043bea5f33cdfb3ae1662d9b0ab",
+            "round": 2,
+            "salt": "firing-arc-pass-ledger-b-2"
+          }
+        }
+      ],
+      "phase_note": "front railgun hit window",
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "b0d342561a7bef681722b13f7eaee264cee316d7492199401ab6050b6ea600d6",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 2,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "b0d342561a7bef681722b13f7eaee264cee316d7492199401ab6050b6ea600d6"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "b0d342561a7bef681722b13f7eaee264cee316d7492199401ab6050b6ea600d6"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "28d0095844ac321d0812743d1b2730213609c5e7afd85625e996602940cc1859",
+            "hp": 40,
+            "position": {
+              "q": 2,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "83d5b5663ec9005fdd621a96dbe162e1adab646afba0eee0807d376651c0815b",
+            "hp": 40,
+            "position": {
+              "q": 8,
+              "r": 0
+            },
+            "velocity": {
+              "dq": -1,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 10,
+          "q_min": 0,
+          "r_max": 4,
+          "r_min": -2
+        },
+        "match_id": "bootstrap-2p-firing-arc-pass-7r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 2,
+        "seed": "bootstrap-seed-firing-arc-pass"
+      },
+      "world_state_hash": "b0d342561a7bef681722b13f7eaee264cee316d7492199401ab6050b6ea600d6"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "bd38396cf1256da46e29fe070dba56f2f6965ee2b7c52c1283daac92dd11d186",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "firing-arc-pass-commit-a-3",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "feb78b3b4abe562749b2b790a35f24500a34f5f5ceb99da3c8434e2b62229053",
+          "expected_ledger_hash": "bd38396cf1256da46e29fe070dba56f2f6965ee2b7c52c1283daac92dd11d186",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_remaining": 982,
+            "previous_fuel_ledger_hash": "28d0095844ac321d0812743d1b2730213609c5e7afd85625e996602940cc1859",
+            "round": 3,
+            "salt": "firing-arc-pass-ledger-a-3"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "a7460003ff704ed37d7f2c9b147efbf229a8de9c76b30e0ffcafebe71c6bb181",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "firing-arc-pass-commit-b-3",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "11d05760aac7e6882d5d3c3a8f6b391b76a0823539990402744887c34da89f4a",
+          "expected_ledger_hash": "a7460003ff704ed37d7f2c9b147efbf229a8de9c76b30e0ffcafebe71c6bb181",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_remaining": 982,
+            "previous_fuel_ledger_hash": "83d5b5663ec9005fdd621a96dbe162e1adab646afba0eee0807d376651c0815b",
+            "round": 3,
+            "salt": "firing-arc-pass-ledger-b-3"
+          }
+        }
+      ],
+      "phase_note": "front railgun hit window",
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "c8602e3ab9a325cc66b804709dae4660627f3d8cb2282f70ef76ddf0f18a4fb1",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 3,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "c8602e3ab9a325cc66b804709dae4660627f3d8cb2282f70ef76ddf0f18a4fb1"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "c8602e3ab9a325cc66b804709dae4660627f3d8cb2282f70ef76ddf0f18a4fb1"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "bd38396cf1256da46e29fe070dba56f2f6965ee2b7c52c1283daac92dd11d186",
+            "hp": 30,
+            "position": {
+              "q": 3,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "a7460003ff704ed37d7f2c9b147efbf229a8de9c76b30e0ffcafebe71c6bb181",
+            "hp": 30,
+            "position": {
+              "q": 7,
+              "r": 0
+            },
+            "velocity": {
+              "dq": -1,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 10,
+          "q_min": 0,
+          "r_max": 4,
+          "r_min": -2
+        },
+        "match_id": "bootstrap-2p-firing-arc-pass-7r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 3,
+        "seed": "bootstrap-seed-firing-arc-pass"
+      },
+      "world_state_hash": "c8602e3ab9a325cc66b804709dae4660627f3d8cb2282f70ef76ddf0f18a4fb1"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "ebf19d58d01b802fda6606d6b3d50dc4cef7bfbd752755b3d1059264a1db7d40",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 4,
+            "salt": "firing-arc-pass-commit-a-4",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "6cf12bba0ed47fb856074f4e298d3c5c109f64e206dd00de0a0ce021890530cc",
+          "expected_ledger_hash": "ebf19d58d01b802fda6606d6b3d50dc4cef7bfbd752755b3d1059264a1db7d40",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_remaining": 976,
+            "previous_fuel_ledger_hash": "bd38396cf1256da46e29fe070dba56f2f6965ee2b7c52c1283daac92dd11d186",
+            "round": 4,
+            "salt": "firing-arc-pass-ledger-a-4"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 8,
+            "fuel_ledger_hash": "ab0f6fa28fc3516e5582b05b3dbde3d1cb174d76f35297bef42f1ff6c71331fa",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                1
+              ]
+            },
+            "round": 4,
+            "salt": "firing-arc-pass-commit-b-4",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "38066f9025543ff72e6ec25a1cb2ebf56f31e547e273448a046c122f7e8a49f9",
+          "expected_ledger_hash": "ab0f6fa28fc3516e5582b05b3dbde3d1cb174d76f35297bef42f1ff6c71331fa",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 8,
+            "fuel_remaining": 974,
+            "previous_fuel_ledger_hash": "a7460003ff704ed37d7f2c9b147efbf229a8de9c76b30e0ffcafebe71c6bb181",
+            "round": 4,
+            "salt": "firing-arc-pass-ledger-b-4"
+          }
+        }
+      ],
+      "phase_note": "offset pass; fixed arcs cannot hit",
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "670a68f4c37bf382b97aa1877063f6cc200675ea16a6e2666da523605677682a",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 4,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 4,
+          "type": "state_vote",
+          "world_state_hash": "670a68f4c37bf382b97aa1877063f6cc200675ea16a6e2666da523605677682a"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 4,
+          "type": "state_vote",
+          "world_state_hash": "670a68f4c37bf382b97aa1877063f6cc200675ea16a6e2666da523605677682a"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "ebf19d58d01b802fda6606d6b3d50dc4cef7bfbd752755b3d1059264a1db7d40",
+            "hp": 30,
+            "position": {
+              "q": 4,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "ab0f6fa28fc3516e5582b05b3dbde3d1cb174d76f35297bef42f1ff6c71331fa",
+            "hp": 30,
+            "position": {
+              "q": 6,
+              "r": 1
+            },
+            "velocity": {
+              "dq": -1,
+              "dr": 1
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 10,
+          "q_min": 0,
+          "r_max": 4,
+          "r_min": -2
+        },
+        "match_id": "bootstrap-2p-firing-arc-pass-7r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 4,
+        "seed": "bootstrap-seed-firing-arc-pass"
+      },
+      "world_state_hash": "670a68f4c37bf382b97aa1877063f6cc200675ea16a6e2666da523605677682a"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "bb85cdf7ce42301c1fa69b97d764f8eb00696176f512318ee96a6b647bc76c40",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 5,
+            "salt": "firing-arc-pass-commit-a-5",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "eba603664656a6a2f24f812bb7852ccc441a247c1cf8d245ad6e865858168aae",
+          "expected_ledger_hash": "bb85cdf7ce42301c1fa69b97d764f8eb00696176f512318ee96a6b647bc76c40",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_remaining": 970,
+            "previous_fuel_ledger_hash": "ebf19d58d01b802fda6606d6b3d50dc4cef7bfbd752755b3d1059264a1db7d40",
+            "round": 5,
+            "salt": "firing-arc-pass-ledger-a-5"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "6bb0a3aa2cfa2e0333b100790eb6c616d07110e067f72bf15a93e02bcf1b8c16",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 5,
+            "salt": "firing-arc-pass-commit-b-5",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "b51761b5fe3819b4e37eff04c6457499ffe970e831a19965c5672e0e9db63603",
+          "expected_ledger_hash": "6bb0a3aa2cfa2e0333b100790eb6c616d07110e067f72bf15a93e02bcf1b8c16",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_remaining": 968,
+            "previous_fuel_ledger_hash": "ab0f6fa28fc3516e5582b05b3dbde3d1cb174d76f35297bef42f1ff6c71331fa",
+            "round": 5,
+            "salt": "firing-arc-pass-ledger-b-5"
+          }
+        }
+      ],
+      "phase_note": "side close pass; only 360 mazer hits",
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "2e3fec806c5837e7b47493a3b2b0a20aa336a6443f64a1ea3d012aadef30e28d",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 5,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 5,
+          "type": "state_vote",
+          "world_state_hash": "2e3fec806c5837e7b47493a3b2b0a20aa336a6443f64a1ea3d012aadef30e28d"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 5,
+          "type": "state_vote",
+          "world_state_hash": "2e3fec806c5837e7b47493a3b2b0a20aa336a6443f64a1ea3d012aadef30e28d"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "bb85cdf7ce42301c1fa69b97d764f8eb00696176f512318ee96a6b647bc76c40",
+            "hp": 25,
+            "position": {
+              "q": 5,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "6bb0a3aa2cfa2e0333b100790eb6c616d07110e067f72bf15a93e02bcf1b8c16",
+            "hp": 25,
+            "position": {
+              "q": 5,
+              "r": 2
+            },
+            "velocity": {
+              "dq": -1,
+              "dr": 1
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 10,
+          "q_min": 0,
+          "r_max": 4,
+          "r_min": -2
+        },
+        "match_id": "bootstrap-2p-firing-arc-pass-7r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 5,
+        "seed": "bootstrap-seed-firing-arc-pass"
+      },
+      "world_state_hash": "2e3fec806c5837e7b47493a3b2b0a20aa336a6443f64a1ea3d012aadef30e28d"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "b643977f843c7cd846428c1b03a5420c0acf684b3321d1f9dbaa24d5db47171d",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 6,
+            "salt": "firing-arc-pass-commit-a-6",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "53f2b1012f9cc3ca37e8ad5d8a2e587fbed641da06c0add40a693e86e44ca4e5",
+          "expected_ledger_hash": "b643977f843c7cd846428c1b03a5420c0acf684b3321d1f9dbaa24d5db47171d",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_remaining": 964,
+            "previous_fuel_ledger_hash": "bb85cdf7ce42301c1fa69b97d764f8eb00696176f512318ee96a6b647bc76c40",
+            "round": 6,
+            "salt": "firing-arc-pass-ledger-a-6"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 12,
+            "fuel_ledger_hash": "7602827d2459efb9af9ec9989989b3f324df8ed1bf284cd78b7de052c09e378e",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                -3
+              ]
+            },
+            "round": 6,
+            "salt": "firing-arc-pass-commit-b-6",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "5728bd0d7ecd8154ad20f7a837471f719d270290ef08052ae54ef9d7d56e5579",
+          "expected_ledger_hash": "7602827d2459efb9af9ec9989989b3f324df8ed1bf284cd78b7de052c09e378e",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 12,
+            "fuel_remaining": 956,
+            "previous_fuel_ledger_hash": "6bb0a3aa2cfa2e0333b100790eb6c616d07110e067f72bf15a93e02bcf1b8c16",
+            "round": 6,
+            "salt": "firing-arc-pass-ledger-b-6"
+          }
+        }
+      ],
+      "phase_note": "behind close pass; only 360 mazer hits",
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "4c00eebb14fce4e6126b92c7f0dc93f12d2e93e95f2670b0dd10a7ca54a449ed",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 6,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 6,
+          "type": "state_vote",
+          "world_state_hash": "4c00eebb14fce4e6126b92c7f0dc93f12d2e93e95f2670b0dd10a7ca54a449ed"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 6,
+          "type": "state_vote",
+          "world_state_hash": "4c00eebb14fce4e6126b92c7f0dc93f12d2e93e95f2670b0dd10a7ca54a449ed"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "b643977f843c7cd846428c1b03a5420c0acf684b3321d1f9dbaa24d5db47171d",
+            "hp": 20,
+            "position": {
+              "q": 6,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "7602827d2459efb9af9ec9989989b3f324df8ed1bf284cd78b7de052c09e378e",
+            "hp": 20,
+            "position": {
+              "q": 4,
+              "r": 0
+            },
+            "velocity": {
+              "dq": -1,
+              "dr": -2
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 10,
+          "q_min": 0,
+          "r_max": 4,
+          "r_min": -2
+        },
+        "match_id": "bootstrap-2p-firing-arc-pass-7r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 6,
+        "seed": "bootstrap-seed-firing-arc-pass"
+      },
+      "world_state_hash": "4c00eebb14fce4e6126b92c7f0dc93f12d2e93e95f2670b0dd10a7ca54a449ed"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "104f18d88652041aab276221470f4b5599be0c2693a6461c4bff60265b19d22f",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 7,
+            "salt": "firing-arc-pass-commit-a-7",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "795405e5d10c941a7a938574bc7be359fb2b952acb22d2ff65cf0c5497d155e3",
+          "expected_ledger_hash": "104f18d88652041aab276221470f4b5599be0c2693a6461c4bff60265b19d22f",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 6,
+            "fuel_remaining": 958,
+            "previous_fuel_ledger_hash": "b643977f843c7cd846428c1b03a5420c0acf684b3321d1f9dbaa24d5db47171d",
+            "round": 7,
+            "salt": "firing-arc-pass-ledger-a-7"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_ledger_hash": "09f9139bd82d4561855e867605f73f39a90dba062fdd0c2ba3da4cbfb503a59a",
+            "match_id": "bootstrap-2p-firing-arc-pass-7r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 7,
+            "salt": "firing-arc-pass-commit-b-7",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "micro-micro-mazer"
+              },
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "fixed-railgun"
+              }
+            ]
+          },
+          "expected_commit_hash": "c5e2e03b9fcde5cf9d9ff6b37d8e3dbe3ef45978e2b62bccf8ab448246bfd24a",
+          "expected_ledger_hash": "09f9139bd82d4561855e867605f73f39a90dba062fdd0c2ba3da4cbfb503a59a",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 6,
+            "fuel_remaining": 950,
+            "previous_fuel_ledger_hash": "7602827d2459efb9af9ec9989989b3f324df8ed1bf284cd78b7de052c09e378e",
+            "round": 7,
+            "salt": "firing-arc-pass-ledger-b-7"
+          }
+        }
+      ],
+      "phase_note": "separated after pass; no hits",
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "b3b178e4b21337e853d9cb748ba616977673cdfec9ff39ab26e99f346c880cf4",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 7,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 7,
+          "type": "state_vote",
+          "world_state_hash": "b3b178e4b21337e853d9cb748ba616977673cdfec9ff39ab26e99f346c880cf4"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-firing-arc-pass-7r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 7,
+          "type": "state_vote",
+          "world_state_hash": "b3b178e4b21337e853d9cb748ba616977673cdfec9ff39ab26e99f346c880cf4"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "104f18d88652041aab276221470f4b5599be0c2693a6461c4bff60265b19d22f",
+            "hp": 20,
+            "position": {
+              "q": 7,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "09f9139bd82d4561855e867605f73f39a90dba062fdd0c2ba3da4cbfb503a59a",
+            "hp": 20,
+            "position": {
+              "q": 3,
+              "r": -2
+            },
+            "velocity": {
+              "dq": -1,
+              "dr": -2
+            },
+            "weapons": [
+              "micro-micro-mazer",
+              "fixed-railgun"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 10,
+          "q_min": 0,
+          "r_max": 4,
+          "r_min": -2
+        },
+        "match_id": "bootstrap-2p-firing-arc-pass-7r",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 7,
+        "seed": "bootstrap-seed-firing-arc-pass"
+      },
+      "world_state_hash": "b3b178e4b21337e853d9cb748ba616977673cdfec9ff39ab26e99f346c880cf4"
+    }
+  ],
+  "ruleset": {
+    "action_costs": {
+      "active_base": 1,
+      "thrust_per_unit": 2
+    },
+    "gravity_mode": "none",
+    "map": {
+      "q_max": 10,
+      "q_min": 0,
+      "r_max": 4,
+      "r_min": -2
+    },
+    "name": "rqp-bootstrap-firing-arc-pass-by",
+    "quorum": "strict-2-of-2",
+    "signatures": "omitted-for-local-replay",
+    "weapons": {
+      "fixed-railgun": {
+        "arc": "forward",
+        "damage": 10,
+        "fuel_cost": 4,
+        "range": 10
+      },
+      "micro-micro-mazer": {
+        "arc": "360",
+        "damage": 5,
+        "fuel_cost": 1,
+        "range": 3
+      }
+    }
+  },
+  "visual_notes": {
+    "round_notes": {
+      "1": "front railgun hit window",
+      "2": "front railgun hit window",
+      "3": "front railgun hit window",
+      "4": "offset pass; fixed arcs cannot hit",
+      "5": "side close pass; only 360 mazer hits",
+      "6": "behind close pass; only 360 mazer hits",
+      "7": "separated after pass; no hits"
+    },
+    "summary": "Both ships start 10 hexes apart and race past each other with fixed facing. Railguns hit in rounds 1-3; round 4 has no hit; mazers hit in rounds 5-6 as the ships pass side/backwards at range 2; round 7 has no hit."
+  }
+}

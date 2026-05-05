@@ -170,14 +170,30 @@ def expected_fuel_burn(fixture: dict[str, Any], action_level: int, thrust: list[
         action_costs = fixture.get("ruleset", {}).get("action_costs", {})
         active_base = action_costs.get("active_base", 1)
         thrust_per_unit = action_costs.get("thrust_per_unit", 2)
-        fire_weapon = action_costs.get("fire_weapon", 0)
         require(isinstance(active_base, int), "ruleset.action_costs.active_base must be an integer")
         require(isinstance(thrust_per_unit, int), "ruleset.action_costs.thrust_per_unit must be an integer")
-        require(isinstance(fire_weapon, int), "ruleset.action_costs.fire_weapon must be an integer")
-        return active_base + thrust_magnitude(thrust) * thrust_per_unit + len(weapons) * fire_weapon
+        return active_base + thrust_magnitude(thrust) * thrust_per_unit + weapon_fire_cost(fixture, weapons)
 
     fail(f"unsupported action_level {action_level}; bootstrap verifier supports only 0 and 1")
     raise AssertionError
+
+
+def weapon_fire_cost(fixture: dict[str, Any], weapons: list[Any]) -> int:
+    weapon_definitions = fixture.get("ruleset", {}).get("weapons")
+    if isinstance(weapon_definitions, dict):
+        total = 0
+        for weapon in weapons:
+            require(isinstance(weapon, dict), "weapon entries must be objects")
+            weapon_id = weapon.get("weapon_id")
+            require(weapon_id in weapon_definitions, f"unknown weapon definition {weapon_id!r}")
+            cost = weapon_definitions[weapon_id].get("fuel_cost", 0)
+            require(isinstance(cost, int), f"ruleset.weapons.{weapon_id}.fuel_cost must be an integer")
+            total += cost
+        return total
+
+    fire_weapon = fixture.get("ruleset", {}).get("action_costs", {}).get("fire_weapon", 0)
+    require(isinstance(fire_weapon, int), "ruleset.action_costs.fire_weapon must be an integer")
+    return len(weapons) * fire_weapon
 
 
 def require_bootstrap_input(
@@ -272,12 +288,6 @@ def simulate_bootstrap_round(
             if agent["hp"] == 0:
                 agent["eliminated"] = True
 
-    weapon_rules = fixture.get("ruleset", {}).get("weapon", {})
-    weapon_damage = weapon_rules.get("damage", 0)
-    weapon_range = weapon_rules.get("range", 0)
-    require(isinstance(weapon_damage, int), "ruleset.weapon.damage must be an integer")
-    require(isinstance(weapon_range, int), "ruleset.weapon.range must be an integer")
-
     opaque_objects = [
         obj
         for obj in produced.get("objects", [])
@@ -301,12 +311,9 @@ def simulate_bootstrap_round(
             previous_target = previous_agents_by_id[target_id]
             target = agents_by_id[target_id]
             require(not previous_target.get("eliminated", False), f"round {round_number} {attacker_id}: target {target_id} already eliminated")
-            require(
-                axial_distance(attacker["position"], target["position"]) <= weapon_range,
-                f"round {round_number} {attacker_id}: target {target_id} out of range",
-            )
-            if not line_of_sight_blocked(attacker["position"], target["position"], opaque_objects):
-                damage_by_agent[target_id] += weapon_damage
+            weapon_rule = weapon_rule_for(fixture, weapon_id)
+            if weapon_hits(attacker, target, weapon_rule, opaque_objects):
+                damage_by_agent[target_id] += weapon_rule["damage"]
 
     for agent_id, damage in damage_by_agent.items():
         if damage == 0:
@@ -323,6 +330,65 @@ def axial_distance(a: dict[str, int], b: dict[str, int]) -> int:
     a_s = -a["q"] - a["r"]
     b_s = -b["q"] - b["r"]
     return (abs(a["q"] - b["q"]) + abs(a["r"] - b["r"]) + abs(a_s - b_s)) // 2
+
+
+def weapon_rule_for(fixture: dict[str, Any], weapon_id: str) -> dict[str, Any]:
+    weapon_definitions = fixture.get("ruleset", {}).get("weapons")
+    if isinstance(weapon_definitions, dict):
+        require(weapon_id in weapon_definitions, f"unknown weapon definition {weapon_id!r}")
+        rule = weapon_definitions[weapon_id]
+        require(isinstance(rule.get("damage"), int), f"ruleset.weapons.{weapon_id}.damage must be an integer")
+        require(isinstance(rule.get("range"), int), f"ruleset.weapons.{weapon_id}.range must be an integer")
+        require(rule.get("arc", "360") in ("360", "forward"), f"ruleset.weapons.{weapon_id}.arc is unsupported")
+        return rule
+
+    weapon_rules = fixture.get("ruleset", {}).get("weapon", {})
+    damage = weapon_rules.get("damage", 0)
+    range_ = weapon_rules.get("range", 0)
+    require(isinstance(damage, int), "ruleset.weapon.damage must be an integer")
+    require(isinstance(range_, int), "ruleset.weapon.range must be an integer")
+    return {"damage": damage, "range": range_, "arc": "360"}
+
+
+def weapon_hits(
+    attacker: dict[str, Any],
+    target: dict[str, Any],
+    weapon_rule: dict[str, Any],
+    opaque_objects: list[dict[str, Any]],
+) -> bool:
+    attacker_position = attacker["position"]
+    target_position = target["position"]
+
+    if axial_distance(attacker_position, target_position) > weapon_rule["range"]:
+        return False
+
+    if not is_axial_straight(attacker_position, target_position):
+        return False
+
+    if weapon_rule.get("arc", "360") == "forward" and not target_in_forward_arc(attacker, target):
+        return False
+
+    return not line_of_sight_blocked(attacker_position, target_position, opaque_objects)
+
+
+def is_axial_straight(a: dict[str, int], b: dict[str, int]) -> bool:
+    return a["q"] == b["q"] or a["r"] == b["r"] or (-a["q"] - a["r"]) == (-b["q"] - b["r"])
+
+
+def target_in_forward_arc(attacker: dict[str, Any], target: dict[str, Any]) -> bool:
+    facing = attacker.get("facing")
+    require(
+        isinstance(facing, dict) and isinstance(facing.get("dq"), int) and isinstance(facing.get("dr"), int),
+        f"{attacker.get('agent_id')} must define integer facing for forward arc weapons",
+    )
+    attacker_position = attacker["position"]
+    target_position = target["position"]
+    distance = axial_distance(attacker_position, target_position)
+    return (
+        distance > 0
+        and target_position["q"] - attacker_position["q"] == facing["dq"] * distance
+        and target_position["r"] - attacker_position["r"] == facing["dr"] * distance
+    )
 
 
 def stationary_collision_damage(collision_rules: dict[str, Any], impact_delta: dict[str, int]) -> int:
