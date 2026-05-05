@@ -1,0 +1,805 @@
+{
+  "canonicalization": {
+    "encoding": "sorted-key-json-v1",
+    "hash": "sha-256"
+  },
+  "description": "Four-round constant downward gravity fixture where agent-a drifts into a stationary asteroid and takes collision damage.",
+  "genesis": {
+    "initial_ledger_payloads": [
+      {
+        "agent_id": "agent-a",
+        "expected_hash": "d0ad515f21a0bf4a2cb1ff7d61ea3ff9af01b778fe148123881069ea88aa6c76",
+        "payload": {
+          "agent_id": "agent-a",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout",
+            "weapons": []
+          },
+          "salt": "asteroid-collision-ledger-a-0"
+        }
+      },
+      {
+        "agent_id": "agent-b",
+        "expected_hash": "8d6a15d010d1978148a1f472525e34abbd742b9a45e6f84934c9244e001418b4",
+        "payload": {
+          "agent_id": "agent-b",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout",
+            "weapons": []
+          },
+          "salt": "asteroid-collision-ledger-b-0"
+        }
+      }
+    ],
+    "world_state": {
+      "agents": [
+        {
+          "agent_id": "agent-a",
+          "eliminated": false,
+          "fuel_ledger_hash": "d0ad515f21a0bf4a2cb1ff7d61ea3ff9af01b778fe148123881069ea88aa6c76",
+          "hp": 60,
+          "position": {
+            "q": 3,
+            "r": 1
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          },
+          "weapons": []
+        },
+        {
+          "agent_id": "agent-b",
+          "eliminated": false,
+          "fuel_ledger_hash": "8d6a15d010d1978148a1f472525e34abbd742b9a45e6f84934c9244e001418b4",
+          "hp": 60,
+          "position": {
+            "q": 6,
+            "r": 1
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          },
+          "weapons": []
+        }
+      ],
+      "audit_flags": [],
+      "hex_potential": [],
+      "map": {
+        "q_max": 9,
+        "q_min": 0,
+        "r_max": 9,
+        "r_min": 0
+      },
+      "match_id": "bootstrap-2p-asteroid-collision-4r",
+      "objects": [
+        {
+          "collides": true,
+          "id": "asteroid-impact-1",
+          "opaque": true,
+          "position": {
+            "q": 3,
+            "r": 4
+          },
+          "type": "asteroid"
+        }
+      ],
+      "protocol": "rqp/1.0-draft.1",
+      "round": 0,
+      "seed": "bootstrap-seed-asteroid-collision"
+    },
+    "world_state_hash": "43cee0bb3a9a81789c3987724f015faf8ad7409f4e4c5ebf6c324bd255eb8361"
+  },
+  "map_definition": {
+    "active_rounds": {
+      "end": 4,
+      "start": 1
+    },
+    "bounds": {
+      "q_max": 9,
+      "q_min": 0,
+      "r_max": 9,
+      "r_min": 0
+    },
+    "generation_profile": "explicit-materialized-v1",
+    "map_id": "bootstrap-asteroid-flat-map",
+    "objects": [
+      {
+        "collides": true,
+        "id": "asteroid-impact-1",
+        "opaque": true,
+        "position": {
+          "q": 3,
+          "r": 4
+        },
+        "type": "asteroid"
+      }
+    ],
+    "parameter_overrides": [
+      {
+        "active_rounds": {
+          "end": 4,
+          "start": 1
+        },
+        "path": "collision.profile",
+        "scope": "map",
+        "value": "flat"
+      },
+      {
+        "active_rounds": {
+          "end": 4,
+          "start": 1
+        },
+        "path": "collision.flat_damage",
+        "scope": "map",
+        "value": 40
+      },
+      {
+        "active_rounds": {
+          "end": 4,
+          "start": 1
+        },
+        "path": "gravity.mode",
+        "scope": "map",
+        "value": "constant_drift"
+      },
+      {
+        "active_rounds": {
+          "end": 4,
+          "start": 1
+        },
+        "path": "gravity.vector",
+        "scope": "map",
+        "value": {
+          "dq": 0,
+          "dr": 1
+        }
+      }
+    ],
+    "seed": "bootstrap-seed-asteroid-collision"
+  },
+  "match_id": "bootstrap-2p-asteroid-collision-4r",
+  "protocol": "rqp/1.0-draft.1",
+  "rounds": [
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "fb690dfe6497a6505eb9ddc52853d6d22401c980d69b22db2e6197f6df2b4e1c",
+            "match_id": "bootstrap-2p-asteroid-collision-4r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "asteroid-collision-commit-a-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "05ac5b125b01c4e6a7987bef7a48f7d0809f50f83fea5d411af3bf0639f6035a",
+          "expected_ledger_hash": "fb690dfe6497a6505eb9ddc52853d6d22401c980d69b22db2e6197f6df2b4e1c",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "d0ad515f21a0bf4a2cb1ff7d61ea3ff9af01b778fe148123881069ea88aa6c76",
+            "round": 1,
+            "salt": "asteroid-collision-ledger-a-1"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "3be17a348042887b558fcf265b26ac7a7d2f225abb8fe89b84bebabcc9dcec5e",
+            "match_id": "bootstrap-2p-asteroid-collision-4r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "asteroid-collision-commit-b-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "10cf188a461a49d003454b3103a7978b74265d83b38149257b3c7f0363723f0a",
+          "expected_ledger_hash": "3be17a348042887b558fcf265b26ac7a7d2f225abb8fe89b84bebabcc9dcec5e",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "8d6a15d010d1978148a1f472525e34abbd742b9a45e6f84934c9244e001418b4",
+            "round": 1,
+            "salt": "asteroid-collision-ledger-b-1"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "a44e75c82dc7f7cd7c576918944c3f0441c467879958521c60e91cdc0e2317c0",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 1,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-asteroid-collision-4r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "a44e75c82dc7f7cd7c576918944c3f0441c467879958521c60e91cdc0e2317c0"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-asteroid-collision-4r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "a44e75c82dc7f7cd7c576918944c3f0441c467879958521c60e91cdc0e2317c0"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "fb690dfe6497a6505eb9ddc52853d6d22401c980d69b22db2e6197f6df2b4e1c",
+            "hp": 60,
+            "position": {
+              "q": 3,
+              "r": 2
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "3be17a348042887b558fcf265b26ac7a7d2f225abb8fe89b84bebabcc9dcec5e",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 2
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-asteroid-collision-4r",
+        "objects": [
+          {
+            "collides": true,
+            "id": "asteroid-impact-1",
+            "opaque": true,
+            "position": {
+              "q": 3,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 1,
+        "seed": "bootstrap-seed-asteroid-collision"
+      },
+      "world_state_hash": "a44e75c82dc7f7cd7c576918944c3f0441c467879958521c60e91cdc0e2317c0"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "efda8892d50627fcb6aeb37bddd700d4b91fb74cac031d131fbe7dd80160c374",
+            "match_id": "bootstrap-2p-asteroid-collision-4r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "asteroid-collision-commit-a-2",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "2a7d12307bda89207c0e71faf6d1497dbfa1f7213178e0faf9b99d6af899256a",
+          "expected_ledger_hash": "efda8892d50627fcb6aeb37bddd700d4b91fb74cac031d131fbe7dd80160c374",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "fb690dfe6497a6505eb9ddc52853d6d22401c980d69b22db2e6197f6df2b4e1c",
+            "round": 2,
+            "salt": "asteroid-collision-ledger-a-2"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "476845caa6a0ac2adcc1cb6673f85e25efd143589cc981a0f8824c020a92153f",
+            "match_id": "bootstrap-2p-asteroid-collision-4r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "asteroid-collision-commit-b-2",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "013f8adf3176168c69bee05d0ef8806017bc7aebc985b5301e4fd51639d89d9a",
+          "expected_ledger_hash": "476845caa6a0ac2adcc1cb6673f85e25efd143589cc981a0f8824c020a92153f",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "3be17a348042887b558fcf265b26ac7a7d2f225abb8fe89b84bebabcc9dcec5e",
+            "round": 2,
+            "salt": "asteroid-collision-ledger-b-2"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "78f27f4b9a57759ff6e7debea355b1671263b6d96be97e2d208405b3263aa4f0",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 2,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-asteroid-collision-4r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "78f27f4b9a57759ff6e7debea355b1671263b6d96be97e2d208405b3263aa4f0"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-asteroid-collision-4r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "78f27f4b9a57759ff6e7debea355b1671263b6d96be97e2d208405b3263aa4f0"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "efda8892d50627fcb6aeb37bddd700d4b91fb74cac031d131fbe7dd80160c374",
+            "hp": 60,
+            "position": {
+              "q": 3,
+              "r": 3
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "476845caa6a0ac2adcc1cb6673f85e25efd143589cc981a0f8824c020a92153f",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 3
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-asteroid-collision-4r",
+        "objects": [
+          {
+            "collides": true,
+            "id": "asteroid-impact-1",
+            "opaque": true,
+            "position": {
+              "q": 3,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 2,
+        "seed": "bootstrap-seed-asteroid-collision"
+      },
+      "world_state_hash": "78f27f4b9a57759ff6e7debea355b1671263b6d96be97e2d208405b3263aa4f0"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "569a43e2e6ffccce082c32aca76dc052ce591e4a84816bf5304b132371c6a1b6",
+            "match_id": "bootstrap-2p-asteroid-collision-4r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "asteroid-collision-commit-a-3",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "65caed020a609c8cab900eec2451de32ef72a937b9d92683db5c789cb1825ce6",
+          "expected_ledger_hash": "569a43e2e6ffccce082c32aca76dc052ce591e4a84816bf5304b132371c6a1b6",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "efda8892d50627fcb6aeb37bddd700d4b91fb74cac031d131fbe7dd80160c374",
+            "round": 3,
+            "salt": "asteroid-collision-ledger-a-3"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "61df681dc5b3c98580be841d51d44331bab7eacaf0f802e834683b4ff87d1764",
+            "match_id": "bootstrap-2p-asteroid-collision-4r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "asteroid-collision-commit-b-3",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "10fe530f3da7e119143d8e7352764b88065743719259dfbaabcaddd629cfd767",
+          "expected_ledger_hash": "61df681dc5b3c98580be841d51d44331bab7eacaf0f802e834683b4ff87d1764",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "476845caa6a0ac2adcc1cb6673f85e25efd143589cc981a0f8824c020a92153f",
+            "round": 3,
+            "salt": "asteroid-collision-ledger-b-3"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "e06d3c1216c4f859a030fc25ee9344ad078bb04d87c21fdd0517e54e6e78519e",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 3,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-asteroid-collision-4r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "e06d3c1216c4f859a030fc25ee9344ad078bb04d87c21fdd0517e54e6e78519e"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-asteroid-collision-4r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "e06d3c1216c4f859a030fc25ee9344ad078bb04d87c21fdd0517e54e6e78519e"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "569a43e2e6ffccce082c32aca76dc052ce591e4a84816bf5304b132371c6a1b6",
+            "hp": 20,
+            "position": {
+              "q": 3,
+              "r": 4
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "61df681dc5b3c98580be841d51d44331bab7eacaf0f802e834683b4ff87d1764",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 4
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-asteroid-collision-4r",
+        "objects": [
+          {
+            "collides": true,
+            "id": "asteroid-impact-1",
+            "opaque": true,
+            "position": {
+              "q": 3,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 3,
+        "seed": "bootstrap-seed-asteroid-collision"
+      },
+      "world_state_hash": "e06d3c1216c4f859a030fc25ee9344ad078bb04d87c21fdd0517e54e6e78519e"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "bb48a78cabc1a1ebd5c531b684020688e481f61808178c951a1d73fb877f3eef",
+            "match_id": "bootstrap-2p-asteroid-collision-4r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 4,
+            "salt": "asteroid-collision-commit-a-4",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "b0ed00a4618a49551bc408d53d06957e1d772571c84a79a717c4560be7edde61",
+          "expected_ledger_hash": "bb48a78cabc1a1ebd5c531b684020688e481f61808178c951a1d73fb877f3eef",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "569a43e2e6ffccce082c32aca76dc052ce591e4a84816bf5304b132371c6a1b6",
+            "round": 4,
+            "salt": "asteroid-collision-ledger-a-4"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "2fbca30195394537a5e553be1d2358ddc11dbe3d519e1fd8bf3d5eaaa22f34b9",
+            "match_id": "bootstrap-2p-asteroid-collision-4r",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 4,
+            "salt": "asteroid-collision-commit-b-4",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "729c3369cfcc6413cdc23adb4cf42a271d1c43eb4ae8c99112391836c2f84e46",
+          "expected_ledger_hash": "2fbca30195394537a5e553be1d2358ddc11dbe3d519e1fd8bf3d5eaaa22f34b9",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "61df681dc5b3c98580be841d51d44331bab7eacaf0f802e834683b4ff87d1764",
+            "round": 4,
+            "salt": "asteroid-collision-ledger-b-4"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "48f025c11e366d413becf85cdaec49fc7e26c998fa1916cedaaf8127873bc984",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 4,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-asteroid-collision-4r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 4,
+          "type": "state_vote",
+          "world_state_hash": "48f025c11e366d413becf85cdaec49fc7e26c998fa1916cedaaf8127873bc984"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-asteroid-collision-4r",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 4,
+          "type": "state_vote",
+          "world_state_hash": "48f025c11e366d413becf85cdaec49fc7e26c998fa1916cedaaf8127873bc984"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "bb48a78cabc1a1ebd5c531b684020688e481f61808178c951a1d73fb877f3eef",
+            "hp": 20,
+            "position": {
+              "q": 3,
+              "r": 5
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "2fbca30195394537a5e553be1d2358ddc11dbe3d519e1fd8bf3d5eaaa22f34b9",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 5
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-asteroid-collision-4r",
+        "objects": [
+          {
+            "collides": true,
+            "id": "asteroid-impact-1",
+            "opaque": true,
+            "position": {
+              "q": 3,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 4,
+        "seed": "bootstrap-seed-asteroid-collision"
+      },
+      "world_state_hash": "48f025c11e366d413becf85cdaec49fc7e26c998fa1916cedaaf8127873bc984"
+    }
+  ],
+  "ruleset": {
+    "action_costs": {
+      "active_base": 1,
+      "fire_weapon": 4,
+      "thrust_per_unit": 2
+    },
+    "collision": {
+      "stationary_damage": 40
+    },
+    "gravity_mode": "constant_drift",
+    "gravity_vector": {
+      "dq": 0,
+      "dr": 1
+    },
+    "map": {
+      "q_max": 9,
+      "q_min": 0,
+      "r_max": 9,
+      "r_min": 0
+    },
+    "name": "rqp-bootstrap-asteroid-collision",
+    "quorum": "strict-2-of-2",
+    "signatures": "omitted-for-local-replay",
+    "weapon": {
+      "damage": 10,
+      "range": 4
+    }
+  },
+  "visual_notes": {
+    "bottom_direction": "+r",
+    "collision_round": 3,
+    "summary": "agent-a starts above asteroid-impact-1 and drifts into it on round 3, dropping from 60 HP to 20 HP."
+  }
+}

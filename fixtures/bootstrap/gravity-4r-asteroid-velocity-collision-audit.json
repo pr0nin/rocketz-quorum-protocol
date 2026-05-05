@@ -1,0 +1,91 @@
+{
+  "agent_disclosures": [
+    {
+      "agent_id": "agent-a",
+      "commit_salts": [
+        "asteroid-velocity-commit-a-1",
+        "asteroid-velocity-commit-a-2",
+        "asteroid-velocity-commit-a-3",
+        "asteroid-velocity-commit-a-4"
+      ],
+      "final_fuel": 1000,
+      "fuel_burns": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "initial_fuel": 1000,
+      "initial_ledger_salt": "asteroid-velocity-ledger-a-0",
+      "ledger_salts": [
+        "asteroid-velocity-ledger-a-1",
+        "asteroid-velocity-ledger-a-2",
+        "asteroid-velocity-ledger-a-3",
+        "asteroid-velocity-ledger-a-4"
+      ],
+      "loadout": {
+        "ship": "bootstrap-scout",
+        "weapons": []
+      }
+    },
+    {
+      "agent_id": "agent-b",
+      "commit_salts": [
+        "asteroid-velocity-commit-b-1",
+        "asteroid-velocity-commit-b-2",
+        "asteroid-velocity-commit-b-3",
+        "asteroid-velocity-commit-b-4"
+      ],
+      "final_fuel": 1000,
+      "fuel_burns": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "initial_fuel": 1000,
+      "initial_ledger_salt": "asteroid-velocity-ledger-b-0",
+      "ledger_salts": [
+        "asteroid-velocity-ledger-b-1",
+        "asteroid-velocity-ledger-b-2",
+        "asteroid-velocity-ledger-b-3",
+        "asteroid-velocity-ledger-b-4"
+      ],
+      "loadout": {
+        "ship": "bootstrap-scout",
+        "weapons": []
+      }
+    }
+  ],
+  "agent_results": [
+    {
+      "agent_id": "agent-a",
+      "audit": "pass",
+      "final_fuel": 1000,
+      "final_hp": 20,
+      "fuel_burn_total": 0,
+      "initial_fuel": 1000,
+      "violations": []
+    },
+    {
+      "agent_id": "agent-b",
+      "audit": "pass",
+      "final_fuel": 1000,
+      "final_hp": 60,
+      "fuel_burn_total": 0,
+      "initial_fuel": 1000,
+      "violations": []
+    }
+  ],
+  "match_id": "bootstrap-2p-asteroid-velocity-collision-4r",
+  "protocol": "rqp/1.0-draft.1",
+  "quorum_mode": "strict-2-of-2",
+  "result": "pass",
+  "type": "audit_report",
+  "verified_rounds": [
+    1,
+    2,
+    3,
+    4
+  ]
+}

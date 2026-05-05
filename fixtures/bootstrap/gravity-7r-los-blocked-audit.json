@@ -1,0 +1,116 @@
+{
+  "agent_disclosures": [
+    {
+      "agent_id": "agent-a",
+      "commit_salts": [
+        "gravity-los-blocked-commit-a-1",
+        "gravity-los-blocked-commit-a-2",
+        "gravity-los-blocked-commit-a-3",
+        "gravity-los-blocked-commit-a-4",
+        "gravity-los-blocked-commit-a-5",
+        "gravity-los-blocked-commit-a-6",
+        "gravity-los-blocked-commit-a-7"
+      ],
+      "final_fuel": 970,
+      "fuel_burns": [
+        0,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "initial_fuel": 1000,
+      "initial_ledger_salt": "gravity-los-blocked-ledger-a-0",
+      "ledger_salts": [
+        "gravity-los-blocked-ledger-a-1",
+        "gravity-los-blocked-ledger-a-2",
+        "gravity-los-blocked-ledger-a-3",
+        "gravity-los-blocked-ledger-a-4",
+        "gravity-los-blocked-ledger-a-5",
+        "gravity-los-blocked-ledger-a-6",
+        "gravity-los-blocked-ledger-a-7"
+      ],
+      "loadout": {
+        "ship": "bootstrap-scout",
+        "weapons": [
+          "training-laser"
+        ]
+      }
+    },
+    {
+      "agent_id": "agent-b",
+      "commit_salts": [
+        "gravity-los-blocked-commit-b-1",
+        "gravity-los-blocked-commit-b-2",
+        "gravity-los-blocked-commit-b-3",
+        "gravity-los-blocked-commit-b-4",
+        "gravity-los-blocked-commit-b-5",
+        "gravity-los-blocked-commit-b-6",
+        "gravity-los-blocked-commit-b-7"
+      ],
+      "final_fuel": 970,
+      "fuel_burns": [
+        0,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "initial_fuel": 1000,
+      "initial_ledger_salt": "gravity-los-blocked-ledger-b-0",
+      "ledger_salts": [
+        "gravity-los-blocked-ledger-b-1",
+        "gravity-los-blocked-ledger-b-2",
+        "gravity-los-blocked-ledger-b-3",
+        "gravity-los-blocked-ledger-b-4",
+        "gravity-los-blocked-ledger-b-5",
+        "gravity-los-blocked-ledger-b-6",
+        "gravity-los-blocked-ledger-b-7"
+      ],
+      "loadout": {
+        "ship": "bootstrap-scout",
+        "weapons": [
+          "training-laser"
+        ]
+      }
+    }
+  ],
+  "agent_results": [
+    {
+      "agent_id": "agent-a",
+      "audit": "pass",
+      "final_fuel": 970,
+      "final_hp": 10,
+      "fuel_burn_total": 30,
+      "initial_fuel": 1000,
+      "violations": []
+    },
+    {
+      "agent_id": "agent-b",
+      "audit": "pass",
+      "final_fuel": 970,
+      "final_hp": 10,
+      "fuel_burn_total": 30,
+      "initial_fuel": 1000,
+      "violations": []
+    }
+  ],
+  "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+  "protocol": "rqp/1.0-draft.1",
+  "quorum_mode": "strict-2-of-2",
+  "result": "pass",
+  "type": "audit_report",
+  "verified_rounds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ]
+}

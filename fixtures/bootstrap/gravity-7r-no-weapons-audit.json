@@ -1,0 +1,112 @@
+{
+  "agent_disclosures": [
+    {
+      "agent_id": "agent-a",
+      "commit_salts": [
+        "gravity-no-weapons-commit-a-1",
+        "gravity-no-weapons-commit-a-2",
+        "gravity-no-weapons-commit-a-3",
+        "gravity-no-weapons-commit-a-4",
+        "gravity-no-weapons-commit-a-5",
+        "gravity-no-weapons-commit-a-6",
+        "gravity-no-weapons-commit-a-7"
+      ],
+      "final_fuel": 1000,
+      "fuel_burns": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "initial_fuel": 1000,
+      "initial_ledger_salt": "gravity-no-weapons-ledger-a-0",
+      "ledger_salts": [
+        "gravity-no-weapons-ledger-a-1",
+        "gravity-no-weapons-ledger-a-2",
+        "gravity-no-weapons-ledger-a-3",
+        "gravity-no-weapons-ledger-a-4",
+        "gravity-no-weapons-ledger-a-5",
+        "gravity-no-weapons-ledger-a-6",
+        "gravity-no-weapons-ledger-a-7"
+      ],
+      "loadout": {
+        "ship": "bootstrap-scout",
+        "weapons": []
+      }
+    },
+    {
+      "agent_id": "agent-b",
+      "commit_salts": [
+        "gravity-no-weapons-commit-b-1",
+        "gravity-no-weapons-commit-b-2",
+        "gravity-no-weapons-commit-b-3",
+        "gravity-no-weapons-commit-b-4",
+        "gravity-no-weapons-commit-b-5",
+        "gravity-no-weapons-commit-b-6",
+        "gravity-no-weapons-commit-b-7"
+      ],
+      "final_fuel": 1000,
+      "fuel_burns": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "initial_fuel": 1000,
+      "initial_ledger_salt": "gravity-no-weapons-ledger-b-0",
+      "ledger_salts": [
+        "gravity-no-weapons-ledger-b-1",
+        "gravity-no-weapons-ledger-b-2",
+        "gravity-no-weapons-ledger-b-3",
+        "gravity-no-weapons-ledger-b-4",
+        "gravity-no-weapons-ledger-b-5",
+        "gravity-no-weapons-ledger-b-6",
+        "gravity-no-weapons-ledger-b-7"
+      ],
+      "loadout": {
+        "ship": "bootstrap-scout",
+        "weapons": []
+      }
+    }
+  ],
+  "agent_results": [
+    {
+      "agent_id": "agent-a",
+      "audit": "pass",
+      "final_fuel": 1000,
+      "final_hp": 60,
+      "fuel_burn_total": 0,
+      "initial_fuel": 1000,
+      "violations": []
+    },
+    {
+      "agent_id": "agent-b",
+      "audit": "pass",
+      "final_fuel": 1000,
+      "final_hp": 60,
+      "fuel_burn_total": 0,
+      "initial_fuel": 1000,
+      "violations": []
+    }
+  ],
+  "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+  "protocol": "rqp/1.0-draft.1",
+  "quorum_mode": "strict-2-of-2",
+  "result": "pass",
+  "type": "audit_report",
+  "verified_rounds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ]
+}

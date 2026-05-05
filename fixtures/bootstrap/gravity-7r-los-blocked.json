@@ -1,0 +1,1353 @@
+{
+  "canonicalization": {
+    "encoding": "sorted-key-json-v1",
+    "hash": "sha-256"
+  },
+  "description": "Seven-round constant downward gravity fixture with both agents firing line-of-sight weapons and static opaque blockers interrupting one firing round.",
+  "genesis": {
+    "initial_ledger_payloads": [
+      {
+        "agent_id": "agent-a",
+        "expected_hash": "5f065631a5a40350602c174697ca2e72b5aec9e2cba87f389bc3e3073d836275",
+        "payload": {
+          "agent_id": "agent-a",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout",
+            "weapons": [
+              "training-laser"
+            ]
+          },
+          "salt": "gravity-los-blocked-ledger-a-0"
+        }
+      },
+      {
+        "agent_id": "agent-b",
+        "expected_hash": "3adf0dd86348708d8aae39e1e77e67bb760f00e02500a52cc8e1536f633735ba",
+        "payload": {
+          "agent_id": "agent-b",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout",
+            "weapons": [
+              "training-laser"
+            ]
+          },
+          "salt": "gravity-los-blocked-ledger-b-0"
+        }
+      }
+    ],
+    "world_state": {
+      "agents": [
+        {
+          "agent_id": "agent-a",
+          "eliminated": false,
+          "fuel_ledger_hash": "5f065631a5a40350602c174697ca2e72b5aec9e2cba87f389bc3e3073d836275",
+          "hp": 60,
+          "position": {
+            "q": 3,
+            "r": 1
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          },
+          "weapons": [
+            "training-laser"
+          ]
+        },
+        {
+          "agent_id": "agent-b",
+          "eliminated": false,
+          "fuel_ledger_hash": "3adf0dd86348708d8aae39e1e77e67bb760f00e02500a52cc8e1536f633735ba",
+          "hp": 60,
+          "position": {
+            "q": 6,
+            "r": 1
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          },
+          "weapons": [
+            "training-laser"
+          ]
+        }
+      ],
+      "audit_flags": [],
+      "hex_potential": [],
+      "map": {
+        "q_max": 9,
+        "q_min": 0,
+        "r_max": 9,
+        "r_min": 0
+      },
+      "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+      "objects": [
+        {
+          "id": "los-rock-1",
+          "opaque": true,
+          "position": {
+            "q": 4,
+            "r": 4
+          },
+          "type": "asteroid"
+        },
+        {
+          "id": "los-rock-2",
+          "opaque": true,
+          "position": {
+            "q": 5,
+            "r": 4
+          },
+          "type": "asteroid"
+        }
+      ],
+      "protocol": "rqp/1.0-draft.1",
+      "round": 0,
+      "seed": "bootstrap-seed-gravity-los-blocked"
+    },
+    "world_state_hash": "61709ef9f091fe6f5049863ee46ded38f79a76b34a28a4441c130ba14f46b780"
+  },
+  "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+  "protocol": "rqp/1.0-draft.1",
+  "rounds": [
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "7c17cbc8d3781dcf02797c794a66d37e770899a7c7d343dcd8cae76f679df688",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "gravity-los-blocked-commit-a-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "fab68a7bcb94dcac5f754a9a80c8c26a94bef4fb1bd138eddfed81ca803a88b3",
+          "expected_ledger_hash": "7c17cbc8d3781dcf02797c794a66d37e770899a7c7d343dcd8cae76f679df688",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "5f065631a5a40350602c174697ca2e72b5aec9e2cba87f389bc3e3073d836275",
+            "round": 1,
+            "salt": "gravity-los-blocked-ledger-a-1"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "9e9f3a03dba40f2b3d49ede342527419d235c7198644b59d8f3618448d65fa87",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "gravity-los-blocked-commit-b-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "bbc52ddd3f3adc5a3d63a9d2b0b0847e0416084e28ea03955999c77c154fa66c",
+          "expected_ledger_hash": "9e9f3a03dba40f2b3d49ede342527419d235c7198644b59d8f3618448d65fa87",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "3adf0dd86348708d8aae39e1e77e67bb760f00e02500a52cc8e1536f633735ba",
+            "round": 1,
+            "salt": "gravity-los-blocked-ledger-b-1"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "59550ac7804382e6d0b261c10c8ac4ccd7c198bd5bb2812210c6c5f4cbbf46ce",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 1,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "59550ac7804382e6d0b261c10c8ac4ccd7c198bd5bb2812210c6c5f4cbbf46ce"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "59550ac7804382e6d0b261c10c8ac4ccd7c198bd5bb2812210c6c5f4cbbf46ce"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "7c17cbc8d3781dcf02797c794a66d37e770899a7c7d343dcd8cae76f679df688",
+            "hp": 60,
+            "position": {
+              "q": 3,
+              "r": 2
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "9e9f3a03dba40f2b3d49ede342527419d235c7198644b59d8f3618448d65fa87",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 2
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+        "objects": [
+          {
+            "id": "los-rock-1",
+            "opaque": true,
+            "position": {
+              "q": 4,
+              "r": 4
+            },
+            "type": "asteroid"
+          },
+          {
+            "id": "los-rock-2",
+            "opaque": true,
+            "position": {
+              "q": 5,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 1,
+        "seed": "bootstrap-seed-gravity-los-blocked"
+      },
+      "world_state_hash": "59550ac7804382e6d0b261c10c8ac4ccd7c198bd5bb2812210c6c5f4cbbf46ce"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "f45c2c1df4cfb73bdcadba9bebb3fe3038cfbe4802a06235bf3881094f835357",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "gravity-los-blocked-commit-a-2",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "7aef3da4719afbf26d69e2ec217749f419508a2361b53162d7f03d68f799f03c",
+          "expected_ledger_hash": "f45c2c1df4cfb73bdcadba9bebb3fe3038cfbe4802a06235bf3881094f835357",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_remaining": 995,
+            "previous_fuel_ledger_hash": "7c17cbc8d3781dcf02797c794a66d37e770899a7c7d343dcd8cae76f679df688",
+            "round": 2,
+            "salt": "gravity-los-blocked-ledger-a-2"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "1f42964e61c81fe70df5a8e1186f4d2fcb4353b1e439dd35b74b9b102bab5f52",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "gravity-los-blocked-commit-b-2",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "2c0c87de45fab73a07cee02978559c072208fbc6de9c08ef14062ac1b345440a",
+          "expected_ledger_hash": "1f42964e61c81fe70df5a8e1186f4d2fcb4353b1e439dd35b74b9b102bab5f52",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_remaining": 995,
+            "previous_fuel_ledger_hash": "9e9f3a03dba40f2b3d49ede342527419d235c7198644b59d8f3618448d65fa87",
+            "round": 2,
+            "salt": "gravity-los-blocked-ledger-b-2"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "9e4436bdb60fceda4250b12130e6011114142814e986a7029c79c9edbcebe22f",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 2,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "9e4436bdb60fceda4250b12130e6011114142814e986a7029c79c9edbcebe22f"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "9e4436bdb60fceda4250b12130e6011114142814e986a7029c79c9edbcebe22f"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "f45c2c1df4cfb73bdcadba9bebb3fe3038cfbe4802a06235bf3881094f835357",
+            "hp": 50,
+            "position": {
+              "q": 3,
+              "r": 3
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "1f42964e61c81fe70df5a8e1186f4d2fcb4353b1e439dd35b74b9b102bab5f52",
+            "hp": 50,
+            "position": {
+              "q": 6,
+              "r": 3
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+        "objects": [
+          {
+            "id": "los-rock-1",
+            "opaque": true,
+            "position": {
+              "q": 4,
+              "r": 4
+            },
+            "type": "asteroid"
+          },
+          {
+            "id": "los-rock-2",
+            "opaque": true,
+            "position": {
+              "q": 5,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 2,
+        "seed": "bootstrap-seed-gravity-los-blocked"
+      },
+      "world_state_hash": "9e4436bdb60fceda4250b12130e6011114142814e986a7029c79c9edbcebe22f"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "6f3f44e01155a8a13d542305984beb59d7c4bc08e2247cde2819ebfaf8d49675",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "gravity-los-blocked-commit-a-3",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "4c215f684fac8ae4029dcb2e71e8ef90ac5b20589ddf324a3737b3877e417dbd",
+          "expected_ledger_hash": "6f3f44e01155a8a13d542305984beb59d7c4bc08e2247cde2819ebfaf8d49675",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_remaining": 990,
+            "previous_fuel_ledger_hash": "f45c2c1df4cfb73bdcadba9bebb3fe3038cfbe4802a06235bf3881094f835357",
+            "round": 3,
+            "salt": "gravity-los-blocked-ledger-a-3"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "099620abbb84742aa6df6fc0b27c415738e2d666b0c8e7d08b46fe07fb4cc4df",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "gravity-los-blocked-commit-b-3",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "171db8e704d35e21440472b457c01edf9637c8eec87111f380f6ca8c16045093",
+          "expected_ledger_hash": "099620abbb84742aa6df6fc0b27c415738e2d666b0c8e7d08b46fe07fb4cc4df",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_remaining": 990,
+            "previous_fuel_ledger_hash": "1f42964e61c81fe70df5a8e1186f4d2fcb4353b1e439dd35b74b9b102bab5f52",
+            "round": 3,
+            "salt": "gravity-los-blocked-ledger-b-3"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "1fc3d0c33ea6f72ee0e9edfe1ab0643502cc78cec5352a4beff3ba24a3bccf7d",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 3,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "1fc3d0c33ea6f72ee0e9edfe1ab0643502cc78cec5352a4beff3ba24a3bccf7d"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "1fc3d0c33ea6f72ee0e9edfe1ab0643502cc78cec5352a4beff3ba24a3bccf7d"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "6f3f44e01155a8a13d542305984beb59d7c4bc08e2247cde2819ebfaf8d49675",
+            "hp": 50,
+            "position": {
+              "q": 3,
+              "r": 4
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "099620abbb84742aa6df6fc0b27c415738e2d666b0c8e7d08b46fe07fb4cc4df",
+            "hp": 50,
+            "position": {
+              "q": 6,
+              "r": 4
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+        "objects": [
+          {
+            "id": "los-rock-1",
+            "opaque": true,
+            "position": {
+              "q": 4,
+              "r": 4
+            },
+            "type": "asteroid"
+          },
+          {
+            "id": "los-rock-2",
+            "opaque": true,
+            "position": {
+              "q": 5,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 3,
+        "seed": "bootstrap-seed-gravity-los-blocked"
+      },
+      "world_state_hash": "1fc3d0c33ea6f72ee0e9edfe1ab0643502cc78cec5352a4beff3ba24a3bccf7d"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "60fd94ca9de757a8e1579fee4afcf5646d9083f892702bed71b384b1f1a5302a",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 4,
+            "salt": "gravity-los-blocked-commit-a-4",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "5feafb60c132fb2af56c43bd4a5284c480252ffedf6f6daed9337933443aadbf",
+          "expected_ledger_hash": "60fd94ca9de757a8e1579fee4afcf5646d9083f892702bed71b384b1f1a5302a",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_remaining": 985,
+            "previous_fuel_ledger_hash": "6f3f44e01155a8a13d542305984beb59d7c4bc08e2247cde2819ebfaf8d49675",
+            "round": 4,
+            "salt": "gravity-los-blocked-ledger-a-4"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "726d785b5a67c7170641700be3db159b375be5f86a2607f75db1d57d5781147d",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 4,
+            "salt": "gravity-los-blocked-commit-b-4",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "1ddc07c020cdc20a9a0aba6f476112561072bc4f0b9e07741a6b0635787ebcdc",
+          "expected_ledger_hash": "726d785b5a67c7170641700be3db159b375be5f86a2607f75db1d57d5781147d",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_remaining": 985,
+            "previous_fuel_ledger_hash": "099620abbb84742aa6df6fc0b27c415738e2d666b0c8e7d08b46fe07fb4cc4df",
+            "round": 4,
+            "salt": "gravity-los-blocked-ledger-b-4"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "78f8f1af8b47c3b7b0703675df1bfacd82160310cb792832f793c32eb964565e",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 4,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 4,
+          "type": "state_vote",
+          "world_state_hash": "78f8f1af8b47c3b7b0703675df1bfacd82160310cb792832f793c32eb964565e"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 4,
+          "type": "state_vote",
+          "world_state_hash": "78f8f1af8b47c3b7b0703675df1bfacd82160310cb792832f793c32eb964565e"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "60fd94ca9de757a8e1579fee4afcf5646d9083f892702bed71b384b1f1a5302a",
+            "hp": 40,
+            "position": {
+              "q": 3,
+              "r": 5
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "726d785b5a67c7170641700be3db159b375be5f86a2607f75db1d57d5781147d",
+            "hp": 40,
+            "position": {
+              "q": 6,
+              "r": 5
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+        "objects": [
+          {
+            "id": "los-rock-1",
+            "opaque": true,
+            "position": {
+              "q": 4,
+              "r": 4
+            },
+            "type": "asteroid"
+          },
+          {
+            "id": "los-rock-2",
+            "opaque": true,
+            "position": {
+              "q": 5,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 4,
+        "seed": "bootstrap-seed-gravity-los-blocked"
+      },
+      "world_state_hash": "78f8f1af8b47c3b7b0703675df1bfacd82160310cb792832f793c32eb964565e"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "1a1e72b5629a90a637c26b78d671a395fb16d77aa6313432899b1ec366c59ca9",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 5,
+            "salt": "gravity-los-blocked-commit-a-5",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "0c0864c82627375a871c426c42468264a337805d976064dc959e5ef2a14410c2",
+          "expected_ledger_hash": "1a1e72b5629a90a637c26b78d671a395fb16d77aa6313432899b1ec366c59ca9",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_remaining": 980,
+            "previous_fuel_ledger_hash": "60fd94ca9de757a8e1579fee4afcf5646d9083f892702bed71b384b1f1a5302a",
+            "round": 5,
+            "salt": "gravity-los-blocked-ledger-a-5"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "1506eefae843719ada638189700d10f8826b804e9750b8da13bc95f72be6caf2",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 5,
+            "salt": "gravity-los-blocked-commit-b-5",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "033e900734b02fb68e209fa5d31cd7add24b6036d22e856cfa48ae6d8a4aa958",
+          "expected_ledger_hash": "1506eefae843719ada638189700d10f8826b804e9750b8da13bc95f72be6caf2",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_remaining": 980,
+            "previous_fuel_ledger_hash": "726d785b5a67c7170641700be3db159b375be5f86a2607f75db1d57d5781147d",
+            "round": 5,
+            "salt": "gravity-los-blocked-ledger-b-5"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "0235cff3b044fb40a2571810945942645be2998c243ee78b8e2df1d2c11bf15c",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 5,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 5,
+          "type": "state_vote",
+          "world_state_hash": "0235cff3b044fb40a2571810945942645be2998c243ee78b8e2df1d2c11bf15c"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 5,
+          "type": "state_vote",
+          "world_state_hash": "0235cff3b044fb40a2571810945942645be2998c243ee78b8e2df1d2c11bf15c"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "1a1e72b5629a90a637c26b78d671a395fb16d77aa6313432899b1ec366c59ca9",
+            "hp": 30,
+            "position": {
+              "q": 3,
+              "r": 6
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "1506eefae843719ada638189700d10f8826b804e9750b8da13bc95f72be6caf2",
+            "hp": 30,
+            "position": {
+              "q": 6,
+              "r": 6
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+        "objects": [
+          {
+            "id": "los-rock-1",
+            "opaque": true,
+            "position": {
+              "q": 4,
+              "r": 4
+            },
+            "type": "asteroid"
+          },
+          {
+            "id": "los-rock-2",
+            "opaque": true,
+            "position": {
+              "q": 5,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 5,
+        "seed": "bootstrap-seed-gravity-los-blocked"
+      },
+      "world_state_hash": "0235cff3b044fb40a2571810945942645be2998c243ee78b8e2df1d2c11bf15c"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "a6382a8cab47f55da6ea745f95f1bb006afbf92dbeb4ff87a0f2f2dcc76b1003",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 6,
+            "salt": "gravity-los-blocked-commit-a-6",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "26808efd874eafe8bc80df962550fe656f209c19d93cb16e69a1ddfc3521c716",
+          "expected_ledger_hash": "a6382a8cab47f55da6ea745f95f1bb006afbf92dbeb4ff87a0f2f2dcc76b1003",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_remaining": 975,
+            "previous_fuel_ledger_hash": "1a1e72b5629a90a637c26b78d671a395fb16d77aa6313432899b1ec366c59ca9",
+            "round": 6,
+            "salt": "gravity-los-blocked-ledger-a-6"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "78e2844353afc94d3ba478cc1ae40686a9b5b2b74ad6cbe4329b3eac334767d3",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 6,
+            "salt": "gravity-los-blocked-commit-b-6",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "969e5b3b8125832da64a3b70ae7d64919198f222352baaf357f4c6c4bea6aa2f",
+          "expected_ledger_hash": "78e2844353afc94d3ba478cc1ae40686a9b5b2b74ad6cbe4329b3eac334767d3",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_remaining": 975,
+            "previous_fuel_ledger_hash": "1506eefae843719ada638189700d10f8826b804e9750b8da13bc95f72be6caf2",
+            "round": 6,
+            "salt": "gravity-los-blocked-ledger-b-6"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "fae8caa5bf09ef509ab6dd23f1287d5543fa44fabd33566edf7bda1b8e3ca26e",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 6,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 6,
+          "type": "state_vote",
+          "world_state_hash": "fae8caa5bf09ef509ab6dd23f1287d5543fa44fabd33566edf7bda1b8e3ca26e"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 6,
+          "type": "state_vote",
+          "world_state_hash": "fae8caa5bf09ef509ab6dd23f1287d5543fa44fabd33566edf7bda1b8e3ca26e"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "a6382a8cab47f55da6ea745f95f1bb006afbf92dbeb4ff87a0f2f2dcc76b1003",
+            "hp": 20,
+            "position": {
+              "q": 3,
+              "r": 7
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "78e2844353afc94d3ba478cc1ae40686a9b5b2b74ad6cbe4329b3eac334767d3",
+            "hp": 20,
+            "position": {
+              "q": 6,
+              "r": 7
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+        "objects": [
+          {
+            "id": "los-rock-1",
+            "opaque": true,
+            "position": {
+              "q": 4,
+              "r": 4
+            },
+            "type": "asteroid"
+          },
+          {
+            "id": "los-rock-2",
+            "opaque": true,
+            "position": {
+              "q": 5,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 6,
+        "seed": "bootstrap-seed-gravity-los-blocked"
+      },
+      "world_state_hash": "fae8caa5bf09ef509ab6dd23f1287d5543fa44fabd33566edf7bda1b8e3ca26e"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "ca481d106132efc0d22261ed2b407f3506040363e6f455bd897efbb096fde06d",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 7,
+            "salt": "gravity-los-blocked-commit-a-7",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "683c3f83cfa8ce91ae4377d8d7460df7e9d400c743b8586624a2aa5a26762dec",
+          "expected_ledger_hash": "ca481d106132efc0d22261ed2b407f3506040363e6f455bd897efbb096fde06d",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 5,
+            "fuel_remaining": 970,
+            "previous_fuel_ledger_hash": "a6382a8cab47f55da6ea745f95f1bb006afbf92dbeb4ff87a0f2f2dcc76b1003",
+            "round": 7,
+            "salt": "gravity-los-blocked-ledger-a-7"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_ledger_hash": "0b0fbe6f944ae6f815af9d4a2d642f7e1ae4dfc1cefec7c06e9f325fb3db7f61",
+            "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 7,
+            "salt": "gravity-los-blocked-commit-b-7",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "fd17ff67025bc948c6a59996e67af1ed4ce8629b5ba755acd11a332ad78f4b64",
+          "expected_ledger_hash": "0b0fbe6f944ae6f815af9d4a2d642f7e1ae4dfc1cefec7c06e9f325fb3db7f61",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 5,
+            "fuel_remaining": 970,
+            "previous_fuel_ledger_hash": "78e2844353afc94d3ba478cc1ae40686a9b5b2b74ad6cbe4329b3eac334767d3",
+            "round": 7,
+            "salt": "gravity-los-blocked-ledger-b-7"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "e1437d46d3e5b920e6ba938e7273a774a4c263ba1349c04c817b5839868afee7",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 7,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 7,
+          "type": "state_vote",
+          "world_state_hash": "e1437d46d3e5b920e6ba938e7273a774a4c263ba1349c04c817b5839868afee7"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 7,
+          "type": "state_vote",
+          "world_state_hash": "e1437d46d3e5b920e6ba938e7273a774a4c263ba1349c04c817b5839868afee7"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "ca481d106132efc0d22261ed2b407f3506040363e6f455bd897efbb096fde06d",
+            "hp": 10,
+            "position": {
+              "q": 3,
+              "r": 8
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "0b0fbe6f944ae6f815af9d4a2d642f7e1ae4dfc1cefec7c06e9f325fb3db7f61",
+            "hp": 10,
+            "position": {
+              "q": 6,
+              "r": 8
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-los-blocked",
+        "objects": [
+          {
+            "id": "los-rock-1",
+            "opaque": true,
+            "position": {
+              "q": 4,
+              "r": 4
+            },
+            "type": "asteroid"
+          },
+          {
+            "id": "los-rock-2",
+            "opaque": true,
+            "position": {
+              "q": 5,
+              "r": 4
+            },
+            "type": "asteroid"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 7,
+        "seed": "bootstrap-seed-gravity-los-blocked"
+      },
+      "world_state_hash": "e1437d46d3e5b920e6ba938e7273a774a4c263ba1349c04c817b5839868afee7"
+    }
+  ],
+  "ruleset": {
+    "action_costs": {
+      "active_base": 1,
+      "fire_weapon": 4,
+      "thrust_per_unit": 2
+    },
+    "gravity_mode": "constant_drift",
+    "gravity_vector": {
+      "dq": 0,
+      "dr": 1
+    },
+    "map": {
+      "q_max": 9,
+      "q_min": 0,
+      "r_max": 9,
+      "r_min": 0
+    },
+    "name": "rqp-bootstrap-gravity-los-blocked",
+    "quorum": "strict-2-of-2",
+    "signatures": "omitted-for-local-replay",
+    "weapon": {
+      "damage": 10,
+      "range": 4
+    }
+  },
+  "visual_notes": {
+    "blocked_rounds": [
+      3
+    ],
+    "bottom_direction": "+r",
+    "line_of_sight_blockers": [
+      "los-rock-1",
+      "los-rock-2"
+    ],
+    "summary": "Both agents drift downward together. In round 3, they are at r=4 and two opaque asteroids at (4,4) and (5,4) block shots between them."
+  }
+}

@@ -1,0 +1,1091 @@
+{
+  "canonicalization": {
+    "encoding": "sorted-key-json-v1",
+    "hash": "sha-256"
+  },
+  "description": "Seven-round constant downward gravity fixture with no equipped weapons.",
+  "genesis": {
+    "initial_ledger_payloads": [
+      {
+        "agent_id": "agent-a",
+        "expected_hash": "3ee797634de378e8cc455259f1060b1de4e56b82377ecd7b8e352fb8e9ec7740",
+        "payload": {
+          "agent_id": "agent-a",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout",
+            "weapons": []
+          },
+          "salt": "gravity-no-weapons-ledger-a-0"
+        }
+      },
+      {
+        "agent_id": "agent-b",
+        "expected_hash": "dc663bb4a502cd6d6aaee6d9cf8077fd52b3145ca3fea1c919d61c4a16c4f6e4",
+        "payload": {
+          "agent_id": "agent-b",
+          "initial_fuel": 1000,
+          "loadout": {
+            "ship": "bootstrap-scout",
+            "weapons": []
+          },
+          "salt": "gravity-no-weapons-ledger-b-0"
+        }
+      }
+    ],
+    "world_state": {
+      "agents": [
+        {
+          "agent_id": "agent-a",
+          "eliminated": false,
+          "fuel_ledger_hash": "3ee797634de378e8cc455259f1060b1de4e56b82377ecd7b8e352fb8e9ec7740",
+          "hp": 60,
+          "position": {
+            "q": 3,
+            "r": 1
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          },
+          "weapons": []
+        },
+        {
+          "agent_id": "agent-b",
+          "eliminated": false,
+          "fuel_ledger_hash": "dc663bb4a502cd6d6aaee6d9cf8077fd52b3145ca3fea1c919d61c4a16c4f6e4",
+          "hp": 60,
+          "position": {
+            "q": 6,
+            "r": 1
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          },
+          "weapons": []
+        }
+      ],
+      "audit_flags": [],
+      "hex_potential": [],
+      "map": {
+        "q_max": 9,
+        "q_min": 0,
+        "r_max": 9,
+        "r_min": 0
+      },
+      "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+      "protocol": "rqp/1.0-draft.1",
+      "round": 0,
+      "seed": "bootstrap-seed-gravity-no-weapons"
+    },
+    "world_state_hash": "56863fc34a35ba514a02e723a83e7a5028bb1b12d045e7b8568ddb0c97493802"
+  },
+  "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+  "protocol": "rqp/1.0-draft.1",
+  "rounds": [
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "f1149e1e789365b455426914d1cc71933a53a10774ac028be30a27eda000791f",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "gravity-no-weapons-commit-a-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "355755cdc7ec294d09b2a3fae0b11b0c38ab75e22ddb27cb490a8edec8cf9f90",
+          "expected_ledger_hash": "f1149e1e789365b455426914d1cc71933a53a10774ac028be30a27eda000791f",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "3ee797634de378e8cc455259f1060b1de4e56b82377ecd7b8e352fb8e9ec7740",
+            "round": 1,
+            "salt": "gravity-no-weapons-ledger-a-1"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "9f9bd2cd1f579401696cf012d6ec297bb297f0fd0771254529693985fc58e82e",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "gravity-no-weapons-commit-b-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "5051ba19ea02743e4c342282691b3f0a1b802086d020df5c1194414308cdc2a1",
+          "expected_ledger_hash": "9f9bd2cd1f579401696cf012d6ec297bb297f0fd0771254529693985fc58e82e",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "dc663bb4a502cd6d6aaee6d9cf8077fd52b3145ca3fea1c919d61c4a16c4f6e4",
+            "round": 1,
+            "salt": "gravity-no-weapons-ledger-b-1"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "c5c154eac0614b5b3a4b37255ccf730f7c54b5c5c4a15061693022e46e48e4c3",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 1,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "c5c154eac0614b5b3a4b37255ccf730f7c54b5c5c4a15061693022e46e48e4c3"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "c5c154eac0614b5b3a4b37255ccf730f7c54b5c5c4a15061693022e46e48e4c3"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "f1149e1e789365b455426914d1cc71933a53a10774ac028be30a27eda000791f",
+            "hp": 60,
+            "position": {
+              "q": 3,
+              "r": 2
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "9f9bd2cd1f579401696cf012d6ec297bb297f0fd0771254529693985fc58e82e",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 2
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 1,
+        "seed": "bootstrap-seed-gravity-no-weapons"
+      },
+      "world_state_hash": "c5c154eac0614b5b3a4b37255ccf730f7c54b5c5c4a15061693022e46e48e4c3"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "9417beb3a225faa0368d39832382534206860f28fed0c5978bdcb68eb66a0df3",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "gravity-no-weapons-commit-a-2",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "2085ffe41fdad28257c490b57e2f05cad0f0abe8e08fa858058a4ebda82e12c7",
+          "expected_ledger_hash": "9417beb3a225faa0368d39832382534206860f28fed0c5978bdcb68eb66a0df3",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "f1149e1e789365b455426914d1cc71933a53a10774ac028be30a27eda000791f",
+            "round": 2,
+            "salt": "gravity-no-weapons-ledger-a-2"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "e7fc27fe8e6463c8eb535ca151a2b139f4e611f64aaf3ae96d2110f147d02475",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "gravity-no-weapons-commit-b-2",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "358c8a969727216d1f721e64954162501c41f6358d40201dcd7db8ef9ddd2773",
+          "expected_ledger_hash": "e7fc27fe8e6463c8eb535ca151a2b139f4e611f64aaf3ae96d2110f147d02475",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "9f9bd2cd1f579401696cf012d6ec297bb297f0fd0771254529693985fc58e82e",
+            "round": 2,
+            "salt": "gravity-no-weapons-ledger-b-2"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "40a51b5f3f0123708a9394e68927ac5fd001a16ede626e03290d9d66e3c9fa53",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 2,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "40a51b5f3f0123708a9394e68927ac5fd001a16ede626e03290d9d66e3c9fa53"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "40a51b5f3f0123708a9394e68927ac5fd001a16ede626e03290d9d66e3c9fa53"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "9417beb3a225faa0368d39832382534206860f28fed0c5978bdcb68eb66a0df3",
+            "hp": 60,
+            "position": {
+              "q": 3,
+              "r": 3
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "e7fc27fe8e6463c8eb535ca151a2b139f4e611f64aaf3ae96d2110f147d02475",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 3
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 2,
+        "seed": "bootstrap-seed-gravity-no-weapons"
+      },
+      "world_state_hash": "40a51b5f3f0123708a9394e68927ac5fd001a16ede626e03290d9d66e3c9fa53"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "20fe1e66116f4709196acbfdcd5a895d8f0353dc7bae1384544500c05c4996c9",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "gravity-no-weapons-commit-a-3",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "c8b0e01d08f80d97fd58f060f1384a2e3e74e83aa5d2de0113d0791079e25327",
+          "expected_ledger_hash": "20fe1e66116f4709196acbfdcd5a895d8f0353dc7bae1384544500c05c4996c9",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "9417beb3a225faa0368d39832382534206860f28fed0c5978bdcb68eb66a0df3",
+            "round": 3,
+            "salt": "gravity-no-weapons-ledger-a-3"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "b6ae026552f1149d02b43d7eb2fa8635e2f81d273159acdd167488a733367614",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "gravity-no-weapons-commit-b-3",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "3fa4452faec344f9bfd430e61fb490ed123929ef62a5f396edbbd3b671c1f118",
+          "expected_ledger_hash": "b6ae026552f1149d02b43d7eb2fa8635e2f81d273159acdd167488a733367614",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "e7fc27fe8e6463c8eb535ca151a2b139f4e611f64aaf3ae96d2110f147d02475",
+            "round": 3,
+            "salt": "gravity-no-weapons-ledger-b-3"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "738f3be016589cbc08ff00e4adfa15240dc869f67f9821e212ef46229052f306",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 3,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "738f3be016589cbc08ff00e4adfa15240dc869f67f9821e212ef46229052f306"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "738f3be016589cbc08ff00e4adfa15240dc869f67f9821e212ef46229052f306"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "20fe1e66116f4709196acbfdcd5a895d8f0353dc7bae1384544500c05c4996c9",
+            "hp": 60,
+            "position": {
+              "q": 3,
+              "r": 4
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "b6ae026552f1149d02b43d7eb2fa8635e2f81d273159acdd167488a733367614",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 4
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 3,
+        "seed": "bootstrap-seed-gravity-no-weapons"
+      },
+      "world_state_hash": "738f3be016589cbc08ff00e4adfa15240dc869f67f9821e212ef46229052f306"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "4cc94347753fa64569705d685bfe142a69015f8f2a81073c3302c2295c343a55",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 4,
+            "salt": "gravity-no-weapons-commit-a-4",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "cdff9e403d4888e4272f4cfae17128e967735e7514105ac2dd818af24bcfb77e",
+          "expected_ledger_hash": "4cc94347753fa64569705d685bfe142a69015f8f2a81073c3302c2295c343a55",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "20fe1e66116f4709196acbfdcd5a895d8f0353dc7bae1384544500c05c4996c9",
+            "round": 4,
+            "salt": "gravity-no-weapons-ledger-a-4"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "00e6bb3e600381a51762f5939fd3d960308ede2f4bd8591abd28157b55916b8a",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 4,
+            "salt": "gravity-no-weapons-commit-b-4",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "a546101ae86b5eeb727b3439d3e9c422a8f5a05e2999e052e2760944976c8294",
+          "expected_ledger_hash": "00e6bb3e600381a51762f5939fd3d960308ede2f4bd8591abd28157b55916b8a",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "b6ae026552f1149d02b43d7eb2fa8635e2f81d273159acdd167488a733367614",
+            "round": 4,
+            "salt": "gravity-no-weapons-ledger-b-4"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "28ce1cbaa6f4d1f2ca2bd65090f7cf7512766c18bf8f0da4542ff45e5a2c7b0d",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 4,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 4,
+          "type": "state_vote",
+          "world_state_hash": "28ce1cbaa6f4d1f2ca2bd65090f7cf7512766c18bf8f0da4542ff45e5a2c7b0d"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 4,
+          "type": "state_vote",
+          "world_state_hash": "28ce1cbaa6f4d1f2ca2bd65090f7cf7512766c18bf8f0da4542ff45e5a2c7b0d"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "4cc94347753fa64569705d685bfe142a69015f8f2a81073c3302c2295c343a55",
+            "hp": 60,
+            "position": {
+              "q": 3,
+              "r": 5
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "00e6bb3e600381a51762f5939fd3d960308ede2f4bd8591abd28157b55916b8a",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 5
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 4,
+        "seed": "bootstrap-seed-gravity-no-weapons"
+      },
+      "world_state_hash": "28ce1cbaa6f4d1f2ca2bd65090f7cf7512766c18bf8f0da4542ff45e5a2c7b0d"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "a64e0a405497c12216de0ca6dd5f875dd3a0021fbee67ac7e4f7ba689197408c",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 5,
+            "salt": "gravity-no-weapons-commit-a-5",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "ef9bd3ada855b8f6ddc2b655fce35ab6bac426225e7266f6dae49312916c7ec3",
+          "expected_ledger_hash": "a64e0a405497c12216de0ca6dd5f875dd3a0021fbee67ac7e4f7ba689197408c",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "4cc94347753fa64569705d685bfe142a69015f8f2a81073c3302c2295c343a55",
+            "round": 5,
+            "salt": "gravity-no-weapons-ledger-a-5"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "f42cd1ec4c864d94fe041f5370ba65ac160a814a0891b65b54e139080c1debcf",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 5,
+            "salt": "gravity-no-weapons-commit-b-5",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "49861ef8d74175c6f504655ddae3dff0d355503b1d2b4ccfb1110290e10fa340",
+          "expected_ledger_hash": "f42cd1ec4c864d94fe041f5370ba65ac160a814a0891b65b54e139080c1debcf",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "00e6bb3e600381a51762f5939fd3d960308ede2f4bd8591abd28157b55916b8a",
+            "round": 5,
+            "salt": "gravity-no-weapons-ledger-b-5"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "798a891c01c63e225d37d6064834cce89f81c7c2e81e45aa736e89df46c16b23",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 5,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 5,
+          "type": "state_vote",
+          "world_state_hash": "798a891c01c63e225d37d6064834cce89f81c7c2e81e45aa736e89df46c16b23"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 5,
+          "type": "state_vote",
+          "world_state_hash": "798a891c01c63e225d37d6064834cce89f81c7c2e81e45aa736e89df46c16b23"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "a64e0a405497c12216de0ca6dd5f875dd3a0021fbee67ac7e4f7ba689197408c",
+            "hp": 60,
+            "position": {
+              "q": 3,
+              "r": 6
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "f42cd1ec4c864d94fe041f5370ba65ac160a814a0891b65b54e139080c1debcf",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 6
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 5,
+        "seed": "bootstrap-seed-gravity-no-weapons"
+      },
+      "world_state_hash": "798a891c01c63e225d37d6064834cce89f81c7c2e81e45aa736e89df46c16b23"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "cbc3cce4c2890d8c37df6af1701f98d90bc6d5cbcbc27d885c49601470fe8359",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 6,
+            "salt": "gravity-no-weapons-commit-a-6",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "752724d17c3602d3ff860be64a3c0f6cfa49d1e313596a898b01988a7d3bc481",
+          "expected_ledger_hash": "cbc3cce4c2890d8c37df6af1701f98d90bc6d5cbcbc27d885c49601470fe8359",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "a64e0a405497c12216de0ca6dd5f875dd3a0021fbee67ac7e4f7ba689197408c",
+            "round": 6,
+            "salt": "gravity-no-weapons-ledger-a-6"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "b6032170f2e664a599d794fce00c61936936b2547b9dd0b936dbe01f08d77cf2",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 6,
+            "salt": "gravity-no-weapons-commit-b-6",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "356eb066cc7f6635497065f479f155dcc7930a8878524ccc1b3eaf46f8173249",
+          "expected_ledger_hash": "b6032170f2e664a599d794fce00c61936936b2547b9dd0b936dbe01f08d77cf2",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "f42cd1ec4c864d94fe041f5370ba65ac160a814a0891b65b54e139080c1debcf",
+            "round": 6,
+            "salt": "gravity-no-weapons-ledger-b-6"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "c7588e76d3e36c8f9b885459427b2dc51be69f2a7b78218d7889830e0f90fa0f",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 6,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 6,
+          "type": "state_vote",
+          "world_state_hash": "c7588e76d3e36c8f9b885459427b2dc51be69f2a7b78218d7889830e0f90fa0f"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 6,
+          "type": "state_vote",
+          "world_state_hash": "c7588e76d3e36c8f9b885459427b2dc51be69f2a7b78218d7889830e0f90fa0f"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "cbc3cce4c2890d8c37df6af1701f98d90bc6d5cbcbc27d885c49601470fe8359",
+            "hp": 60,
+            "position": {
+              "q": 3,
+              "r": 7
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "b6032170f2e664a599d794fce00c61936936b2547b9dd0b936dbe01f08d77cf2",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 7
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 6,
+        "seed": "bootstrap-seed-gravity-no-weapons"
+      },
+      "world_state_hash": "c7588e76d3e36c8f9b885459427b2dc51be69f2a7b78218d7889830e0f90fa0f"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "8a63c012cb024adc3cd912637ca3475cbca586f7174f1416bc2471c3c1bf4315",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 7,
+            "salt": "gravity-no-weapons-commit-a-7",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "22344bfc3e64b94e38e4de77bbbb8268167e87df21349aba6cda1de4407a1f15",
+          "expected_ledger_hash": "8a63c012cb024adc3cd912637ca3475cbca586f7174f1416bc2471c3c1bf4315",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "cbc3cce4c2890d8c37df6af1701f98d90bc6d5cbcbc27d885c49601470fe8359",
+            "round": 7,
+            "salt": "gravity-no-weapons-ledger-a-7"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "3be8a937a3183a7aec6cd57ccedd6ab616481ced09720c33d394ea1a58781971",
+            "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 7,
+            "salt": "gravity-no-weapons-commit-b-7",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "4d64f7c37ca38bf456df4c3f4806ed27795ff9ec257225a6b255ceda2d2a41c0",
+          "expected_ledger_hash": "3be8a937a3183a7aec6cd57ccedd6ab616481ced09720c33d394ea1a58781971",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 1000,
+            "previous_fuel_ledger_hash": "b6032170f2e664a599d794fce00c61936936b2547b9dd0b936dbe01f08d77cf2",
+            "round": 7,
+            "salt": "gravity-no-weapons-ledger-b-7"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "89d2e97f9f47e6370b565286f5f400d5523ca1e9ee139a919d82bff62a267ab0",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 7,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 7,
+          "type": "state_vote",
+          "world_state_hash": "89d2e97f9f47e6370b565286f5f400d5523ca1e9ee139a919d82bff62a267ab0"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 7,
+          "type": "state_vote",
+          "world_state_hash": "89d2e97f9f47e6370b565286f5f400d5523ca1e9ee139a919d82bff62a267ab0"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "8a63c012cb024adc3cd912637ca3475cbca586f7174f1416bc2471c3c1bf4315",
+            "hp": 60,
+            "position": {
+              "q": 3,
+              "r": 8
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "3be8a937a3183a7aec6cd57ccedd6ab616481ced09720c33d394ea1a58781971",
+            "hp": 60,
+            "position": {
+              "q": 6,
+              "r": 8
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": []
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 9,
+          "q_min": 0,
+          "r_max": 9,
+          "r_min": 0
+        },
+        "match_id": "bootstrap-2p-gravity-7r-no-weapons",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 7,
+        "seed": "bootstrap-seed-gravity-no-weapons"
+      },
+      "world_state_hash": "89d2e97f9f47e6370b565286f5f400d5523ca1e9ee139a919d82bff62a267ab0"
+    }
+  ],
+  "ruleset": {
+    "action_costs": {
+      "active_base": 1,
+      "fire_weapon": 4,
+      "thrust_per_unit": 2
+    },
+    "gravity_mode": "constant_drift",
+    "gravity_vector": {
+      "dq": 0,
+      "dr": 1
+    },
+    "map": {
+      "q_max": 9,
+      "q_min": 0,
+      "r_max": 9,
+      "r_min": 0
+    },
+    "name": "rqp-bootstrap-gravity-no-weapons",
+    "quorum": "strict-2-of-2",
+    "signatures": "omitted-for-local-replay",
+    "weapon": {
+      "damage": 10,
+      "range": 4
+    }
+  },
+  "visual_notes": {
+    "bottom_direction": "+r",
+    "initial_distance": 3,
+    "summary": "Both agents start near the top of a 10 by 10 axial map and drift one +r hex per round."
+  }
+}
