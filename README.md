@@ -66,6 +66,25 @@ The visualizer loads the checked-in bootstrap fixtures, validates each round's w
 
 The visualizer exposes `window.__rqpVisualRules.verifyObjectsContainedInHex()` for browser automation. It returns `{ ok, checked, failures }` and verifies that every rendered ship or map object stays within its assigned hex.
 
+The replay studio also includes round markers, reset-to-genesis, keyboard shortcuts (`←`/`→`, Space/K, R), playback speed, round diffs for position/velocity/HP/fuel, weapon outcome labels, collision annotations, copyable hashes, raw world-state inspection, and audit sidecar display.
+
+## Browser-check the replay studio
+
+Install the Playwright test dependency once, then install Chromium for the browser smoke test:
+
+```sh
+npm ci
+npx playwright install chromium
+```
+
+Run the visualizer browser harness with:
+
+```sh
+npm run test:visualizer
+```
+
+The harness serves the existing static `/visualizer/` URL, loads every bundled fixture, sweeps every round, verifies `Hash OK`, calls `verifyObjectsContainedInHex()`, checks manual stepping/autoplay, and asserts representative phase labels, weapon outcomes, diffs, and debug panels.
+
 ## Repository map
 
 | Path | Purpose | Status |
@@ -77,6 +96,7 @@ The visualizer exposes `window.__rqpVisualRules.verifyObjectsContainedInHex()` f
 | `tools/rqp_bootstrap/` | Reusable canonicalization, fixture loading, schema/profile checking, engine, combat/collision, audit, and runner modules. | Reference engine seed |
 | `tools/rqp_fixture_suite.py` | First-class conformance runner for discovered fixtures, single fixtures, JSON output, and generated negative checks. | Executable baseline |
 | `visualizer/` | Static browser replay viewer for stepping through bootstrap fixtures visually. | Visual verification |
+| `tests/visualizer-smoke.spec.js` | Playwright browser harness for replay-studio invariants across bundled fixtures. | Visual verification |
 | `canonical-test-vectors.md` | Canonical JSON and SHA-256 examples for interoperability checks. | Support spec |
 | `ruleset-default.md` | Early default ruleset profile for physics, costs, ships, weapons, and map generation. | Support profile |
 | `transport-profile-websocket.md` | Practical non-authoritative WebSocket relay profile. | Support profile |
@@ -96,6 +116,8 @@ The bootstrap fixtures intentionally progress from static replay to visual and r
 3. `gravity-7r-*.json` fixtures prove constant-drift visual gravity, weapons, and line-of-sight blocking.
 4. `gravity-4r-asteroid-*.json` fixtures prove flat and velocity-based collision profiles.
 5. `firing-arc-*.json` fixtures prove facing, fixed forward arcs, 360-degree short-range weapons, and pass-by engagement windows.
+6. `playable-default-campaign.json` proves the first playable default profile with asymmetric loadouts, rotation plus thrust, blocked and unblocked weapons, collision aftermath, elimination, and missing reveal fallback.
+7. `playable-quorum-failure.json` proves the minimal strict `2-of-2` quorum failure diagnostic shape.
 
 `fixtures/bootstrap/rfc5-fixture-index.json` maps RFC section 5 simulation headings to executable fixture coverage.
 
@@ -115,4 +137,4 @@ The verifier intentionally fails loudly for unsupported profile combinations. Tr
 
 ## Current limits
 
-RQP is still a draft. The bootstrap suite does not yet define a complete production ruleset, advanced weapon geometry, network dispute mode, tournament economics, zero-knowledge fuel proofs, or a visual client. Those topics are either in support profiles or listed as open questions in `rfc.md`.
+RQP is still a draft. The bootstrap suite now includes a small playable default profile, but it does not yet define production balance, advanced weapon geometry, full network dispute mode, tournament economics, zero-knowledge fuel proofs, or a complete visual client. Those topics are either in support profiles or listed as future-RFC work in `rfc.md`.

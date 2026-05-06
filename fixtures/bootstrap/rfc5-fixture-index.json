@@ -5,34 +5,38 @@
     {
       "fixtures": [
         "inertial-3-rounds.json",
-        "one-action-thrust.json"
+        "one-action-thrust.json",
+        "playable-default-campaign.json"
       ],
       "heading": "5.1 Numeric Model",
-      "notes": "All fixtures use integer-only canonical state, sorted-key JSON, SHA-256, integer fuel burns, integer HP, and integer coordinates. Thrust and weapon fixtures also exercise integer cost formulas."
+      "notes": "All fixtures use integer-only canonical state, sorted-key JSON, SHA-256, integer fuel burns, integer HP, and integer coordinates. Thrust and weapon fixtures also exercise integer cost formulas. The playable campaign adds integer rotation costs, per-weapon fuel costs, fixed weapon damage, collision damage, and missing-reveal fallback accounting."
     },
     {
       "fixtures": [
         "gravity-7r-both-armed.json",
-        "gravity-7r-los-blocked.json"
+        "gravity-7r-los-blocked.json",
+        "playable-default-campaign.json"
       ],
       "heading": "5.2 Coordinate System",
-      "notes": "Both fixtures use axial coordinates and line-of-sight/range checks over a same-r row with distance 3 between agents."
+      "notes": "Both fixtures use axial coordinates and line-of-sight/range checks over a same-r row with distance 3 between agents. The playable campaign adds a same-row lane with blockers, forward arcs, and post-movement range checks."
     },
     {
       "fixtures": [
         "gravity-4r-asteroid-collision.json",
-        "gravity-4r-asteroid-velocity-collision.json"
+        "gravity-4r-asteroid-velocity-collision.json",
+        "playable-default-campaign.json"
       ],
       "heading": "5.3 Map and Condition Profiles",
-      "notes": "Both fixtures include map definitions, explicit objects, constant-drift gravity, and map-level collision/gravity parameter overrides."
+      "notes": "Both fixtures include map definitions, explicit objects, constant-drift gravity, and map-level collision/gravity parameter overrides. The playable campaign uses an explicit-materialized-v1 lane map with provenance seed and materialized blocker/collision objects."
     },
     {
       "fixtures": [
         "gravity-4r-asteroid-collision.json",
-        "gravity-4r-asteroid-velocity-collision.json"
+        "gravity-4r-asteroid-velocity-collision.json",
+        "playable-default-campaign.json"
       ],
       "heading": "5.3.1 Seed-Derived Map Generation",
-      "notes": "Both fixtures use explicit-materialized-v1 map definitions with seeds recorded as generation provenance. This gives deterministic seed/profile metadata while materializing generated objects for early clients."
+      "notes": "Both fixtures use explicit-materialized-v1 map definitions with seeds recorded as generation provenance. This gives deterministic seed/profile metadata while materializing generated objects for early clients. The playable campaign records seed/profile provenance while materializing canonical objects for early-client replay."
     },
     {
       "fixtures": [
@@ -47,28 +51,31 @@
         "gravity-7r-los-blocked.json",
         "gravity-4r-asteroid-collision.json",
         "firing-arc-both-away.json",
-        "firing-arc-pass-by-7r.json"
+        "firing-arc-pass-by-7r.json",
+        "playable-default-campaign.json"
       ],
       "heading": "5.4 Object State",
-      "notes": "The LOS fixture has opaque blocker objects. The asteroid fixture has a colliding stationary object. The firing arc fixtures include ship facing for directional weapons."
+      "notes": "The LOS fixture has opaque blocker objects. The asteroid fixture has a colliding stationary object. The firing arc fixtures include ship facing for directional weapons. The playable campaign adds materialized ship stats, asymmetric loadouts, opaque blockers, collision objects, facing, audit flags, and eliminated state."
     },
     {
       "fixtures": [
         "inertial-3-rounds.json",
         "one-action-thrust.json",
         "gravity-7r-no-weapons.json",
-        "firing-arc-pass-by-7r.json"
+        "firing-arc-pass-by-7r.json",
+        "playable-default-campaign.json"
       ],
       "heading": "5.5 Movement",
-      "notes": "These cover inertial no-motion, active thrust changing velocity/position, constant-drift gravity movement, and a pass-by race with opposing velocities plus corrective thrust."
+      "notes": "These cover inertial no-motion, active thrust changing velocity/position, constant-drift gravity movement, and a pass-by race with opposing velocities plus corrective thrust. The playable campaign covers signed one-step rotation, active thrust, inertial drift, and recovery thrust after impact."
     },
     {
       "fixtures": [
         "gravity-4r-asteroid-collision.json",
-        "gravity-4r-asteroid-velocity-collision.json"
+        "gravity-4r-asteroid-velocity-collision.json",
+        "playable-default-campaign.json"
       ],
       "heading": "5.6 Collision Resolution",
-      "notes": "These cover flat stationary collision damage and velocity-based stationary collision damage."
+      "notes": "These cover flat stationary collision damage and velocity-based stationary collision damage. The playable campaign covers velocity-based collision damage followed by recovery/aftermath."
     },
     {
       "fixtures": [
@@ -77,10 +84,11 @@
         "firing-arc-both-away.json",
         "firing-arc-agent-a-forward.json",
         "firing-arc-both-forward.json",
-        "firing-arc-pass-by-7r.json"
+        "firing-arc-pass-by-7r.json",
+        "playable-default-campaign.json"
       ],
       "heading": "5.7 Bootstrap Line-of-Sight Weapons",
-      "notes": "The both-armed fixture covers unblocked LOS damage. The blocked fixture covers opaque intermediate hexes preventing damage. The firing arc fixtures cover 360-degree out-of-range misses, fixed forward arc hits/misses, and a pass-by sequence where front, side, and rear engagement windows differ."
+      "notes": "The both-armed fixture covers unblocked LOS damage. The blocked fixture covers opaque intermediate hexes preventing damage. The firing arc fixtures cover 360-degree out-of-range misses, fixed forward arc hits/misses, and a pass-by sequence where front, side, and rear engagement windows differ. The playable campaign covers fixed-damage weapon schemas, blocked laser shots, unblocked forward rail shots, simultaneous damage, and elimination."
     }
   ]
 }

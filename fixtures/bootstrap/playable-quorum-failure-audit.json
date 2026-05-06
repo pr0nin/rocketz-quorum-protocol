@@ -1,0 +1,75 @@
+{
+  "agent_disclosures": [
+    {
+      "agent_id": "agent-a",
+      "commit_salts": [
+        "playable-quorum-failure-commit-agent-a-1"
+      ],
+      "final_fuel": 100,
+      "fuel_burns": [
+        0
+      ],
+      "initial_fuel": 100,
+      "initial_ledger_salt": "playable-quorum-ledger-agent-a-0",
+      "ledger_salts": [
+        "playable-quorum-failure-ledger-agent-a-1"
+      ],
+      "loadout": {
+        "ship": "striker-v1"
+      }
+    },
+    {
+      "agent_id": "agent-b",
+      "commit_salts": [
+        "playable-quorum-failure-commit-agent-b-1"
+      ],
+      "final_fuel": 100,
+      "fuel_burns": [
+        0
+      ],
+      "initial_fuel": 100,
+      "initial_ledger_salt": "playable-quorum-ledger-agent-b-0",
+      "ledger_salts": [
+        "playable-quorum-failure-ledger-agent-b-1"
+      ],
+      "loadout": {
+        "ship": "guardian-v1"
+      }
+    }
+  ],
+  "agent_results": [
+    {
+      "agent_id": "agent-a",
+      "audit": "pass",
+      "final_fuel": 100,
+      "final_hp": 100,
+      "fuel_burn_total": 0,
+      "initial_fuel": 100,
+      "violations": []
+    },
+    {
+      "agent_id": "agent-b",
+      "audit": "pass",
+      "final_fuel": 100,
+      "final_hp": 100,
+      "fuel_burn_total": 0,
+      "initial_fuel": 100,
+      "violations": []
+    }
+  ],
+  "dispute_diagnostics": [
+    {
+      "available_votes": 1,
+      "decision": "round_not_locked",
+      "required_votes": 2
+    }
+  ],
+  "match_id": "playable-quorum-failure",
+  "protocol": "rqp/1.0-draft.1",
+  "quorum_mode": "strict-2-of-2",
+  "result": "pass",
+  "type": "audit_report",
+  "verified_rounds": [
+    1
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "rocketz-quorum-protocol",
+  "private": true,
+  "scripts": {
+    "test:visualizer": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1"
+  }
+}

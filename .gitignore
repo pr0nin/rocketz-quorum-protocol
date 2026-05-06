@@ -45,3 +45,7 @@ luac.out
 # Python bytecode
 __pycache__/
 *.py[cod]
+
+# JavaScript dependencies for visualizer browser checks
+node_modules/
+test-results/

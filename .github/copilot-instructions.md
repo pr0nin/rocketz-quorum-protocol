@@ -51,13 +51,20 @@ This repository is a docs-first bootstrap specification and fixture suite for th
   ```
   Then open `http://127.0.0.1:8765/visualizer/`.
   The visualizer exposes `window.__rqpVisualRules.verifyObjectsContainedInHex()` so Playwright can assert all rendered ships/map objects fit inside their current hex.
+- Run the visualizer browser harness:
+  ```sh
+  npm ci
+  npx playwright install chromium
+  npm run test:visualizer
+  ```
+  This serves `/visualizer/`, loads every bundled fixture, sweeps all rounds, verifies `Hash OK`, checks containment, and exercises stepping/autoplay plus representative labels.
 
 ## High-level architecture
 
 - `rfc.md` is the normative RQP 1.0 draft. It defines deterministic integer simulation, axial hex coordinates, map/condition profiles, movement, collision, bootstrap LOS weapons, canonical serialization, quorum, and audit.
 - `fixtures/bootstrap/` is the implementation target. Each non-audit fixture contains genesis data, round inputs, expected ledger/commit/world-state hashes, votes, and quorum locks. Matching `*-audit.json` files disclose salts and final audit expectations. The inertial fixture uniquely pairs with `post-game-audit.json`.
 - `tools/rqp_verify_bootstrap.py` is the backwards-compatible verifier CLI for one fixture/audit pair. Reusable implementation modules live under `tools/rqp_bootstrap/`, and `tools/rqp_fixture_suite.py` discovers fixture/audit pairs, runs the full suite, emits JSON output, and performs generated negative conformance checks.
-- `visualizer/` is a static browser replay viewer. It loads bundled fixtures from `fixtures/bootstrap/`, supports replay JSON/folder uploads, validates each displayed world-state hash in-browser, and supports previous/next/slider/manual stepping plus Play/Pause automatic replay.
+- `visualizer/` is a static browser replay/debug studio. It loads bundled fixtures from `fixtures/bootstrap/`, supports replay JSON/folder uploads with optional audit sidecars, validates each displayed world-state hash in-browser, and supports previous/next/slider/timeline/manual stepping, reset, speed control, keyboard shortcuts, diff/debug panels, and Play/Pause automatic replay.
 - `fixtures/bootstrap/README.md` explains fixture intent and expected hashes. `fixtures/bootstrap/rfc5-fixture-index.json` maps RFC section 5 deterministic simulation headings to executable fixture coverage.
 - `README.md` is the developer entry point. `one-pager.md` is orientation. `canonical-test-vectors.md`, `ruleset-default.md`, `transport-profile-websocket.md`, and `tournament-profile.md` are support profiles/specs. `working.rfc.md`, `rfc-deviations.md`, `chatter.md`, and `Rocketz Quorum Protocol.md` are design rationale/source-history documents, not normative implementation targets.
 
@@ -73,3 +80,4 @@ This repository is a docs-first bootstrap specification and fixture suite for th
 - For velocity-based stationary collisions, speed is based on the actual per-round position delta after action acceleration and gravity/drift, not only stored velocity.
 - Out-of-range or out-of-arc weapon reveals are valid spent actions in bootstrap fixtures; they deal no damage and allow visualizers to show misses.
 - After `py_compile`, remove `tools/__pycache__` before finishing.
+- After Playwright runs, do not commit `test-results/`; it is ignored as a generated test artifact.

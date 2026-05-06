@@ -28,7 +28,11 @@ Files:
 22. `firing-arc-both-forward-audit.json` - post-game disclosure and expected audit result for the both-forward arc fixture.
 23. `firing-arc-pass-by-7r.json` - seven rounds where two ships race past each other, railguns hit from the front, then only 360-degree mazers hit during side/backward pass windows.
 24. `firing-arc-pass-by-7r-audit.json` - post-game disclosure and expected audit result for the pass-by arc fixture.
-25. `rfc5-fixture-index.json` - machine-readable index mapping RFC section 5 headings to executable fixtures.
+25. `playable-default-campaign.json` - five-round playable default-profile campaign with asymmetric loadouts, rotation plus thrust, blocked and unblocked weapons, collision aftermath, elimination, and missing reveal fallback.
+26. `playable-default-campaign-audit.json` - post-game disclosure, missing-reveal diagnostic, and expected audit result for the playable campaign.
+27. `playable-quorum-failure.json` - one-round strict `2-of-2` quorum diagnostic fixture where only one state vote is available, so the tentative state does not lock.
+28. `playable-quorum-failure-audit.json` - post-game disclosure and expected audit/dispute diagnostics for the quorum failure fixture.
+29. `rfc5-fixture-index.json` - machine-readable index mapping RFC section 5 headings to executable fixtures.
 
 ## Fixture Scope
 
@@ -105,6 +109,22 @@ The pass-by firing arc fixture extends this into a 7-round visual sequence:
 6. Round 6 is a behind close pass at distance `2`; fixed railguns still miss and only the 360-degree mazers hit.
 7. Round 7 separates the ships again; no weapon hits.
 
+The playable default campaign fixture is the first coherent mini-match for `rqp-default-playable-v0`:
+
+1. `agent-a` uses a `striker-v1` with `training-laser` and `breach-rail`; `agent-b` uses a `guardian-v1` with `training-laser`.
+2. Round 1 rotates `agent-a` from `(1, -1)` to `(1, 0)` and thrusts down the lane.
+3. Round 2 has both lasers blocked by `screen-asteroid`.
+4. Round 3 records `agent-b` as a missing reveal and applies the inertial fallback while `agent-a` lands an unblocked `breach-rail` shot.
+5. Round 4 moves `agent-a` into `recovery-wreck`, applies velocity-based collision damage, then resolves simultaneous weapon damage; `agent-b` is eliminated.
+6. Round 5 spends recovery thrust to arrest `agent-a`'s velocity after the collision aftermath.
+
+The quorum failure fixture is a diagnostic-only local replay:
+
+1. Both agents submit inertial inputs.
+2. Only `agent-a` publishes a state vote.
+3. Strict `2-of-2` quorum does not lock (`locked = false`, `locked_hash = null`).
+4. `quorum_diagnostics` records `available_votes = 1`, `required_votes = 2`, and `decision = round_not_locked`.
+
 ## Canonicalization
 
 Every expected hash uses `sorted-key-json-v1`:
@@ -150,6 +170,8 @@ python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-both-away.js
 python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-agent-a-forward.json fixtures/bootstrap/firing-arc-agent-a-forward-audit.json
 python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-both-forward.json fixtures/bootstrap/firing-arc-both-forward-audit.json
 python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-pass-by-7r.json fixtures/bootstrap/firing-arc-pass-by-7r-audit.json
+python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/playable-default-campaign.json fixtures/bootstrap/playable-default-campaign-audit.json
+python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/playable-quorum-failure.json fixtures/bootstrap/playable-quorum-failure-audit.json
 ```
 
 1. Load `inertial-3-rounds.json`.
@@ -159,10 +181,10 @@ python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-pass-by-7r.j
    - Canonicalize each `ledger_payload` and verify it equals `expected_ledger_hash`.
    - Verify each `ledger_payload.previous_fuel_ledger_hash` equals the previous ledger hash for that agent.
    - Canonicalize each `commit_payload` and verify it equals `expected_commit_hash`.
-   - Execute the round from the previous locked world state using the fixture ruleset. Inertial fixtures keep positions and HP unchanged; thrust fixtures update velocity/position; gravity fixtures apply constant `+r` drift; weapon fixtures apply line-of-sight damage.
+   - Execute the round from the previous locked world state using the fixture ruleset. Inertial fixtures keep positions and HP unchanged; thrust fixtures update velocity/position; rotation fixtures update facing; gravity fixtures apply constant `+r` drift; weapon fixtures apply line-of-sight damage; playable fixtures can add missing-reveal audit flags.
    - Canonicalize the produced `world_state` and verify it equals `world_state_hash`.
-   - Verify both `state_votes` reference the same `world_state_hash`.
-   - Verify quorum uses `threshold = 2`, `votes_for_hash = 2`, `locked = true`, and `locked_hash = world_state_hash`.
+   - Verify every present `state_vote` references the same `world_state_hash`.
+   - Verify quorum uses `threshold = 2`; locked rounds require both votes and `locked_hash = world_state_hash`, while the quorum failure diagnostic requires too few votes and `locked_hash = null`.
 5. Load `post-game-audit.json`.
 6. Rebuild each agent's initial ledger hash and per-round ledger hashes from the disclosed salts and fuel burns.
 7. Rebuild each round's commit hashes from the disclosed commit salts.
@@ -207,6 +229,13 @@ python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-pass-by-7r.j
 | Both forward | `690563ad1895e0e1c45e2eeb17dc085da20904aa744905143bc04f5b524c26e9` | `f8f8610edc91e2f67048a562bbb097e88bc813fefa10af9138bcb77d6da55c9e` | `agent-a: 40`, `agent-b: 40` |
 | Pass-by race | `df0ebd4d00e7625b44455ab967e3495b5ab758509ecfa64de74edd0a8fecb986` | `b3b178e4b21337e853d9cb748ba616977673cdfec9ff39ab26e99f346c880cf4` | `agent-a: 20`, `agent-b: 20` |
 
+### Playable default profile fixtures
+
+| Fixture | Genesis hash | Final/tentative round hash | Lock result | Final locked HP |
+| --- | --- | --- | --- | --- |
+| Playable campaign | `9287e860a81c6f0215c848255f9b672123b673859dc5120139f2ece4a9d03d3a` | `77428eb8d6bc2ece011138a971e9989d0fa12f66ae7982ab4d1a76c4f67f76ea` | locked round 5 | `agent-a: 35`, `agent-b: 0` |
+| Quorum failure diagnostic | `66665526861997ac254edffe67e1e01d84f7df20ab6b1a010cb0857237c10c4b` | `3be20d019d251188739c08d88ec4459ff94b594eb2692b512abdffe17abfd874` | unlocked round 1 | `agent-a: 100`, `agent-b: 100` |
+
 ## RFC Section 5 Coverage
 
 `rfc5-fixture-index.json` maps every RFC section 5 heading to executable fixtures. Headings with meaningful variation have at least two fixture examples:
@@ -218,7 +247,7 @@ python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/firing-arc-pass-by-7r.j
 | 5.3 Map and Condition Profiles | flat and velocity-based asteroid map definitions |
 | 5.3.1 Seed-Derived Map Generation | two `explicit-materialized-v1` seed/profile map fixtures |
 | 5.3.2 Parameter Overrides | flat and velocity-based collision override fixtures |
-| 5.4 Object State | opaque LOS blocker objects, colliding asteroid objects, and ship facing |
-| 5.5 Movement | inertial, active thrust, and constant-drift gravity fixtures |
-| 5.6 Collision Resolution | flat and velocity-based stationary collision fixtures |
-| 5.7 Bootstrap Line-of-Sight Weapons | unblocked LOS, blocked LOS, out-of-range 360, and fixed forward arc fixtures |
+| 5.4 Object State | opaque LOS blocker objects, colliding asteroid objects, ship facing, and playable ship/loadout state |
+| 5.5 Movement | inertial, active thrust, constant-drift gravity, and playable rotation/recovery thrust fixtures |
+| 5.6 Collision Resolution | flat, velocity-based stationary collision, and playable collision-aftermath fixtures |
+| 5.7 Bootstrap Line-of-Sight Weapons | unblocked LOS, blocked LOS, out-of-range 360, fixed forward arc, and playable fixed-damage weapon fixtures |
