@@ -68,6 +68,10 @@ The visualizer exposes `window.__rqpVisualRules.verifyObjectsContainedInHex()` f
 
 The replay studio also includes round markers, reset-to-genesis, keyboard shortcuts (`←`/`→`, Space/K, R), playback speed, round diffs for position/velocity/HP/fuel, weapon outcome labels, collision annotations, copyable hashes, raw world-state inspection, and audit sidecar display.
 
+![Visualizer — genesis round of the inertial fixture, showing two ships on a hex grid with Hash OK validation](https://github.com/user-attachments/assets/458544a5-87c2-4692-b90c-bd074b25ac0c)
+
+![Visualizer — round 3 of the playable default campaign, showing a breach-rail hit for 35 damage and depleted HP/fuel bars](https://github.com/user-attachments/assets/46e3a706-f831-4367-a4a2-c31d9875164d)
+
 ## Browser-check the replay studio
 
 Install the Playwright test dependency once with Node.js 18 or newer, then install Chromium for the browser smoke test:
@@ -95,7 +99,7 @@ The harness serves the existing static `/visualizer/` URL, loads every bundled f
 | `tools/rqp_verify_bootstrap.py` | Backwards-compatible dependency-free verifier CLI for one fixture/audit pair. | Executable baseline |
 | `tools/rqp_bootstrap/` | Reusable canonicalization, fixture loading, schema/profile checking, engine, combat/collision, audit, and runner modules. | Reference engine seed |
 | `tools/rqp_fixture_suite.py` | First-class conformance runner for discovered fixtures, single fixtures, JSON output, and generated negative checks. | Executable baseline |
-| `visualizer/` | Static browser replay viewer for stepping through bootstrap fixtures visually. | Visual verification |
+| `visualizer/` | Static browser replay viewer for stepping through bootstrap fixtures visually. See `visualizer/README.md`. | Visual verification |
 | `tests/visualizer-smoke.spec.js` | Playwright browser harness for replay-studio invariants across bundled fixtures. | Visual verification |
 | `canonical-test-vectors.md` | Canonical JSON and SHA-256 examples for interoperability checks. | Support spec |
 | `ruleset-default.md` | Early default ruleset profile for physics, costs, ships, weapons, and map generation. | Support profile |
