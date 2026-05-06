@@ -1,0 +1,111 @@
+{
+  "agent_disclosures": [
+    {
+      "agent_id": "agent-a",
+      "commit_salts": [
+        "playable-default-campaign-commit-agent-a-1",
+        "playable-default-campaign-commit-agent-a-2",
+        "playable-default-campaign-commit-agent-a-3",
+        "playable-default-campaign-commit-agent-a-4",
+        "playable-default-campaign-commit-agent-a-5"
+      ],
+      "final_fuel": 68,
+      "fuel_burns": [
+        4,
+        4,
+        9,
+        12,
+        3
+      ],
+      "initial_fuel": 100,
+      "initial_ledger_salt": "playable-campaign-ledger-agent-a-0",
+      "ledger_salts": [
+        "playable-default-campaign-ledger-agent-a-1",
+        "playable-default-campaign-ledger-agent-a-2",
+        "playable-default-campaign-ledger-agent-a-3",
+        "playable-default-campaign-ledger-agent-a-4",
+        "playable-default-campaign-ledger-agent-a-5"
+      ],
+      "loadout": {
+        "ship": "striker-v1",
+        "weapons": [
+          "training-laser",
+          "breach-rail"
+        ]
+      }
+    },
+    {
+      "agent_id": "agent-b",
+      "commit_salts": [
+        "playable-default-campaign-commit-agent-b-1",
+        "playable-default-campaign-commit-agent-b-2",
+        "playable-default-campaign-commit-agent-b-3",
+        "playable-default-campaign-commit-agent-b-4",
+        "playable-default-campaign-commit-agent-b-5"
+      ],
+      "final_fuel": 92,
+      "fuel_burns": [
+        0,
+        4,
+        0,
+        4,
+        0
+      ],
+      "initial_fuel": 100,
+      "initial_ledger_salt": "playable-campaign-ledger-agent-b-0",
+      "ledger_salts": [
+        "playable-default-campaign-ledger-agent-b-1",
+        "playable-default-campaign-ledger-agent-b-2",
+        "playable-default-campaign-ledger-agent-b-3",
+        "playable-default-campaign-ledger-agent-b-4",
+        "playable-default-campaign-ledger-agent-b-5"
+      ],
+      "loadout": {
+        "ship": "guardian-v1",
+        "weapons": [
+          "training-laser"
+        ]
+      }
+    }
+  ],
+  "agent_results": [
+    {
+      "agent_id": "agent-a",
+      "audit": "pass",
+      "final_fuel": 68,
+      "final_hp": 35,
+      "fuel_burn_total": 32,
+      "initial_fuel": 100,
+      "violations": []
+    },
+    {
+      "agent_id": "agent-b",
+      "audit": "pass",
+      "final_fuel": 92,
+      "final_hp": 0,
+      "fuel_burn_total": 8,
+      "initial_fuel": 100,
+      "violations": []
+    }
+  ],
+  "diagnostics": [
+    {
+      "agent_id": "agent-b",
+      "fallback": "inertial",
+      "round": 3,
+      "type": "missing_reveal"
+    }
+  ],
+  "match_id": "playable-default-campaign",
+  "protocol": "rqp/1.0-draft.1",
+  "quorum_mode": "strict-2-of-2",
+  "result": "pass",
+  "type": "audit_report",
+  "verified_rounds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}

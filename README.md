@@ -93,6 +93,8 @@ The bootstrap fixtures intentionally progress from static replay to visual and r
 3. `gravity-7r-*.json` fixtures prove constant-drift visual gravity, weapons, and line-of-sight blocking.
 4. `gravity-4r-asteroid-*.json` fixtures prove flat and velocity-based collision profiles.
 5. `firing-arc-*.json` fixtures prove facing, fixed forward arcs, 360-degree short-range weapons, and pass-by engagement windows.
+6. `playable-default-campaign.json` proves the first playable default profile with asymmetric loadouts, rotation plus thrust, blocked and unblocked weapons, collision aftermath, elimination, and missing reveal fallback.
+7. `playable-quorum-failure.json` proves the minimal strict `2-of-2` quorum failure diagnostic shape.
 
 `fixtures/bootstrap/rfc5-fixture-index.json` maps RFC section 5 simulation headings to executable fixture coverage.
 
@@ -112,4 +114,4 @@ The verifier intentionally fails loudly for unsupported profile combinations. Tr
 
 ## Current limits
 
-RQP is still a draft. The bootstrap suite does not yet define a complete production ruleset, advanced weapon geometry, network dispute mode, tournament economics, zero-knowledge fuel proofs, or a visual client. Those topics are either in support profiles or listed as open questions in `rfc.md`.
+RQP is still a draft. The bootstrap suite now includes a small playable default profile, but it does not yet define production balance, advanced weapon geometry, full network dispute mode, tournament economics, zero-knowledge fuel proofs, or a complete visual client. Those topics are either in support profiles or listed as future-RFC work in `rfc.md`.

@@ -1,0 +1,216 @@
+{
+  "canonicalization": {
+    "encoding": "sorted-key-json-v1",
+    "hash": "sha-256"
+  },
+  "description": "One-round quorum diagnostic fixture where only one of two state votes is available, so strict quorum does not lock the tentative state.",
+  "genesis": {
+    "initial_ledger_payloads": [
+      {
+        "agent_id": "agent-a",
+        "expected_hash": "5245a074fbc3a2d2d59023776547abeaff58dc42a51a0e01577fd6e1fbf2c418",
+        "payload": {
+          "agent_id": "agent-a",
+          "initial_fuel": 100,
+          "loadout": {
+            "ship": "striker-v1"
+          },
+          "salt": "playable-quorum-ledger-agent-a-0"
+        }
+      },
+      {
+        "agent_id": "agent-b",
+        "expected_hash": "3cea9c30528880c9edc08d2140d5600c0055b48c55bd744bc545547310b35d4c",
+        "payload": {
+          "agent_id": "agent-b",
+          "initial_fuel": 100,
+          "loadout": {
+            "ship": "guardian-v1"
+          },
+          "salt": "playable-quorum-ledger-agent-b-0"
+        }
+      }
+    ],
+    "world_state": {
+      "agents": [
+        {
+          "agent_id": "agent-a",
+          "eliminated": false,
+          "fuel_ledger_hash": "5245a074fbc3a2d2d59023776547abeaff58dc42a51a0e01577fd6e1fbf2c418",
+          "hp": 100,
+          "position": {
+            "q": 0,
+            "r": 0
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "eliminated": false,
+          "fuel_ledger_hash": "3cea9c30528880c9edc08d2140d5600c0055b48c55bd744bc545547310b35d4c",
+          "hp": 100,
+          "position": {
+            "q": 1,
+            "r": 0
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          }
+        }
+      ],
+      "audit_flags": [],
+      "hex_potential": [],
+      "match_id": "playable-quorum-failure",
+      "protocol": "rqp/1.0-draft.1",
+      "round": 0,
+      "seed": "seed-playable-quorum-failure"
+    },
+    "world_state_hash": "66665526861997ac254edffe67e1e01d84f7df20ab6b1a010cb0857237c10c4b"
+  },
+  "match_id": "playable-quorum-failure",
+  "protocol": "rqp/1.0-draft.1",
+  "rounds": [
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "c63cc27eac298e6114f49f75239fdb3129262b59f791cef0116f2c04da755f33",
+            "match_id": "playable-quorum-failure",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "playable-quorum-failure-commit-agent-a-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "7dd43659674dd80ffe41e1f50ca3b4e7200ad4c3f4b6e98781451af59845833f",
+          "expected_ledger_hash": "c63cc27eac298e6114f49f75239fdb3129262b59f791cef0116f2c04da755f33",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 0,
+            "fuel_remaining": 100,
+            "previous_fuel_ledger_hash": "5245a074fbc3a2d2d59023776547abeaff58dc42a51a0e01577fd6e1fbf2c418",
+            "round": 1,
+            "salt": "playable-quorum-failure-ledger-agent-a-1"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "ec04b507e647297080604e693e38d7d97bb93ce5571a4abd158890d2be20e479",
+            "match_id": "playable-quorum-failure",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "playable-quorum-failure-commit-agent-b-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "c46ef8fd929748975938005165e9c5f23093b487a1d75c2275c7aa2043c3be13",
+          "expected_ledger_hash": "ec04b507e647297080604e693e38d7d97bb93ce5571a4abd158890d2be20e479",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 100,
+            "previous_fuel_ledger_hash": "3cea9c30528880c9edc08d2140d5600c0055b48c55bd744bc545547310b35d4c",
+            "round": 1,
+            "salt": "playable-quorum-failure-ledger-agent-b-1"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": false,
+        "locked_hash": null,
+        "threshold": 2,
+        "votes_for_hash": 1
+      },
+      "quorum_diagnostics": {
+        "available_votes": 1,
+        "decision": "round_not_locked",
+        "required_votes": 2
+      },
+      "round": 1,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "playable-quorum-failure",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "3be20d019d251188739c08d88ec4459ff94b594eb2692b512abdffe17abfd874"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "fuel_ledger_hash": "c63cc27eac298e6114f49f75239fdb3129262b59f791cef0116f2c04da755f33",
+            "hp": 100,
+            "position": {
+              "q": 0,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            }
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "fuel_ledger_hash": "ec04b507e647297080604e693e38d7d97bb93ce5571a4abd158890d2be20e479",
+            "hp": 100,
+            "position": {
+              "q": 1,
+              "r": 0
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            }
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "match_id": "playable-quorum-failure",
+        "protocol": "rqp/1.0-draft.1",
+        "round": 1,
+        "seed": "seed-playable-quorum-failure"
+      },
+      "world_state_hash": "3be20d019d251188739c08d88ec4459ff94b594eb2692b512abdffe17abfd874"
+    }
+  ],
+  "ruleset": {
+    "action_costs": {
+      "active_base": 1,
+      "thrust_per_unit": 2
+    },
+    "gravity_mode": "none",
+    "name": "rqp-default-playable-v0-quorum-diagnostic",
+    "quorum": "strict-2-of-2",
+    "signatures": "omitted-for-local-replay"
+  }
+}
