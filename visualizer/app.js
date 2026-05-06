@@ -48,7 +48,6 @@ let fixtures = [];
 let selectedFixture = null;
 let currentRoundIndex = 0;
 let playTimer = null;
-let loadedAudits = new Map();
 
 const elements = {
   fixtureSelect: document.querySelector("#fixtureSelect"),
@@ -150,7 +149,6 @@ async function loadBundledFixtures() {
       console.warn(`Could not load ${name}:`, error);
     }
   }
-  loadedAudits = new Map([...loadedAudits, ...audits]);
   fixtures = [...fixtures.filter((fixture) => fixture.source === "upload"), ...loaded];
   renderFixtureOptions();
   selectFixture(fixtures[0] ?? null);

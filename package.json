@@ -1,4 +1,6 @@
 {
+  "name": "rocketz-quorum-protocol",
+  "private": true,
   "scripts": {
     "test:visualizer": "playwright test"
   },
