@@ -42,6 +42,10 @@ luac.out
 # Playwright CLI session artifacts
 .playwright-cli/
 
+# Python bytecode
+__pycache__/
+*.py[cod]
+
 # JavaScript dependencies for visualizer browser checks
 node_modules/
 test-results/

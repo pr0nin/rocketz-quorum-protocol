@@ -22,29 +22,30 @@ PASS: RQP bootstrap fixture verified
 
 That default command verifies `fixtures/bootstrap/inertial-3-rounds.json` against `fixtures/bootstrap/post-game-audit.json`.
 
-## Verify every bootstrap fixture
+## Run the bootstrap conformance suite
 
-Run the full checked-in fixture suite with:
+Run the full checked-in fixture suite and generated negative conformance checks with:
 
 ```sh
-for fixture in fixtures/bootstrap/*.json; do
-  case "$fixture" in
-    *-audit.json|*/post-game-audit.json|*/rfc5-fixture-index.json) continue ;;
-  esac
-
-  audit="${fixture%.json}-audit.json"
-  if [ "$fixture" = "fixtures/bootstrap/inertial-3-rounds.json" ]; then
-    audit="fixtures/bootstrap/post-game-audit.json"
-  fi
-
-  python3 tools/rqp_verify_bootstrap.py "$fixture" "$audit"
-done
+python3 tools/rqp_fixture_suite.py
 ```
 
-Every fixture/audit pair should print:
+Expected summary:
 
 ```text
-PASS: RQP bootstrap fixture verified
+SUMMARY fixtures=12/12 negative=6/6 skipped=0 failed=0
+```
+
+Run a single fixture through the suite runner with:
+
+```sh
+python3 tools/rqp_fixture_suite.py fixtures/bootstrap/one-action-thrust.json
+```
+
+Emit machine-readable output with:
+
+```sh
+python3 tools/rqp_fixture_suite.py --json
 ```
 
 ## View fixture replays in a browser
@@ -91,7 +92,9 @@ The harness serves the existing static `/visualizer/` URL, loads every bundled f
 | `rfc.md` | Normative RQP 1.0 draft: deterministic simulation, canonicalization, quorum, audit, bootstrap requirements. | Primary spec |
 | `fixtures/bootstrap/` | Machine-readable conformance fixtures and post-game audit disclosures. | Primary implementation target |
 | `fixtures/bootstrap/README.md` | Fixture-by-fixture guide, expected hashes, and verifier commands. | Primary fixture documentation |
-| `tools/rqp_verify_bootstrap.py` | Dependency-free Python reference verifier/engine harness. | Executable baseline |
+| `tools/rqp_verify_bootstrap.py` | Backwards-compatible dependency-free verifier CLI for one fixture/audit pair. | Executable baseline |
+| `tools/rqp_bootstrap/` | Reusable canonicalization, fixture loading, schema/profile checking, engine, combat/collision, audit, and runner modules. | Reference engine seed |
+| `tools/rqp_fixture_suite.py` | First-class conformance runner for discovered fixtures, single fixtures, JSON output, and generated negative checks. | Executable baseline |
 | `visualizer/` | Static browser replay viewer for stepping through bootstrap fixtures visually. | Visual verification |
 | `tests/visualizer-smoke.spec.js` | Playwright browser harness for replay-studio invariants across bundled fixtures. | Visual verification |
 | `canonical-test-vectors.md` | Canonical JSON and SHA-256 examples for interoperability checks. | Support spec |
