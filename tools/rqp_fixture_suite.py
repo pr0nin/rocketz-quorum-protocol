@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Verify RQP bootstrap replay fixtures."""
+"""Run the RQP bootstrap fixture conformance suite."""
 
 from __future__ import annotations
 
-from rqp_bootstrap.cli import main
+from rqp_bootstrap.suite import main
 
 
 if __name__ == "__main__":

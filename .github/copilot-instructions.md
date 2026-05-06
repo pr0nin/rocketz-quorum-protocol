@@ -12,25 +12,22 @@ This repository is a docs-first bootstrap specification and fixture suite for th
   ```sh
   python3 tools/rqp_verify_bootstrap.py fixtures/bootstrap/one-action-thrust.json fixtures/bootstrap/one-action-thrust-audit.json
   ```
-- Run the full checked-in fixture suite:
+- Run the full checked-in fixture suite and generated negative conformance checks:
   ```sh
-  for fixture in fixtures/bootstrap/*.json; do
-    case "$fixture" in
-      *-audit.json|*/post-game-audit.json|*/rfc5-fixture-index.json) continue ;;
-    esac
-
-    audit="${fixture%.json}-audit.json"
-    if [ "$fixture" = "fixtures/bootstrap/inertial-3-rounds.json" ]; then
-      audit="fixtures/bootstrap/post-game-audit.json"
-    fi
-
-    python3 tools/rqp_verify_bootstrap.py "$fixture" "$audit"
-  done
+  python3 tools/rqp_fixture_suite.py
+  ```
+- Run the fixture suite for a single fixture:
+  ```sh
+  python3 tools/rqp_fixture_suite.py fixtures/bootstrap/one-action-thrust.json
+  ```
+- Emit machine-readable fixture-suite output:
+  ```sh
+  python3 tools/rqp_fixture_suite.py --json
   ```
 - Syntax/format checks used in this repo:
   ```sh
-  python3 -m py_compile tools/rqp_verify_bootstrap.py
-  rm -rf tools/__pycache__
+  python3 -m py_compile tools/rqp_verify_bootstrap.py tools/rqp_fixture_suite.py tools/rqp_bootstrap/*.py
+  rm -rf tools/__pycache__ tools/rqp_bootstrap/__pycache__
   for f in fixtures/bootstrap/*.json; do python3 -m json.tool "$f" >/dev/null; done
   git --no-pager diff --check
   ```
@@ -59,7 +56,7 @@ This repository is a docs-first bootstrap specification and fixture suite for th
 
 - `rfc.md` is the normative RQP 1.0 draft. It defines deterministic integer simulation, axial hex coordinates, map/condition profiles, movement, collision, bootstrap LOS weapons, canonical serialization, quorum, and audit.
 - `fixtures/bootstrap/` is the implementation target. Each non-audit fixture contains genesis data, round inputs, expected ledger/commit/world-state hashes, votes, and quorum locks. Matching `*-audit.json` files disclose salts and final audit expectations. The inertial fixture uniquely pairs with `post-game-audit.json`.
-- `tools/rqp_verify_bootstrap.py` is the reference verifier/engine harness. It loads a fixture/audit pair, enforces the supported bootstrap profile, verifies genesis hashes, replays fuel-ledger and commit hashes, simulates each round, validates strict 2-of-2 quorum, and replays the post-game audit.
+- `tools/rqp_verify_bootstrap.py` is the backwards-compatible verifier CLI for one fixture/audit pair. Reusable implementation modules live under `tools/rqp_bootstrap/`, and `tools/rqp_fixture_suite.py` discovers fixture/audit pairs, runs the full suite, emits JSON output, and performs generated negative conformance checks.
 - `visualizer/` is a static browser replay viewer. It loads bundled fixtures from `fixtures/bootstrap/`, supports replay JSON/folder uploads, validates each displayed world-state hash in-browser, and supports previous/next/slider/manual stepping plus Play/Pause automatic replay.
 - `fixtures/bootstrap/README.md` explains fixture intent and expected hashes. `fixtures/bootstrap/rfc5-fixture-index.json` maps RFC section 5 deterministic simulation headings to executable fixture coverage.
 - `README.md` is the developer entry point. `one-pager.md` is orientation. `canonical-test-vectors.md`, `ruleset-default.md`, `transport-profile-websocket.md`, and `tournament-profile.md` are support profiles/specs. `working.rfc.md`, `rfc-deviations.md`, `chatter.md`, and `Rocketz Quorum Protocol.md` are design rationale/source-history documents, not normative implementation targets.
