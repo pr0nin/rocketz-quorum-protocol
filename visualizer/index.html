@@ -37,9 +37,22 @@
           <button id="playButton" type="button">Play</button>
           <button id="nextButton" type="button">Next</button>
         </div>
+        <div class="transport">
+          <button id="resetButton" type="button">Reset to genesis</button>
+          <label class="speed-control" for="speedSelect">Speed
+            <select id="speedSelect">
+              <option value="0.5">0.5x</option>
+              <option value="1" selected>1x</option>
+              <option value="2">2x</option>
+              <option value="4">4x</option>
+            </select>
+          </label>
+        </div>
 
         <label for="roundSlider">Round</label>
         <input id="roundSlider" type="range" min="0" max="0" value="0">
+        <div id="timeline" class="timeline" aria-label="Round timeline"></div>
+        <p class="keyboard-hint">Shortcuts: ←/→ step, Space or K play/pause, R reset.</p>
 
         <div class="status-grid">
           <div>
@@ -59,6 +72,8 @@
             <strong id="quorumLabel">-</strong>
           </div>
         </div>
+        <button id="copyHashButton" type="button">Copy current hash</button>
+        <p id="hashDetails" class="hash-details">Expected and actual hashes appear here.</p>
 
         <p id="phaseNote" class="phase-note">Choose a fixture to begin.</p>
       </section>
@@ -74,6 +89,19 @@
         <h2>Weapon declarations</h2>
         <div id="weaponList" class="weapon-list"></div>
 
+        <h2>Round diff</h2>
+        <div id="diffList" class="diff-list"></div>
+
+        <details>
+          <summary>Audit sidecar</summary>
+          <pre id="auditDetails"></pre>
+        </details>
+
+        <details>
+          <summary>Raw current world state</summary>
+          <pre id="rawState"></pre>
+        </details>
+
         <h2>Legend</h2>
         <ul class="legend">
           <li><span class="legend-swatch ship-a"></span> agent-a ship</li>
@@ -83,7 +111,8 @@
           <li><span class="legend-swatch engine"></span> orange exhaust = back</li>
           <li><span class="legend-line railgun"></span> fixed railgun hit window</li>
           <li><span class="legend-line mazer"></span> 360-degree mazer hit window</li>
-          <li><span class="legend-line miss"></span> declared miss/out of arc</li>
+          <li><span class="legend-line miss"></span> declared miss/out of range/arc</li>
+          <li><span class="legend-line blocked"></span> blocked line of sight</li>
           <li><span class="legend-swatch asteroid"></span> opaque/colliding object</li>
         </ul>
       </aside>

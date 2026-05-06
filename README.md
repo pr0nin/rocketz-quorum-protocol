@@ -65,6 +65,25 @@ The visualizer loads the checked-in bootstrap fixtures, validates each round's w
 
 The visualizer exposes `window.__rqpVisualRules.verifyObjectsContainedInHex()` for browser automation. It returns `{ ok, checked, failures }` and verifies that every rendered ship or map object stays within its assigned hex.
 
+The replay studio also includes round markers, reset-to-genesis, keyboard shortcuts (`←`/`→`, Space/K, R), playback speed, round diffs for position/velocity/HP/fuel, weapon outcome labels, collision annotations, copyable hashes, raw world-state inspection, and audit sidecar display.
+
+## Browser-check the replay studio
+
+Install the Playwright test dependency once, then install Chromium for the browser smoke test:
+
+```sh
+npm ci
+npx playwright install chromium
+```
+
+Run the visualizer browser harness with:
+
+```sh
+npm run test:visualizer
+```
+
+The harness serves the existing static `/visualizer/` URL, loads every bundled fixture, sweeps every round, verifies `Hash OK`, calls `verifyObjectsContainedInHex()`, checks manual stepping/autoplay, and asserts representative phase labels, weapon outcomes, diffs, and debug panels.
+
 ## Repository map
 
 | Path | Purpose | Status |
@@ -74,6 +93,7 @@ The visualizer exposes `window.__rqpVisualRules.verifyObjectsContainedInHex()` f
 | `fixtures/bootstrap/README.md` | Fixture-by-fixture guide, expected hashes, and verifier commands. | Primary fixture documentation |
 | `tools/rqp_verify_bootstrap.py` | Dependency-free Python reference verifier/engine harness. | Executable baseline |
 | `visualizer/` | Static browser replay viewer for stepping through bootstrap fixtures visually. | Visual verification |
+| `tests/visualizer-smoke.spec.js` | Playwright browser harness for replay-studio invariants across bundled fixtures. | Visual verification |
 | `canonical-test-vectors.md` | Canonical JSON and SHA-256 examples for interoperability checks. | Support spec |
 | `ruleset-default.md` | Early default ruleset profile for physics, costs, ships, weapons, and map generation. | Support profile |
 | `transport-profile-websocket.md` | Practical non-authoritative WebSocket relay profile. | Support profile |
