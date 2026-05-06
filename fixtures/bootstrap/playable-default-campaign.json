@@ -1,0 +1,1243 @@
+{
+  "canonicalization": {
+    "encoding": "sorted-key-json-v1",
+    "hash": "sha-256"
+  },
+  "description": "Five-round playable default-profile campaign covering asymmetric loadouts, rotation, thrust, blocked and unblocked weapons, collision aftermath, elimination, and missing reveal fallback.",
+  "genesis": {
+    "initial_ledger_payloads": [
+      {
+        "agent_id": "agent-a",
+        "expected_hash": "df51ffaf785479fe8494593f0f676d843e60ad269451866adfdf8c627bf011d0",
+        "payload": {
+          "agent_id": "agent-a",
+          "initial_fuel": 100,
+          "loadout": {
+            "ship": "striker-v1",
+            "weapons": [
+              "training-laser",
+              "breach-rail"
+            ]
+          },
+          "salt": "playable-campaign-ledger-agent-a-0"
+        }
+      },
+      {
+        "agent_id": "agent-b",
+        "expected_hash": "95d5a18ce44888fafd44f3922d0f8bfcf72f62449c141c1924f81a77b0548447",
+        "payload": {
+          "agent_id": "agent-b",
+          "initial_fuel": 100,
+          "loadout": {
+            "ship": "guardian-v1",
+            "weapons": [
+              "training-laser"
+            ]
+          },
+          "salt": "playable-campaign-ledger-agent-b-0"
+        }
+      }
+    ],
+    "world_state": {
+      "agents": [
+        {
+          "agent_id": "agent-a",
+          "eliminated": false,
+          "facing": {
+            "dq": 1,
+            "dr": -1
+          },
+          "fuel_ledger_hash": "df51ffaf785479fe8494593f0f676d843e60ad269451866adfdf8c627bf011d0",
+          "hp": 70,
+          "position": {
+            "q": 0,
+            "r": 0
+          },
+          "ship": {
+            "mass": 10,
+            "max_rotation": 1,
+            "max_thrust": 2,
+            "profile": "striker-v1"
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          },
+          "weapons": [
+            "training-laser",
+            "breach-rail"
+          ]
+        },
+        {
+          "agent_id": "agent-b",
+          "eliminated": false,
+          "facing": {
+            "dq": -1,
+            "dr": 0
+          },
+          "fuel_ledger_hash": "95d5a18ce44888fafd44f3922d0f8bfcf72f62449c141c1924f81a77b0548447",
+          "hp": 80,
+          "position": {
+            "q": 5,
+            "r": 0
+          },
+          "ship": {
+            "mass": 14,
+            "max_rotation": 1,
+            "max_thrust": 1,
+            "profile": "guardian-v1"
+          },
+          "velocity": {
+            "dq": 0,
+            "dr": 0
+          },
+          "weapons": [
+            "training-laser"
+          ]
+        }
+      ],
+      "audit_flags": [],
+      "hex_potential": [],
+      "map": {
+        "q_max": 6,
+        "q_min": 0,
+        "r_max": 2,
+        "r_min": -2
+      },
+      "map_definition": {
+        "bounds": {
+          "q_max": 6,
+          "q_min": 0,
+          "r_max": 2,
+          "r_min": -2
+        },
+        "generation_profile": "explicit-materialized-v1",
+        "map_id": "playable-lane-materialized-001",
+        "objects": [
+          "screen-asteroid",
+          "recovery-wreck"
+        ],
+        "seed": "playable-lane-seed-001"
+      },
+      "match_id": "playable-default-campaign",
+      "objects": [
+        {
+          "collides": false,
+          "object_id": "screen-asteroid",
+          "opaque": true,
+          "position": {
+            "q": 3,
+            "r": 0
+          },
+          "type": "asteroid"
+        },
+        {
+          "collides": true,
+          "object_id": "recovery-wreck",
+          "opaque": false,
+          "position": {
+            "q": 4,
+            "r": 0
+          },
+          "type": "wreckage"
+        }
+      ],
+      "protocol": "rqp/1.0-draft.1",
+      "round": 0,
+      "seed": "seed-playable-default-campaign"
+    },
+    "world_state_hash": "9287e860a81c6f0215c848255f9b672123b673859dc5120139f2ece4a9d03d3a"
+  },
+  "match_id": "playable-default-campaign",
+  "protocol": "rqp/1.0-draft.1",
+  "rounds": [
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 4,
+            "fuel_ledger_hash": "a8eceeeca86923ff894168d0fbd625ed0f8238146bf84ead8856df01d8b8a419",
+            "match_id": "playable-default-campaign",
+            "movement": {
+              "rotation": -1,
+              "thrust": [
+                1,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "playable-default-campaign-commit-agent-a-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "274c2e3d4727cc9bc22be387c41dbf53d14048b68add3910bb56f1fd479a94c9",
+          "expected_ledger_hash": "a8eceeeca86923ff894168d0fbd625ed0f8238146bf84ead8856df01d8b8a419",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 4,
+            "fuel_remaining": 96,
+            "previous_fuel_ledger_hash": "df51ffaf785479fe8494593f0f676d843e60ad269451866adfdf8c627bf011d0",
+            "round": 1,
+            "salt": "playable-default-campaign-ledger-agent-a-1"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "b95ee56ad0373c4c6c9722ce605560369786a0f0a8f77515393e37e110b85d7e",
+            "match_id": "playable-default-campaign",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 1,
+            "salt": "playable-default-campaign-commit-agent-b-1",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "0f7722321cdc0be3a3b23a1a41c22166bad385b20904553884f8fbf3e3719b95",
+          "expected_ledger_hash": "b95ee56ad0373c4c6c9722ce605560369786a0f0a8f77515393e37e110b85d7e",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 100,
+            "previous_fuel_ledger_hash": "95d5a18ce44888fafd44f3922d0f8bfcf72f62449c141c1924f81a77b0548447",
+            "round": 1,
+            "salt": "playable-default-campaign-ledger-agent-b-1"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "3b74416c56090cf798a768cc41b99f456d6d14691678cfdf3dc112b7bb265bcd",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 1,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "playable-default-campaign",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "3b74416c56090cf798a768cc41b99f456d6d14691678cfdf3dc112b7bb265bcd"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "playable-default-campaign",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 1,
+          "type": "state_vote",
+          "world_state_hash": "3b74416c56090cf798a768cc41b99f456d6d14691678cfdf3dc112b7bb265bcd"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "a8eceeeca86923ff894168d0fbd625ed0f8238146bf84ead8856df01d8b8a419",
+            "hp": 70,
+            "position": {
+              "q": 1,
+              "r": 0
+            },
+            "ship": {
+              "mass": 10,
+              "max_rotation": 1,
+              "max_thrust": 2,
+              "profile": "striker-v1"
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser",
+              "breach-rail"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "b95ee56ad0373c4c6c9722ce605560369786a0f0a8f77515393e37e110b85d7e",
+            "hp": 80,
+            "position": {
+              "q": 5,
+              "r": 0
+            },
+            "ship": {
+              "mass": 14,
+              "max_rotation": 1,
+              "max_thrust": 1,
+              "profile": "guardian-v1"
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 6,
+          "q_min": 0,
+          "r_max": 2,
+          "r_min": -2
+        },
+        "map_definition": {
+          "bounds": {
+            "q_max": 6,
+            "q_min": 0,
+            "r_max": 2,
+            "r_min": -2
+          },
+          "generation_profile": "explicit-materialized-v1",
+          "map_id": "playable-lane-materialized-001",
+          "objects": [
+            "screen-asteroid",
+            "recovery-wreck"
+          ],
+          "seed": "playable-lane-seed-001"
+        },
+        "match_id": "playable-default-campaign",
+        "objects": [
+          {
+            "collides": false,
+            "object_id": "screen-asteroid",
+            "opaque": true,
+            "position": {
+              "q": 3,
+              "r": 0
+            },
+            "type": "asteroid"
+          },
+          {
+            "collides": true,
+            "object_id": "recovery-wreck",
+            "opaque": false,
+            "position": {
+              "q": 4,
+              "r": 0
+            },
+            "type": "wreckage"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 1,
+        "seed": "seed-playable-default-campaign"
+      },
+      "world_state_hash": "3b74416c56090cf798a768cc41b99f456d6d14691678cfdf3dc112b7bb265bcd"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 4,
+            "fuel_ledger_hash": "d36351d6b8894204efbeb3e41e36182575bea42811d00f5f27c5c4a400e42c56",
+            "match_id": "playable-default-campaign",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "playable-default-campaign-commit-agent-a-2",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "2894e2685cfccac9c81905ed1b98c8638deb67d250a8611d3c97890a4395c534",
+          "expected_ledger_hash": "d36351d6b8894204efbeb3e41e36182575bea42811d00f5f27c5c4a400e42c56",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 4,
+            "fuel_remaining": 92,
+            "previous_fuel_ledger_hash": "a8eceeeca86923ff894168d0fbd625ed0f8238146bf84ead8856df01d8b8a419",
+            "round": 2,
+            "salt": "playable-default-campaign-ledger-agent-a-2"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 4,
+            "fuel_ledger_hash": "895dbb956748257a648c48195009d74c758170cbba358b973884c2e0141affb2",
+            "match_id": "playable-default-campaign",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 2,
+            "salt": "playable-default-campaign-commit-agent-b-2",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "c8c3af49bccec0b5247c5da9866528e60bf6a9e0b9433553f9254b2b9fabba32",
+          "expected_ledger_hash": "895dbb956748257a648c48195009d74c758170cbba358b973884c2e0141affb2",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 4,
+            "fuel_remaining": 96,
+            "previous_fuel_ledger_hash": "b95ee56ad0373c4c6c9722ce605560369786a0f0a8f77515393e37e110b85d7e",
+            "round": 2,
+            "salt": "playable-default-campaign-ledger-agent-b-2"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "1faaf277f761b85bb729bc5ae346936b03c3b5a269490c9ba78d6a13b9f29a63",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 2,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "playable-default-campaign",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "1faaf277f761b85bb729bc5ae346936b03c3b5a269490c9ba78d6a13b9f29a63"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "playable-default-campaign",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 2,
+          "type": "state_vote",
+          "world_state_hash": "1faaf277f761b85bb729bc5ae346936b03c3b5a269490c9ba78d6a13b9f29a63"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "d36351d6b8894204efbeb3e41e36182575bea42811d00f5f27c5c4a400e42c56",
+            "hp": 70,
+            "position": {
+              "q": 2,
+              "r": 0
+            },
+            "ship": {
+              "mass": 10,
+              "max_rotation": 1,
+              "max_thrust": 2,
+              "profile": "striker-v1"
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser",
+              "breach-rail"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "895dbb956748257a648c48195009d74c758170cbba358b973884c2e0141affb2",
+            "hp": 80,
+            "position": {
+              "q": 5,
+              "r": 0
+            },
+            "ship": {
+              "mass": 14,
+              "max_rotation": 1,
+              "max_thrust": 1,
+              "profile": "guardian-v1"
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [],
+        "hex_potential": [],
+        "map": {
+          "q_max": 6,
+          "q_min": 0,
+          "r_max": 2,
+          "r_min": -2
+        },
+        "map_definition": {
+          "bounds": {
+            "q_max": 6,
+            "q_min": 0,
+            "r_max": 2,
+            "r_min": -2
+          },
+          "generation_profile": "explicit-materialized-v1",
+          "map_id": "playable-lane-materialized-001",
+          "objects": [
+            "screen-asteroid",
+            "recovery-wreck"
+          ],
+          "seed": "playable-lane-seed-001"
+        },
+        "match_id": "playable-default-campaign",
+        "objects": [
+          {
+            "collides": false,
+            "object_id": "screen-asteroid",
+            "opaque": true,
+            "position": {
+              "q": 3,
+              "r": 0
+            },
+            "type": "asteroid"
+          },
+          {
+            "collides": true,
+            "object_id": "recovery-wreck",
+            "opaque": false,
+            "position": {
+              "q": 4,
+              "r": 0
+            },
+            "type": "wreckage"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 2,
+        "seed": "seed-playable-default-campaign"
+      },
+      "world_state_hash": "1faaf277f761b85bb729bc5ae346936b03c3b5a269490c9ba78d6a13b9f29a63"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 9,
+            "fuel_ledger_hash": "13489cceed9bf735e338783a85210d0127a185dd91aa7c4b9750822ef3745e55",
+            "match_id": "playable-default-campaign",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 3,
+            "salt": "playable-default-campaign-commit-agent-a-3",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "breach-rail"
+              }
+            ]
+          },
+          "expected_commit_hash": "0d67096c10c06ec43c439788edfcb60d6f877343c61c86d02be195948484335d",
+          "expected_ledger_hash": "13489cceed9bf735e338783a85210d0127a185dd91aa7c4b9750822ef3745e55",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 9,
+            "fuel_remaining": 83,
+            "previous_fuel_ledger_hash": "d36351d6b8894204efbeb3e41e36182575bea42811d00f5f27c5c4a400e42c56",
+            "round": 3,
+            "salt": "playable-default-campaign-ledger-agent-a-3"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "b923298bc5edb86742d4ff7f45c326f2e47e78cfe8a78874ebf966339f5228a4",
+            "match_id": "playable-default-campaign",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "reveal_status": "missing_fallback",
+            "round": 3,
+            "salt": "playable-default-campaign-commit-agent-b-3",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "163fc1ac32ccd773672bf94ddf773ef9669fa40d7053ac4f5216c43cae96986e",
+          "expected_ledger_hash": "b923298bc5edb86742d4ff7f45c326f2e47e78cfe8a78874ebf966339f5228a4",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 96,
+            "previous_fuel_ledger_hash": "895dbb956748257a648c48195009d74c758170cbba358b973884c2e0141affb2",
+            "round": 3,
+            "salt": "playable-default-campaign-ledger-agent-b-3"
+          },
+          "missing_reveal": true
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "310e47bd5594f192f2135b39309dba7f1b1419eeb14d8ba4e7481e95b7f032c0",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 3,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "playable-default-campaign",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "310e47bd5594f192f2135b39309dba7f1b1419eeb14d8ba4e7481e95b7f032c0"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "playable-default-campaign",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 3,
+          "type": "state_vote",
+          "world_state_hash": "310e47bd5594f192f2135b39309dba7f1b1419eeb14d8ba4e7481e95b7f032c0"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "13489cceed9bf735e338783a85210d0127a185dd91aa7c4b9750822ef3745e55",
+            "hp": 70,
+            "position": {
+              "q": 3,
+              "r": 0
+            },
+            "ship": {
+              "mass": 10,
+              "max_rotation": 1,
+              "max_thrust": 2,
+              "profile": "striker-v1"
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser",
+              "breach-rail"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": false,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "b923298bc5edb86742d4ff7f45c326f2e47e78cfe8a78874ebf966339f5228a4",
+            "hp": 45,
+            "position": {
+              "q": 5,
+              "r": 0
+            },
+            "ship": {
+              "mass": 14,
+              "max_rotation": 1,
+              "max_thrust": 1,
+              "profile": "guardian-v1"
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [
+          {
+            "agent_id": "agent-b",
+            "fallback": "inertial",
+            "round": 3,
+            "type": "missing_reveal"
+          }
+        ],
+        "hex_potential": [],
+        "map": {
+          "q_max": 6,
+          "q_min": 0,
+          "r_max": 2,
+          "r_min": -2
+        },
+        "map_definition": {
+          "bounds": {
+            "q_max": 6,
+            "q_min": 0,
+            "r_max": 2,
+            "r_min": -2
+          },
+          "generation_profile": "explicit-materialized-v1",
+          "map_id": "playable-lane-materialized-001",
+          "objects": [
+            "screen-asteroid",
+            "recovery-wreck"
+          ],
+          "seed": "playable-lane-seed-001"
+        },
+        "match_id": "playable-default-campaign",
+        "objects": [
+          {
+            "collides": false,
+            "object_id": "screen-asteroid",
+            "opaque": true,
+            "position": {
+              "q": 3,
+              "r": 0
+            },
+            "type": "asteroid"
+          },
+          {
+            "collides": true,
+            "object_id": "recovery-wreck",
+            "opaque": false,
+            "position": {
+              "q": 4,
+              "r": 0
+            },
+            "type": "wreckage"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 3,
+        "seed": "seed-playable-default-campaign"
+      },
+      "world_state_hash": "310e47bd5594f192f2135b39309dba7f1b1419eeb14d8ba4e7481e95b7f032c0"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 12,
+            "fuel_ledger_hash": "ee5d845f812a0382dd96f4273cbf17ebb5686b80757ca12eb027ffa6fbeaab41",
+            "match_id": "playable-default-campaign",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 4,
+            "salt": "playable-default-campaign-commit-agent-a-4",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "training-laser"
+              },
+              {
+                "target_agent_id": "agent-b",
+                "weapon_id": "breach-rail"
+              }
+            ]
+          },
+          "expected_commit_hash": "fdad5472abcac5e606bbf1393fc280980f49b083f683e889d64477c2e202e28b",
+          "expected_ledger_hash": "ee5d845f812a0382dd96f4273cbf17ebb5686b80757ca12eb027ffa6fbeaab41",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 12,
+            "fuel_remaining": 71,
+            "previous_fuel_ledger_hash": "13489cceed9bf735e338783a85210d0127a185dd91aa7c4b9750822ef3745e55",
+            "round": 4,
+            "salt": "playable-default-campaign-ledger-agent-a-4"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-b",
+            "fuel_burn": 4,
+            "fuel_ledger_hash": "a0ac90a013392f49abfe6aa0f61036436166bec65b3678afdd31f1193dd91351",
+            "match_id": "playable-default-campaign",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 4,
+            "salt": "playable-default-campaign-commit-agent-b-4",
+            "vote": null,
+            "weapons": [
+              {
+                "target_agent_id": "agent-a",
+                "weapon_id": "training-laser"
+              }
+            ]
+          },
+          "expected_commit_hash": "7db346a6659ec3f5ef894fe6551e8dc764f5bbc62276bc1cefc9d415d9f38e9c",
+          "expected_ledger_hash": "a0ac90a013392f49abfe6aa0f61036436166bec65b3678afdd31f1193dd91351",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 4,
+            "fuel_remaining": 92,
+            "previous_fuel_ledger_hash": "b923298bc5edb86742d4ff7f45c326f2e47e78cfe8a78874ebf966339f5228a4",
+            "round": 4,
+            "salt": "playable-default-campaign-ledger-agent-b-4"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "4a75533e99fc38dd11285a9ad800fecf7816d87eb9f17d7d2ee4997788c7cd7f",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 4,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "playable-default-campaign",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 4,
+          "type": "state_vote",
+          "world_state_hash": "4a75533e99fc38dd11285a9ad800fecf7816d87eb9f17d7d2ee4997788c7cd7f"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "playable-default-campaign",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 4,
+          "type": "state_vote",
+          "world_state_hash": "4a75533e99fc38dd11285a9ad800fecf7816d87eb9f17d7d2ee4997788c7cd7f"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "ee5d845f812a0382dd96f4273cbf17ebb5686b80757ca12eb027ffa6fbeaab41",
+            "hp": 35,
+            "position": {
+              "q": 4,
+              "r": 0
+            },
+            "ship": {
+              "mass": 10,
+              "max_rotation": 1,
+              "max_thrust": 2,
+              "profile": "striker-v1"
+            },
+            "velocity": {
+              "dq": 1,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser",
+              "breach-rail"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": true,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "a0ac90a013392f49abfe6aa0f61036436166bec65b3678afdd31f1193dd91351",
+            "hp": 0,
+            "position": {
+              "q": 5,
+              "r": 0
+            },
+            "ship": {
+              "mass": 14,
+              "max_rotation": 1,
+              "max_thrust": 1,
+              "profile": "guardian-v1"
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [
+          {
+            "agent_id": "agent-b",
+            "fallback": "inertial",
+            "round": 3,
+            "type": "missing_reveal"
+          }
+        ],
+        "hex_potential": [],
+        "map": {
+          "q_max": 6,
+          "q_min": 0,
+          "r_max": 2,
+          "r_min": -2
+        },
+        "map_definition": {
+          "bounds": {
+            "q_max": 6,
+            "q_min": 0,
+            "r_max": 2,
+            "r_min": -2
+          },
+          "generation_profile": "explicit-materialized-v1",
+          "map_id": "playable-lane-materialized-001",
+          "objects": [
+            "screen-asteroid",
+            "recovery-wreck"
+          ],
+          "seed": "playable-lane-seed-001"
+        },
+        "match_id": "playable-default-campaign",
+        "objects": [
+          {
+            "collides": false,
+            "object_id": "screen-asteroid",
+            "opaque": true,
+            "position": {
+              "q": 3,
+              "r": 0
+            },
+            "type": "asteroid"
+          },
+          {
+            "collides": true,
+            "object_id": "recovery-wreck",
+            "opaque": false,
+            "position": {
+              "q": 4,
+              "r": 0
+            },
+            "type": "wreckage"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 4,
+        "seed": "seed-playable-default-campaign"
+      },
+      "world_state_hash": "4a75533e99fc38dd11285a9ad800fecf7816d87eb9f17d7d2ee4997788c7cd7f"
+    },
+    {
+      "agent_inputs": [
+        {
+          "agent_id": "agent-a",
+          "commit_payload": {
+            "action_level": 1,
+            "agent_id": "agent-a",
+            "fuel_burn": 3,
+            "fuel_ledger_hash": "f91611362d13bea9e3b9454935559c676e993ef59f8b514ff7e089ec8c9782c2",
+            "match_id": "playable-default-campaign",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                -1,
+                0
+              ]
+            },
+            "round": 5,
+            "salt": "playable-default-campaign-commit-agent-a-5",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "85d7fcd14f10580a451352efab2afdedda002bbfaf39980a1971cd1a64a6be91",
+          "expected_ledger_hash": "f91611362d13bea9e3b9454935559c676e993ef59f8b514ff7e089ec8c9782c2",
+          "ledger_payload": {
+            "agent_id": "agent-a",
+            "fuel_burn": 3,
+            "fuel_remaining": 68,
+            "previous_fuel_ledger_hash": "ee5d845f812a0382dd96f4273cbf17ebb5686b80757ca12eb027ffa6fbeaab41",
+            "round": 5,
+            "salt": "playable-default-campaign-ledger-agent-a-5"
+          }
+        },
+        {
+          "agent_id": "agent-b",
+          "commit_payload": {
+            "action_level": 0,
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_ledger_hash": "46e8c8c4064be12433554b5d160eeecd3c0837c621dde014b39b2e64858ef20b",
+            "match_id": "playable-default-campaign",
+            "movement": {
+              "rotation": 0,
+              "thrust": [
+                0,
+                0
+              ]
+            },
+            "round": 5,
+            "salt": "playable-default-campaign-commit-agent-b-5",
+            "vote": null,
+            "weapons": []
+          },
+          "expected_commit_hash": "05c2f877f648a2dfbdf516ca4e1aaab3eea0a31d17b3f5f0592ac35d5b78fe84",
+          "expected_ledger_hash": "46e8c8c4064be12433554b5d160eeecd3c0837c621dde014b39b2e64858ef20b",
+          "ledger_payload": {
+            "agent_id": "agent-b",
+            "fuel_burn": 0,
+            "fuel_remaining": 92,
+            "previous_fuel_ledger_hash": "a0ac90a013392f49abfe6aa0f61036436166bec65b3678afdd31f1193dd91351",
+            "round": 5,
+            "salt": "playable-default-campaign-ledger-agent-b-5"
+          }
+        }
+      ],
+      "quorum": {
+        "active_agents": 2,
+        "locked": true,
+        "locked_hash": "77428eb8d6bc2ece011138a971e9989d0fa12f66ae7982ab4d1a76c4f67f76ea",
+        "threshold": 2,
+        "votes_for_hash": 2
+      },
+      "round": 5,
+      "state_votes": [
+        {
+          "agent_id": "agent-a",
+          "match_id": "playable-default-campaign",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 5,
+          "type": "state_vote",
+          "world_state_hash": "77428eb8d6bc2ece011138a971e9989d0fa12f66ae7982ab4d1a76c4f67f76ea"
+        },
+        {
+          "agent_id": "agent-b",
+          "match_id": "playable-default-campaign",
+          "protocol": "rqp/1.0-draft.1",
+          "round": 5,
+          "type": "state_vote",
+          "world_state_hash": "77428eb8d6bc2ece011138a971e9989d0fa12f66ae7982ab4d1a76c4f67f76ea"
+        }
+      ],
+      "world_state": {
+        "agents": [
+          {
+            "agent_id": "agent-a",
+            "eliminated": false,
+            "facing": {
+              "dq": 1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "f91611362d13bea9e3b9454935559c676e993ef59f8b514ff7e089ec8c9782c2",
+            "hp": 35,
+            "position": {
+              "q": 4,
+              "r": 0
+            },
+            "ship": {
+              "mass": 10,
+              "max_rotation": 1,
+              "max_thrust": 2,
+              "profile": "striker-v1"
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser",
+              "breach-rail"
+            ]
+          },
+          {
+            "agent_id": "agent-b",
+            "eliminated": true,
+            "facing": {
+              "dq": -1,
+              "dr": 0
+            },
+            "fuel_ledger_hash": "46e8c8c4064be12433554b5d160eeecd3c0837c621dde014b39b2e64858ef20b",
+            "hp": 0,
+            "position": {
+              "q": 5,
+              "r": 0
+            },
+            "ship": {
+              "mass": 14,
+              "max_rotation": 1,
+              "max_thrust": 1,
+              "profile": "guardian-v1"
+            },
+            "velocity": {
+              "dq": 0,
+              "dr": 0
+            },
+            "weapons": [
+              "training-laser"
+            ]
+          }
+        ],
+        "audit_flags": [
+          {
+            "agent_id": "agent-b",
+            "fallback": "inertial",
+            "round": 3,
+            "type": "missing_reveal"
+          }
+        ],
+        "hex_potential": [],
+        "map": {
+          "q_max": 6,
+          "q_min": 0,
+          "r_max": 2,
+          "r_min": -2
+        },
+        "map_definition": {
+          "bounds": {
+            "q_max": 6,
+            "q_min": 0,
+            "r_max": 2,
+            "r_min": -2
+          },
+          "generation_profile": "explicit-materialized-v1",
+          "map_id": "playable-lane-materialized-001",
+          "objects": [
+            "screen-asteroid",
+            "recovery-wreck"
+          ],
+          "seed": "playable-lane-seed-001"
+        },
+        "match_id": "playable-default-campaign",
+        "objects": [
+          {
+            "collides": false,
+            "object_id": "screen-asteroid",
+            "opaque": true,
+            "position": {
+              "q": 3,
+              "r": 0
+            },
+            "type": "asteroid"
+          },
+          {
+            "collides": true,
+            "object_id": "recovery-wreck",
+            "opaque": false,
+            "position": {
+              "q": 4,
+              "r": 0
+            },
+            "type": "wreckage"
+          }
+        ],
+        "protocol": "rqp/1.0-draft.1",
+        "round": 5,
+        "seed": "seed-playable-default-campaign"
+      },
+      "world_state_hash": "77428eb8d6bc2ece011138a971e9989d0fa12f66ae7982ab4d1a76c4f67f76ea"
+    }
+  ],
+  "ruleset": {
+    "action_costs": {
+      "active_base": 1,
+      "rotation_per_step": 1,
+      "thrust_per_unit": 2
+    },
+    "collision": {
+      "max_damage": 30,
+      "profile": "velocity_based",
+      "velocity_factor": 25
+    },
+    "gravity_mode": "none",
+    "map_profile": "explicit-materialized-v1",
+    "name": "rqp-default-playable-v0",
+    "quorum": "strict-2-of-2",
+    "signatures": "omitted-for-local-replay",
+    "weapons": {
+      "breach-rail": {
+        "arc": "forward",
+        "damage": 35,
+        "fuel_cost": 8,
+        "range": 5
+      },
+      "training-laser": {
+        "arc": "360",
+        "damage": 10,
+        "fuel_cost": 3,
+        "range": 4
+      }
+    }
+  }
+}
