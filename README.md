@@ -70,7 +70,7 @@ The replay studio also includes round markers, reset-to-genesis, keyboard shortc
 
 ## Browser-check the replay studio
 
-Install the Playwright test dependency once, then install Chromium for the browser smoke test:
+Install the Playwright test dependency once with Node.js 18 or newer, then install Chromium for the browser smoke test:
 
 ```sh
 npm ci

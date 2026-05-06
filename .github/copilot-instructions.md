@@ -53,6 +53,7 @@ This repository is a docs-first bootstrap specification and fixture suite for th
   The visualizer exposes `window.__rqpVisualRules.verifyObjectsContainedInHex()` so Playwright can assert all rendered ships/map objects fit inside their current hex.
 - Run the visualizer browser harness:
   ```sh
+  # Requires Node.js 18 or newer.
   npm ci
   npx playwright install chromium
   npm run test:visualizer

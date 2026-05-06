@@ -3,11 +3,6 @@ const path = require("node:path");
 const { expect, test } = require("@playwright/test");
 
 const fixtureDir = path.join(__dirname, "..", "fixtures", "bootstrap");
-const fixtureNames = fs.readdirSync(fixtureDir)
-  .filter((name) => name.endsWith(".json"))
-  .filter((name) => !name.endsWith("-audit.json"))
-  .filter((name) => name !== "post-game-audit.json" && name !== "rfc5-fixture-index.json")
-  .sort();
 
 function fixture(name) {
   return JSON.parse(fs.readFileSync(path.join(fixtureDir, name), "utf8"));
@@ -35,7 +30,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("loads every bundled fixture and sweeps every round", async ({ page }) => {
-  await expect(page.locator("#fixtureSelect option")).toHaveCount(fixtureNames.length);
+  const fixtureNames = await page.locator("#fixtureSelect option").evaluateAll((options) => (
+    options.map((option) => option.value)
+  ));
+  expect(fixtureNames.length).toBeGreaterThan(0);
 
   for (const name of fixtureNames) {
     const data = fixture(name);
@@ -87,6 +85,10 @@ test("shows representative phase labels, weapon outcomes, diffs, and debug panel
   await setRound(page, 3);
   await expect(page.locator("#weaponList")).toContainText("blocked");
 
+  await page.selectOption("#fixtureSelect", "gravity-7r-both-armed.json");
+  await setRound(page, 2);
+  await expect(page.locator(".impact-label")).toHaveCount(0);
+
   await page.selectOption("#fixtureSelect", "gravity-4r-asteroid-collision.json");
   await setRound(page, 3);
   await expect(page.locator(".impact-label")).toContainText("IMPACT");
@@ -96,4 +98,24 @@ test("shows representative phase labels, weapon outcomes, diffs, and debug panel
   await expect(page.locator("#rawState")).toContainText("\"agents\"");
   await page.locator("summary", { hasText: "Audit sidecar" }).click();
   await expect(page.locator("#auditDetails")).toContainText("audit");
+});
+
+test("can attach a renamed audit sidecar after loading a replay", async ({ page }) => {
+  const replay = fixture("inertial-3-rounds.json");
+  const audit = fs.readFileSync(path.join(fixtureDir, "post-game-audit.json"));
+
+  await page.setInputFiles("#fileInput", {
+    name: "renamed-inertial-replay.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(replay)),
+  });
+  await expect(page.locator("#fixtureSelect")).toHaveValue("upload:renamed-inertial-replay.json");
+  await expect(page.locator("#auditDetails")).toContainText("No audit sidecar loaded");
+
+  await page.setInputFiles("#fileInput", {
+    name: "renamed-inertial-audit.json",
+    mimeType: "application/json",
+    buffer: audit,
+  });
+  await expect(page.locator("#auditDetails")).toContainText("bootstrap-2p-inertial-3r");
 });

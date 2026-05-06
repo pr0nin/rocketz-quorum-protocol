@@ -11,6 +11,8 @@ const BUNDLED_FIXTURES = [
   "firing-arc-agent-a-forward.json",
   "firing-arc-both-forward.json",
   "firing-arc-pass-by-7r.json",
+  "playable-default-campaign.json",
+  "playable-quorum-failure.json",
 ];
 
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -94,22 +96,12 @@ function wireControls() {
   });
 
   elements.fileInput.addEventListener("change", async (event) => {
-    const loaded = await loadUploadedFixtures([...event.target.files]);
-    if (loaded.length > 0) {
-      fixtures = [...loaded, ...fixtures.filter((fixture) => fixture.source === "bundled")];
-      renderFixtureOptions();
-      selectFixture(loaded[0]);
-    }
+    handleUploadResult(await loadUploadedFixtures([...event.target.files]));
     elements.fileInput.value = "";
   });
 
   elements.folderInput.addEventListener("change", async (event) => {
-    const loaded = await loadUploadedFixtures([...event.target.files]);
-    if (loaded.length > 0) {
-      fixtures = [...loaded, ...fixtures.filter((fixture) => fixture.source === "bundled")];
-      renderFixtureOptions();
-      selectFixture(loaded[0]);
-    }
+    handleUploadResult(await loadUploadedFixtures([...event.target.files]));
     elements.folderInput.value = "";
   });
 
@@ -139,11 +131,12 @@ async function loadBundledFixtures() {
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
       }
+      const data = await response.json();
       loaded.push({
         name,
         source: "bundled",
-        data: await response.json(),
-        audit: audits.get(name) ?? null,
+        data,
+        audit: auditForReplay(name, data, audits),
       });
     } catch (error) {
       console.warn(`Could not load ${name}:`, error);
@@ -168,9 +161,9 @@ async function loadBundledAudits() {
       if (!response.ok) continue;
       const audit = await response.json();
       if (name === "post-game-audit.json") {
-        audits.set("inertial-3-rounds.json", audit);
+        storeAudit(audits, "inertial-3-rounds.json", audit);
       } else {
-        audits.set(name.replace(/-audit\.json$/, ".json"), audit);
+        storeAudit(audits, name.replace(/-audit\.json$/, ".json"), audit);
       }
     } catch (error) {
       console.warn(`Could not load audit ${name}:`, error);
@@ -194,7 +187,8 @@ async function loadUploadedFixtures(files) {
       if (data?.genesis?.world_state && Array.isArray(data.rounds)) {
         replayFiles.push({ file, displayName, data });
       } else if (file.name.endsWith("-audit.json") || file.name === "post-game-audit.json") {
-        audits.set(file.name === "post-game-audit.json" ? "inertial-3-rounds.json" : file.name.replace(/-audit\.json$/, ".json"), data);
+        const replayName = file.name === "post-game-audit.json" ? null : file.name.replace(/-audit\.json$/, ".json");
+        storeAudit(audits, replayName, data);
       }
     } catch (error) {
       console.warn(`Skipping ${file.name}:`, error);
@@ -206,11 +200,60 @@ async function loadUploadedFixtures(files) {
       name: `upload:${replay.displayName}`,
       source: "upload",
       data: replay.data,
-      audit: audits.get(replay.file.name) ?? null,
+      audit: auditForReplay(replay.file.name, replay.data, audits),
     });
   }
 
-  return loaded;
+  return { loaded, audits };
+}
+
+function handleUploadResult({ loaded, audits }) {
+  if (loaded.length > 0) {
+    fixtures = [...loaded, ...fixtures.filter((fixture) => fixture.source === "bundled")];
+    renderFixtureOptions();
+    selectFixture(loaded[0]);
+    return;
+  }
+
+  if (audits.size === 0) {
+    return;
+  }
+
+  const selectedName = selectedFixture?.name ?? null;
+  fixtures = fixtures.map((fixture) => ({
+    ...fixture,
+    audit: auditForReplay(fixtureNameForAudit(fixture), fixture.data, audits) ?? fixture.audit,
+  }));
+  selectedFixture = fixtures.find((fixture) => fixture.name === selectedName) ?? selectedFixture;
+  if (selectedFixture) {
+    render();
+  }
+}
+
+function storeAudit(audits, replayName, audit) {
+  if (replayName) {
+    audits.set(replayName, audit);
+  }
+  const matchKey = auditMatchKey(audit);
+  if (matchKey) {
+    audits.set(matchKey, audit);
+  }
+}
+
+function auditForReplay(replayName, replayData, audits) {
+  return audits.get(replayName) ?? audits.get(matchKey(replayData?.match_id)) ?? null;
+}
+
+function fixtureNameForAudit(fixture) {
+  return fixture.source === "upload" ? fixture.name.replace(/^upload:/, "").split("/").pop() : fixture.name;
+}
+
+function auditMatchKey(audit) {
+  return matchKey(audit?.match_id ?? audit?.final_audit?.match_id);
+}
+
+function matchKey(matchId) {
+  return matchId ? `match:${matchId}` : null;
 }
 
 function renderFixtureOptions() {
@@ -231,6 +274,8 @@ function selectFixture(fixture) {
 
   if (!fixture) {
     elements.roundSlider.max = "0";
+    elements.roundSlider.value = "0";
+    renderTimeline();
     renderEmptyState("No fixture loaded.");
     return;
   }
@@ -320,11 +365,17 @@ function renderEmptyState(message) {
   elements.agentCards.replaceChildren();
   elements.weaponList.replaceChildren();
   elements.diffList.replaceChildren();
+  elements.timeline.replaceChildren();
   elements.roundLabel.textContent = "0 / 0";
   elements.validationLabel.textContent = "Not loaded";
+  elements.validationLabel.className = "";
   elements.hashLabel.textContent = "-";
+  delete elements.hashLabel.dataset.fullHash;
+  elements.hashDetails.textContent = "Expected and actual hashes appear here.";
   elements.quorumLabel.textContent = "-";
   elements.phaseNote.textContent = message;
+  elements.auditDetails.textContent = "No audit sidecar loaded for this replay.";
+  elements.rawState.textContent = "";
 }
 
 function currentWorldState(fixture, roundIndex) {
@@ -829,9 +880,18 @@ function renderAuditDetails(audit) {
 function buildCollisionEvents(previousState, state) {
   if (!previousState) return [];
   const previousAgents = new Map(previousState.agents.map((agent) => [agent.agent_id, agent]));
+  const collisionPositions = new Set(
+    mapObjects(selectedFixture.data, state)
+      .filter((object) => object.collides)
+      .map((object) => `${object.position.q},${object.position.r}`),
+  );
   return state.agents
     .map((agent) => ({ agent, previous: previousAgents.get(agent.agent_id) }))
-    .filter(({ agent, previous }) => previous && (agent.hp ?? 0) < (previous.hp ?? 0))
+    .filter(({ agent, previous }) => (
+      previous &&
+      (agent.hp ?? 0) < (previous.hp ?? 0) &&
+      collisionPositions.has(`${agent.position.q},${agent.position.r}`)
+    ))
     .map(({ agent, previous }) => ({ agent, hpLost: (previous.hp ?? 0) - (agent.hp ?? 0) }));
 }
 

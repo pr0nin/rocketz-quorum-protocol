@@ -1,6 +1,9 @@
 {
   "name": "rocketz-quorum-protocol",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "test:visualizer": "playwright test"
   },
