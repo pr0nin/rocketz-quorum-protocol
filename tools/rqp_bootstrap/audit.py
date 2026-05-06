@@ -23,6 +23,28 @@ def verify_audit(
     require_equal("audit result", audit.get("result"), "pass")
     require_equal("audit verified_rounds", audit.get("verified_rounds"), round_numbers)
 
+    missing_reveal_diagnostics = [
+        {
+            "agent_id": agent_id,
+            "fallback": "inertial",
+            "round": round_number,
+            "type": "missing_reveal",
+        }
+        for round_number in round_numbers
+        for agent_id in agent_ids
+        if round_inputs_by_round[round_number][agent_id].get("missing_reveal") is True
+    ]
+    if missing_reveal_diagnostics:
+        require_equal("audit missing reveal diagnostics", audit.get("diagnostics"), missing_reveal_diagnostics)
+
+    dispute_diagnostics = [
+        round_fixture["quorum_diagnostics"]
+        for round_fixture in fixture["rounds"]
+        if round_fixture.get("quorum", {}).get("locked") is False
+    ]
+    if dispute_diagnostics:
+        require_equal("audit dispute diagnostics", audit.get("dispute_diagnostics"), dispute_diagnostics)
+
     disclosures = index_by_agent(audit.get("agent_disclosures", []), "audit disclosures")
     results = index_by_agent(audit.get("agent_results", []), "audit agent_results")
     require_equal("audit disclosure agents", sorted(disclosures), sorted(agent_ids))

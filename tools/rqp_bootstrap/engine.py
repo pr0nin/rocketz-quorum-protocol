@@ -11,11 +11,41 @@ from .errors import fail, require, require_equal, require_unique
 from .fixture import index_by_agent
 
 
+AXIAL_DIRECTIONS = [
+    {"dq": 1, "dr": 0},
+    {"dq": 1, "dr": -1},
+    {"dq": 0, "dr": -1},
+    {"dq": -1, "dr": 0},
+    {"dq": -1, "dr": 1},
+    {"dq": 0, "dr": 1},
+]
+
+
 def thrust_magnitude(thrust: list[int]) -> int:
     return abs(thrust[0]) + abs(thrust[1])
 
 
-def expected_fuel_burn(fixture: dict[str, Any], action_level: int, thrust: list[int], weapons: list[Any]) -> int:
+def rotate_facing(agent: dict[str, Any], rotation: int) -> dict[str, int]:
+    facing = agent.get("facing")
+    require(
+        isinstance(facing, dict) and isinstance(facing.get("dq"), int) and isinstance(facing.get("dr"), int),
+        f"{agent.get('agent_id')} must define integer facing before rotation",
+    )
+    try:
+        facing_index = AXIAL_DIRECTIONS.index({"dq": facing["dq"], "dr": facing["dr"]})
+    except ValueError as error:
+        fail(f"{agent.get('agent_id')} facing is not an axial unit direction: {facing!r}")
+        raise AssertionError from error
+    return AXIAL_DIRECTIONS[(facing_index + rotation) % len(AXIAL_DIRECTIONS)]
+
+
+def expected_fuel_burn(
+    fixture: dict[str, Any],
+    action_level: int,
+    thrust: list[int],
+    rotation: int,
+    weapons: list[Any],
+) -> int:
     if action_level == 0:
         require_equal("inertial weapon fire", weapons, [])
         return 0
@@ -24,9 +54,16 @@ def expected_fuel_burn(fixture: dict[str, Any], action_level: int, thrust: list[
         action_costs = fixture.get("ruleset", {}).get("action_costs", {})
         active_base = action_costs.get("active_base", 1)
         thrust_per_unit = action_costs.get("thrust_per_unit", 2)
+        rotation_per_step = action_costs.get("rotation_per_step", 0)
         require(isinstance(active_base, int), "ruleset.action_costs.active_base must be an integer")
         require(isinstance(thrust_per_unit, int), "ruleset.action_costs.thrust_per_unit must be an integer")
-        return active_base + thrust_magnitude(thrust) * thrust_per_unit + weapon_fire_cost(fixture, weapons)
+        require(isinstance(rotation_per_step, int), "ruleset.action_costs.rotation_per_step must be an integer")
+        return (
+            active_base
+            + thrust_magnitude(thrust) * thrust_per_unit
+            + abs(rotation) * rotation_per_step
+            + weapon_fire_cost(fixture, weapons)
+        )
 
     fail(f"unsupported action_level {action_level}; bootstrap verifier supports only 0 and 1")
     raise AssertionError
@@ -73,14 +110,20 @@ def require_bootstrap_input(
         isinstance(thrust, list) and len(thrust) == 2 and all(isinstance(component, int) for component in thrust),
         f"round {round_number} {agent_id}: thrust must be two integers",
     )
-    require_equal(f"round {round_number} {agent_id} rotation", commit_payload.get("movement", {}).get("rotation"), 0)
+    rotation = commit_payload.get("movement", {}).get("rotation")
+    require(isinstance(rotation, int), f"round {round_number} {agent_id}: rotation must be an integer")
     weapons = commit_payload.get("weapons")
     require(isinstance(weapons, list), f"round {round_number} {agent_id}: weapons must be a list")
     require_equal(f"round {round_number} {agent_id} vote", commit_payload.get("vote"), None)
     if action_level == 0:
         require_equal(f"round {round_number} {agent_id} inertial thrust", thrust, [0, 0])
+        require_equal(f"round {round_number} {agent_id} inertial rotation", rotation, 0)
 
-    fuel_burn = expected_fuel_burn(fixture, action_level, thrust, weapons)
+    if item.get("missing_reveal") is True:
+        require_equal(f"round {round_number} {agent_id} missing reveal fallback level", action_level, 0)
+        require_equal(f"round {round_number} {agent_id} missing reveal fallback weapons", weapons, [])
+
+    fuel_burn = expected_fuel_burn(fixture, action_level, thrust, rotation, weapons)
     require_equal(f"round {round_number} {agent_id} ledger fuel_burn", ledger_payload.get("fuel_burn"), fuel_burn)
     require_equal(f"round {round_number} {agent_id} commit fuel_burn", commit_payload.get("fuel_burn"), fuel_burn)
     require_equal(
@@ -110,10 +153,13 @@ def simulate_bootstrap_round(
         require(agent_id in agent_inputs, f"round {round_number}: missing input for {agent_id}")
         commit_payload = agent_inputs[agent_id]["commit_payload"]
         thrust = commit_payload["movement"]["thrust"]
+        rotation = commit_payload["movement"]["rotation"]
         velocity = agent["velocity"]
         position = agent["position"]
         delta = {"dq": 0, "dr": 0}
         if not agent.get("eliminated", False):
+            if rotation != 0:
+                agent["facing"] = rotate_facing(agent, rotation)
             velocity["dq"] += thrust[0]
             velocity["dr"] += thrust[1]
             delta = {"dq": velocity["dq"] + gravity["dq"], "dr": velocity["dr"] + gravity["dr"]}
@@ -121,6 +167,16 @@ def simulate_bootstrap_round(
             position["r"] += delta["dr"]
         impact_delta_by_agent[agent_id] = delta
         agent["fuel_ledger_hash"] = agent_inputs[agent_id]["expected_ledger_hash"]
+
+        if agent_inputs[agent_id].get("missing_reveal") is True:
+            produced.setdefault("audit_flags", []).append(
+                {
+                    "agent_id": agent_id,
+                    "fallback": "inertial",
+                    "round": round_number,
+                    "type": "missing_reveal",
+                }
+            )
 
     collision_rules = fixture.get("ruleset", {}).get("collision", {})
     collision_objects = [
@@ -252,12 +308,11 @@ def verify_rounds(
 
         state_votes = round_fixture.get("state_votes")
         require(isinstance(state_votes, list), f"round {round_number}: state_votes must be a list")
-        require_equal(f"round {round_number} state vote count", len(state_votes), len(agent_ids))
         vote_agents = [vote.get("agent_id") for vote in state_votes]
         require_unique(vote_agents, f"round {round_number} state_votes")
-        require_equal(f"round {round_number} state vote agents", sorted(vote_agents), sorted(agent_ids))
         for vote in state_votes:
             agent_id = vote["agent_id"]
+            require(agent_id in agent_ids, f"round {round_number}: unknown state vote agent {agent_id!r}")
             require_equal(f"round {round_number} {agent_id} vote type", vote.get("type"), "state_vote")
             require_equal(f"round {round_number} {agent_id} vote protocol", vote.get("protocol"), fixture["protocol"])
             require_equal(f"round {round_number} {agent_id} vote match_id", vote.get("match_id"), fixture["match_id"])
@@ -268,11 +323,24 @@ def verify_rounds(
         require(isinstance(quorum, dict), f"round {round_number}: quorum must be an object")
         require_equal(f"round {round_number} quorum active_agents", quorum.get("active_agents"), len(agent_ids))
         require_equal(f"round {round_number} quorum threshold", quorum.get("threshold"), 2)
-        require_equal(f"round {round_number} quorum votes_for_hash", quorum.get("votes_for_hash"), len(agent_ids))
-        require_equal(f"round {round_number} quorum locked", quorum.get("locked"), True)
-        require_equal(f"round {round_number} quorum locked_hash", quorum.get("locked_hash"), world_hash)
+        require_equal(f"round {round_number} quorum votes_for_hash", quorum.get("votes_for_hash"), len(state_votes))
+        locked = quorum.get("locked")
+        require(isinstance(locked, bool), f"round {round_number}: quorum.locked must be boolean")
+        if locked:
+            require_equal(f"round {round_number} state vote count", len(state_votes), len(agent_ids))
+            require_equal(f"round {round_number} state vote agents", sorted(vote_agents), sorted(agent_ids))
+            require_equal(f"round {round_number} quorum locked_hash", quorum.get("locked_hash"), world_hash)
+        else:
+            require(len(state_votes) < quorum["threshold"], f"round {round_number}: unlocked quorum must have too few votes")
+            require_equal(f"round {round_number} quorum locked_hash", quorum.get("locked_hash"), None)
+            diagnostics = round_fixture.get("quorum_diagnostics")
+            require(isinstance(diagnostics, dict), f"round {round_number}: unlocked quorum needs diagnostics")
+            require_equal(f"round {round_number} quorum diagnostic available_votes", diagnostics.get("available_votes"), len(state_votes))
+            require_equal(f"round {round_number} quorum diagnostic required_votes", diagnostics.get("required_votes"), quorum["threshold"])
+            require_equal(f"round {round_number} quorum diagnostic decision", diagnostics.get("decision"), "round_not_locked")
 
-        previous_world = round_fixture["world_state"]
+        if locked:
+            previous_world = round_fixture["world_state"]
 
     final_hp = {
         agent["agent_id"]: agent["hp"]
