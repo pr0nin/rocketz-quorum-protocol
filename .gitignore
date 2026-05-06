@@ -41,3 +41,7 @@ luac.out
 
 # Playwright CLI session artifacts
 .playwright-cli/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
