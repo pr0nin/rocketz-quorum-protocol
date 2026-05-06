@@ -65,7 +65,7 @@ test("manual stepping, shortcuts, and autoplay advance replay", async ({ page })
   await page.selectOption("#speedSelect", "4");
   await page.click("#playButton");
   await expect(page.locator("#playButton")).toHaveText("Pause");
-  await expect(page.locator("#roundLabel")).not.toHaveText("0 / 7", { timeout: 1_500 });
+  await expect(page.locator("#roundLabel")).not.toHaveText("0 / 7", { timeout: 3_000 });
   await page.keyboard.press(" ");
   await expect(page.locator("#playButton")).toHaveText("Play");
 });

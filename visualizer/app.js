@@ -533,7 +533,8 @@ function weaponResult(attacker, target, rule, opaqueObjects) {
 }
 
 function weaponRule(fixture, weaponId) {
-  const rule = fixture.ruleset?.weapons?.[weaponId] ?? fixture.ruleset?.weapon ?? {};
+  const defaultWeaponRule = fixture.ruleset?.weapon ?? {};
+  const rule = fixture.ruleset?.weapons?.[weaponId] ?? defaultWeaponRule;
   return {
     range: rule.range ?? 0,
     damage: rule.damage ?? 0,
