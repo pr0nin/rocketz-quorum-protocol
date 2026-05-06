@@ -48,12 +48,18 @@ This repository is a docs-first bootstrap specification and fixture suite for th
   print("rfc5 index valid")
   PY
   ```
+- Serve the static browser visualizer:
+  ```sh
+  python3 -m http.server 8765 --bind 127.0.0.1
+  ```
+  Then open `http://127.0.0.1:8765/visualizer/`.
 
 ## High-level architecture
 
 - `rfc.md` is the normative RQP 1.0 draft. It defines deterministic integer simulation, axial hex coordinates, map/condition profiles, movement, collision, bootstrap LOS weapons, canonical serialization, quorum, and audit.
 - `fixtures/bootstrap/` is the implementation target. Each non-audit fixture contains genesis data, round inputs, expected ledger/commit/world-state hashes, votes, and quorum locks. Matching `*-audit.json` files disclose salts and final audit expectations. The inertial fixture uniquely pairs with `post-game-audit.json`.
 - `tools/rqp_verify_bootstrap.py` is the reference verifier/engine harness. It loads a fixture/audit pair, enforces the supported bootstrap profile, verifies genesis hashes, replays fuel-ledger and commit hashes, simulates each round, validates strict 2-of-2 quorum, and replays the post-game audit.
+- `visualizer/` is a static browser replay viewer. It loads bundled fixtures from `fixtures/bootstrap/`, supports replay JSON/folder uploads, validates each displayed world-state hash in-browser, and supports previous/next/slider/manual stepping plus Play/Pause automatic replay.
 - `fixtures/bootstrap/README.md` explains fixture intent and expected hashes. `fixtures/bootstrap/rfc5-fixture-index.json` maps RFC section 5 deterministic simulation headings to executable fixture coverage.
 - `README.md` is the developer entry point. `one-pager.md` is orientation. `canonical-test-vectors.md`, `ruleset-default.md`, `transport-profile-websocket.md`, and `tournament-profile.md` are support profiles/specs. `working.rfc.md`, `rfc-deviations.md`, `chatter.md`, and `Rocketz Quorum Protocol.md` are design rationale/source-history documents, not normative implementation targets.
 

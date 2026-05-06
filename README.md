@@ -47,6 +47,22 @@ Every fixture/audit pair should print:
 PASS: RQP bootstrap fixture verified
 ```
 
+## View fixture replays in a browser
+
+Start a local static server from the repository root:
+
+```sh
+python3 -m http.server 8765 --bind 127.0.0.1
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8765/visualizer/
+```
+
+The visualizer loads the checked-in bootstrap fixtures, validates each round's world-state hash in the browser, and supports manual previous/next/slider stepping plus automatic Play/Pause replay. It can also load replay JSON files or a fixture folder through the upload control.
+
 ## Repository map
 
 | Path | Purpose | Status |
@@ -55,6 +71,7 @@ PASS: RQP bootstrap fixture verified
 | `fixtures/bootstrap/` | Machine-readable conformance fixtures and post-game audit disclosures. | Primary implementation target |
 | `fixtures/bootstrap/README.md` | Fixture-by-fixture guide, expected hashes, and verifier commands. | Primary fixture documentation |
 | `tools/rqp_verify_bootstrap.py` | Dependency-free Python reference verifier/engine harness. | Executable baseline |
+| `visualizer/` | Static browser replay viewer for stepping through bootstrap fixtures visually. | Visual verification |
 | `canonical-test-vectors.md` | Canonical JSON and SHA-256 examples for interoperability checks. | Support spec |
 | `ruleset-default.md` | Early default ruleset profile for physics, costs, ships, weapons, and map generation. | Support profile |
 | `transport-profile-websocket.md` | Practical non-authoritative WebSocket relay profile. | Support profile |
