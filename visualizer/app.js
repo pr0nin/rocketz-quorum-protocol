@@ -16,7 +16,7 @@ const BUNDLED_FIXTURES = [
 const SVG_NS = "http://www.w3.org/2000/svg";
 const HEX_SIZE = 34;
 const SQRT3 = Math.sqrt(3);
-const PLAY_INTERVAL_MS = 1050;
+const DEFAULT_PLAY_INTERVAL_MS = 1050;
 const SHIP_SCALE = 0.72;
 
 const VISUAL_OBJECT_PROFILES = {
@@ -48,6 +48,7 @@ let fixtures = [];
 let selectedFixture = null;
 let currentRoundIndex = 0;
 let playTimer = null;
+let loadedAudits = new Map();
 
 const elements = {
   fixtureSelect: document.querySelector("#fixtureSelect"),
@@ -58,14 +59,22 @@ const elements = {
   playButton: document.querySelector("#playButton"),
   nextButton: document.querySelector("#nextButton"),
   roundSlider: document.querySelector("#roundSlider"),
+  timeline: document.querySelector("#timeline"),
+  resetButton: document.querySelector("#resetButton"),
+  speedSelect: document.querySelector("#speedSelect"),
   roundLabel: document.querySelector("#roundLabel"),
   validationLabel: document.querySelector("#validationLabel"),
   hashLabel: document.querySelector("#hashLabel"),
+  hashDetails: document.querySelector("#hashDetails"),
+  copyHashButton: document.querySelector("#copyHashButton"),
   quorumLabel: document.querySelector("#quorumLabel"),
   phaseNote: document.querySelector("#phaseNote"),
   board: document.querySelector("#board"),
   agentCards: document.querySelector("#agentCards"),
   weaponList: document.querySelector("#weaponList"),
+  diffList: document.querySelector("#diffList"),
+  auditDetails: document.querySelector("#auditDetails"),
+  rawState: document.querySelector("#rawState"),
 };
 
 init();
@@ -108,13 +117,23 @@ function wireControls() {
   elements.reloadButton.addEventListener("click", loadBundledFixtures);
   elements.prevButton.addEventListener("click", () => setRound(currentRoundIndex - 1));
   elements.nextButton.addEventListener("click", () => setRound(currentRoundIndex + 1));
+  elements.resetButton.addEventListener("click", () => setRound(0));
   elements.playButton.addEventListener("click", togglePlayback);
   elements.roundSlider.addEventListener("input", () => setRound(Number(elements.roundSlider.value)));
+  elements.speedSelect.addEventListener("change", () => {
+    if (playTimer) {
+      stopPlayback();
+      togglePlayback();
+    }
+  });
+  elements.copyHashButton.addEventListener("click", copyCurrentHash);
+  document.addEventListener("keydown", handleShortcut);
 }
 
 async function loadBundledFixtures() {
   stopPlayback();
   const loaded = [];
+  const audits = await loadBundledAudits();
   for (const name of BUNDLED_FIXTURES) {
     try {
       const response = await fetch(`../fixtures/bootstrap/${name}`, { cache: "no-store" });
@@ -125,35 +144,74 @@ async function loadBundledFixtures() {
         name,
         source: "bundled",
         data: await response.json(),
+        audit: audits.get(name) ?? null,
       });
     } catch (error) {
       console.warn(`Could not load ${name}:`, error);
     }
   }
+  loadedAudits = new Map([...loadedAudits, ...audits]);
   fixtures = [...fixtures.filter((fixture) => fixture.source === "upload"), ...loaded];
   renderFixtureOptions();
   selectFixture(fixtures[0] ?? null);
 }
 
+async function loadBundledAudits() {
+  const auditNames = new Set([
+    ...BUNDLED_FIXTURES
+      .filter((name) => name !== "inertial-3-rounds.json")
+      .map((name) => name.replace(/\.json$/, "-audit.json")),
+    "post-game-audit.json",
+  ]);
+  const audits = new Map();
+  for (const name of auditNames) {
+    try {
+      const response = await fetch(`../fixtures/bootstrap/${name}`, { cache: "no-store" });
+      if (!response.ok) continue;
+      const audit = await response.json();
+      if (name === "post-game-audit.json") {
+        audits.set("inertial-3-rounds.json", audit);
+      } else {
+        audits.set(name.replace(/-audit\.json$/, ".json"), audit);
+      }
+    } catch (error) {
+      console.warn(`Could not load audit ${name}:`, error);
+    }
+  }
+  return audits;
+}
+
 async function loadUploadedFixtures(files) {
   const loaded = [];
+  const audits = new Map();
+  const replayFiles = [];
+
   for (const file of files) {
-    if (!file.name.endsWith(".json") || file.name.endsWith("-audit.json") || file.name === "post-game-audit.json" || file.name === "rfc5-fixture-index.json") {
+    if (!file.name.endsWith(".json") || file.name === "rfc5-fixture-index.json") {
       continue;
     }
+    const displayName = file.webkitRelativePath || file.name;
     try {
       const data = JSON.parse(await file.text());
       if (data?.genesis?.world_state && Array.isArray(data.rounds)) {
-        loaded.push({
-          name: `upload:${file.webkitRelativePath || file.name}`,
-          source: "upload",
-          data,
-        });
+        replayFiles.push({ file, displayName, data });
+      } else if (file.name.endsWith("-audit.json") || file.name === "post-game-audit.json") {
+        audits.set(file.name === "post-game-audit.json" ? "inertial-3-rounds.json" : file.name.replace(/-audit\.json$/, ".json"), data);
       }
     } catch (error) {
       console.warn(`Skipping ${file.name}:`, error);
     }
   }
+
+  for (const replay of replayFiles) {
+    loaded.push({
+      name: `upload:${replay.displayName}`,
+      source: "upload",
+      data: replay.data,
+      audit: audits.get(replay.file.name) ?? null,
+    });
+  }
+
   return loaded;
 }
 
@@ -182,6 +240,7 @@ function selectFixture(fixture) {
   elements.fixtureSelect.value = fixture.name;
   elements.roundSlider.max = String(fixture.data.rounds.length);
   elements.roundSlider.value = "0";
+  renderTimeline();
   render();
 }
 
@@ -192,6 +251,7 @@ function setRound(nextIndex) {
   const max = selectedFixture.data.rounds.length;
   currentRoundIndex = Math.max(0, Math.min(max, nextIndex));
   elements.roundSlider.value = String(currentRoundIndex);
+  renderTimeline();
   render();
 
   if (playTimer && currentRoundIndex === max) {
@@ -213,7 +273,7 @@ function togglePlayback() {
   elements.playButton.textContent = "Pause";
   playTimer = window.setInterval(() => {
     setRound(currentRoundIndex + 1);
-  }, PLAY_INTERVAL_MS);
+  }, playbackDelay());
 }
 
 function stopPlayback() {
@@ -234,24 +294,34 @@ async function render() {
   const state = currentWorldState(fixture, currentRoundIndex);
   const currentRound = currentRoundIndex === 0 ? null : fixture.rounds[currentRoundIndex - 1];
   const validation = await validateCurrentState(fixture, currentRoundIndex, state);
+  const previousState = currentRoundIndex === 0 ? null : currentWorldState(fixture, currentRoundIndex - 1);
   const weaponEvents = currentRound ? buildWeaponEvents(fixture, currentRound, state) : [];
+  const collisionEvents = buildCollisionEvents(previousState, state);
 
   elements.roundLabel.textContent = `${currentRoundIndex} / ${fixture.rounds.length}`;
   elements.validationLabel.textContent = validation.ok ? "Hash OK" : "Hash mismatch";
   elements.validationLabel.className = validation.ok ? "ok" : "bad";
   elements.hashLabel.textContent = shortHash(validation.actual);
+  elements.hashLabel.dataset.fullHash = validation.actual;
+  elements.hashDetails.textContent = validation.ok
+    ? `expected = actual = ${validation.actual}`
+    : `expected ${validation.expected} but got ${validation.actual}`;
   elements.quorumLabel.textContent = currentRound ? quorumText(currentRound) : "Genesis";
   elements.phaseNote.textContent = currentRound?.phase_note || fixture.description || "Genesis state";
 
-  renderBoard(fixture, state, weaponEvents);
+  renderBoard(fixture, state, weaponEvents, collisionEvents);
   renderAgentCards(fixture, state);
   renderWeaponList(weaponEvents);
+  renderDiffList(previousState, state);
+  renderAuditDetails(selectedFixture.audit);
+  elements.rawState.textContent = JSON.stringify(state, null, 2);
 }
 
 function renderEmptyState(message) {
   elements.board.replaceChildren();
   elements.agentCards.replaceChildren();
   elements.weaponList.replaceChildren();
+  elements.diffList.replaceChildren();
   elements.roundLabel.textContent = "0 / 0";
   elements.validationLabel.textContent = "Not loaded";
   elements.hashLabel.textContent = "-";
@@ -273,7 +343,7 @@ async function validateCurrentState(fixture, roundIndex, state) {
   };
 }
 
-function renderBoard(fixture, state, weaponEvents) {
+function renderBoard(fixture, state, weaponEvents, collisionEvents = []) {
   const bounds = boardBounds(fixture, state);
   const layout = createBoardLayout(bounds);
   const svg = elements.board;
@@ -283,6 +353,8 @@ function renderBoard(fixture, state, weaponEvents) {
   const defs = svgEl("defs");
   defs.appendChild(marker("arrow-railgun", "#ffd166"));
   defs.appendChild(marker("arrow-mazer", "#c084fc"));
+  defs.appendChild(marker("arrow-laser", "#6ee7ff"));
+  defs.appendChild(marker("arrow-blocked", "#ff5468"));
   defs.appendChild(marker("arrow-miss", "#7c8ba0"));
   svg.appendChild(defs);
 
@@ -332,17 +404,30 @@ function renderBoard(fixture, state, weaponEvents) {
   }
   svg.appendChild(rangeLayer);
 
+  const annotationLayer = svgEl("g", { class: "annotation-layer" });
+  for (const event of collisionEvents) {
+    const point = axialToPixel(event.agent.position);
+    annotationLayer.appendChild(svgEl("circle", {
+      class: "impact-ring",
+      cx: point.x,
+      cy: point.y,
+      r: "26",
+    }));
+    annotationLayer.appendChild(svgText("IMPACT", point.x, point.y - 30, "impact-label"));
+  }
+  svg.appendChild(annotationLayer);
+
   const weaponLayer = svgEl("g", { class: "weapon-layer" });
   for (const event of weaponEvents) {
     const from = axialToPixel(event.attacker.position);
     const to = axialToPixel(event.target.position);
     weaponLayer.appendChild(svgEl("line", {
-      class: `weapon-line ${event.weaponId} ${event.hit ? "hit" : "miss"}`,
+      class: `weapon-line ${event.weaponId} ${event.kind}`,
       x1: from.x,
       y1: from.y,
       x2: to.x,
       y2: to.y,
-      "marker-end": `url(#${event.hit ? markerId(event.weaponId) : "arrow-miss"})`,
+      "marker-end": `url(#${event.hit ? markerId(event.weaponId) : event.kind === "blocked" ? "arrow-blocked" : "arrow-miss"})`,
     }));
   }
   svg.appendChild(weaponLayer);
@@ -389,7 +474,7 @@ function renderWeaponList(weaponEvents) {
       card.className = "weapon-card";
       card.innerHTML = `
         <h3>${escapeHtml(event.attacker.agent_id)} -> ${escapeHtml(event.target.agent_id)}</h3>
-        <p>${escapeHtml(event.weaponId)}: <strong class="${event.hit ? "ok" : "bad"}">${event.hit ? "hit" : "miss"}</strong></p>
+        <p>${escapeHtml(event.weaponId)}: <strong class="${event.hit ? "ok" : "bad"}">${escapeHtml(event.label)}</strong></p>
         <p>${escapeHtml(event.reason)}</p>
       `;
       return card;
@@ -422,6 +507,8 @@ function buildWeaponEvents(fixture, round, state) {
         target,
         weaponId: declaration.weapon_id,
         hit: result.hit,
+        kind: result.kind,
+        label: result.label,
         reason: result.reason,
       });
     }
@@ -433,22 +520,22 @@ function buildWeaponEvents(fixture, round, state) {
 function weaponResult(attacker, target, rule, opaqueObjects) {
   const distance = axialDistance(attacker.position, target.position);
   if (distance > rule.range) {
-    return { hit: false, reason: `out of range (${distance} > ${rule.range})` };
+    return { hit: false, kind: "out-of-range", label: "out of range", reason: `out of range (${distance} > ${rule.range})` };
   }
   if (!isAxialStraight(attacker.position, target.position)) {
-    return { hit: false, reason: "not on a straight axial line" };
+    return { hit: false, kind: "non-straight", label: "non-straight miss", reason: "not on a straight axial line" };
   }
   if (rule.arc === "forward" && !targetInForwardArc(attacker, target, distance)) {
-    return { hit: false, reason: "outside fixed forward arc" };
+    return { hit: false, kind: "out-of-arc", label: "out of arc", reason: "outside fixed forward arc" };
   }
   if (lineOfSightBlocked(attacker.position, target.position, opaqueObjects)) {
-    return { hit: false, reason: "line of sight blocked" };
+    return { hit: false, kind: "blocked", label: "blocked", reason: "line of sight blocked" };
   }
-  return { hit: true, reason: `${rule.damage} damage` };
+  return { hit: true, kind: "hit", label: "hit", reason: `${rule.damage} damage` };
 }
 
 function weaponRule(fixture, weaponId) {
-  const rule = fixture.ruleset?.weapons?.[weaponId] ?? {};
+  const rule = fixture.ruleset?.weapons?.[weaponId] ?? fixture.ruleset?.weapon ?? {};
   return {
     range: rule.range ?? 0,
     damage: rule.damage ?? 0,
@@ -457,7 +544,9 @@ function weaponRule(fixture, weaponId) {
 }
 
 function markerId(weaponId) {
-  return weaponId === "fixed-railgun" ? "arrow-railgun" : "arrow-mazer";
+  if (weaponId === "fixed-railgun") return "arrow-railgun";
+  if (weaponId === "training-laser") return "arrow-laser";
+  return "arrow-mazer";
 }
 
 function marker(id, color) {
@@ -489,6 +578,13 @@ function shipSprite(agent) {
     "data-scale": String(SHIP_SCALE),
     transform: `translate(${point.x} ${point.y}) rotate(${angle}) scale(${SHIP_SCALE})`,
   });
+
+  if (agent.weapons?.includes("fixed-railgun")) {
+    group.appendChild(svgEl("polygon", {
+      class: "arc-cone",
+      points: "2,0 30,-9 30,9",
+    }));
+  }
 
   group.appendChild(svgEl("line", {
     class: "facing-ray",
@@ -679,6 +775,109 @@ function range(start, end, step) {
     values.push(value);
   }
   return values;
+}
+
+function renderTimeline() {
+  if (!selectedFixture) {
+    elements.timeline.replaceChildren();
+    return;
+  }
+
+  const max = selectedFixture.data.rounds.length;
+  elements.timeline.replaceChildren(
+    ...Array.from({ length: max + 1 }, (_, index) => {
+      const markerButton = document.createElement("button");
+      markerButton.type = "button";
+      markerButton.className = index === currentRoundIndex ? "timeline-marker active" : "timeline-marker";
+      markerButton.textContent = index === 0 ? "G" : String(index);
+      markerButton.title = index === 0 ? "Genesis" : selectedFixture.data.rounds[index - 1]?.phase_note || `Round ${index}`;
+      markerButton.addEventListener("click", () => setRound(index));
+      return markerButton;
+    }),
+  );
+}
+
+function renderDiffList(previousState, state) {
+  if (!previousState) {
+    elements.diffList.replaceChildren(emptyCard("Genesis baseline; no previous round to diff."));
+    return;
+  }
+  const previousAgents = new Map(previousState.agents.map((agent) => [agent.agent_id, agent]));
+  const rows = [];
+  for (const agent of state.agents) {
+    const previous = previousAgents.get(agent.agent_id);
+    if (!previous) continue;
+    const changes = [
+      diffField("position", coordText(previous.position, "q", "r"), coordText(agent.position, "q", "r")),
+      diffField("velocity", coordText(previous.velocity, "dq", "dr"), coordText(agent.velocity, "dq", "dr")),
+      diffField("HP", previous.hp, agent.hp),
+      diffField("fuel", fuelFromState(previous, agent.agent_id), fuelForAgent(agent)),
+    ].filter(Boolean);
+    const card = document.createElement("article");
+    card.className = "diff-card";
+    card.innerHTML = `<h3>${escapeHtml(agent.agent_id)}</h3>${changes.length ? changes.map((change) => `<p>${change}</p>`).join("") : "<p>No tracked changes.</p>"}`;
+    rows.push(card);
+  }
+  elements.diffList.replaceChildren(...rows);
+}
+
+function renderAuditDetails(audit) {
+  elements.auditDetails.textContent = audit
+    ? JSON.stringify(audit.final_audit ?? audit, null, 2)
+    : "No audit sidecar loaded for this replay.";
+}
+
+function buildCollisionEvents(previousState, state) {
+  if (!previousState) return [];
+  const previousAgents = new Map(previousState.agents.map((agent) => [agent.agent_id, agent]));
+  return state.agents
+    .map((agent) => ({ agent, previous: previousAgents.get(agent.agent_id) }))
+    .filter(({ agent, previous }) => previous && (agent.hp ?? 0) < (previous.hp ?? 0))
+    .map(({ agent, previous }) => ({ agent, hpLost: (previous.hp ?? 0) - (agent.hp ?? 0) }));
+}
+
+function diffField(label, before, after) {
+  return before === after ? null : `${escapeHtml(label)}: <strong>${escapeHtml(before)}</strong> → <strong>${escapeHtml(after)}</strong>`;
+}
+
+function coordText(value = {}, a, b) {
+  return `${a}=${value?.[a] ?? 0}, ${b}=${value?.[b] ?? 0}`;
+}
+
+function fuelFromState(state, agentId) {
+  if (!selectedFixture) return 0;
+  if (state.round === 0) {
+    const initial = selectedFixture.data.genesis.initial_ledger_payloads.find((item) => item.agent_id === agentId);
+    return initial?.payload.initial_fuel ?? 0;
+  }
+  const round = selectedFixture.data.rounds[(state.round ?? 1) - 1];
+  const input = round?.agent_inputs.find((item) => item.agent_id === agentId);
+  return input?.ledger_payload.fuel_remaining ?? "hidden";
+}
+
+function playbackDelay() {
+  return Math.max(80, Math.round(DEFAULT_PLAY_INTERVAL_MS / Number(elements.speedSelect.value || 1)));
+}
+
+function handleShortcut(event) {
+  if (["INPUT", "SELECT", "TEXTAREA"].includes(event.target?.tagName)) return;
+  if (event.key === "ArrowLeft") setRound(currentRoundIndex - 1);
+  if (event.key === "ArrowRight") setRound(currentRoundIndex + 1);
+  if (event.key.toLowerCase() === "r") setRound(0);
+  if (event.key === " " || event.key.toLowerCase() === "k") {
+    event.preventDefault();
+    togglePlayback();
+  }
+}
+
+async function copyCurrentHash() {
+  const hash = elements.hashLabel.dataset.fullHash;
+  if (!hash) return;
+  await navigator.clipboard.writeText(hash);
+  elements.copyHashButton.textContent = "Copied";
+  window.setTimeout(() => {
+    elements.copyHashButton.textContent = "Copy current hash";
+  }, 900);
 }
 
 function fuelForAgent(agent) {

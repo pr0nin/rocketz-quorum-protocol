@@ -41,3 +41,7 @@ luac.out
 
 # Playwright CLI session artifacts
 .playwright-cli/
+
+# JavaScript dependencies for visualizer browser checks
+node_modules/
+test-results/
