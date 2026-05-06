@@ -17,6 +17,32 @@ const SVG_NS = "http://www.w3.org/2000/svg";
 const HEX_SIZE = 34;
 const SQRT3 = Math.sqrt(3);
 const PLAY_INTERVAL_MS = 1050;
+const SHIP_SCALE = 0.72;
+
+const VISUAL_OBJECT_PROFILES = {
+  asteroid: [
+    [0, -18],
+    [14, -10],
+    [17, 5],
+    [6, 18],
+    [-13, 14],
+    [-19, -3],
+  ],
+  ship: [
+    [-18, -11],
+    [6, -12],
+    [21, -5],
+    [28, 0],
+    [21, 5],
+    [6, 12],
+    [-18, 11],
+    [-26, 0],
+    [-13, -15],
+    [-3, -7],
+    [-13, 15],
+    [-3, 7],
+  ],
+};
 
 let fixtures = [];
 let selectedFixture = null;
@@ -43,6 +69,10 @@ const elements = {
 };
 
 init();
+
+window.__rqpVisualRules = {
+  verifyObjectsContainedInHex,
+};
 
 async function init() {
   wireControls();
@@ -277,6 +307,11 @@ function renderBoard(fixture, state, weaponEvents) {
     if (object.collides) classes.push("collides");
     objectLayer.appendChild(svgEl("polygon", {
       class: classes.join(" "),
+      "data-visual-object": "map-object",
+      "data-profile": "asteroid",
+      "data-object-id": object.id || object.type || "object",
+      "data-angle": "0",
+      "data-scale": "1",
       points: asteroidPoints(point.x, point.y),
     }));
     objectLayer.appendChild(svgText(object.id || object.type || "object", point.x, point.y + 23, "ship-label"));
@@ -447,62 +482,67 @@ function shipSprite(agent) {
   const angle = vectorAngle(agent.facing ?? agent.velocity ?? { dq: 1, dr: 0 });
   const group = svgEl("g", {
     class: `ship ${agent.agent_id === "agent-a" ? "agent-a" : "agent-b"}`,
-    transform: `translate(${point.x} ${point.y}) rotate(${angle}) scale(1.28)`,
+    "data-visual-object": "ship",
+    "data-profile": "ship",
+    "data-agent-id": agent.agent_id,
+    "data-angle": angle.toFixed(6),
+    "data-scale": String(SHIP_SCALE),
+    transform: `translate(${point.x} ${point.y}) rotate(${angle}) scale(${SHIP_SCALE})`,
   });
 
   group.appendChild(svgEl("line", {
     class: "facing-ray",
     x1: "0",
     y1: "0",
-    x2: "42",
+    x2: "23",
     y2: "0",
   }));
   group.appendChild(svgEl("polygon", {
     class: "fin",
-    points: "-7,-10 -27,-24 -20,-4",
+    points: "-3,-7 -13,-15 -10,-3",
   }));
   group.appendChild(svgEl("polygon", {
     class: "fin",
-    points: "-7,10 -27,24 -20,4",
+    points: "-3,7 -13,15 -10,3",
   }));
   group.appendChild(svgEl("polygon", {
     class: "engine-glow",
-    points: "-35,-8 -52,0 -35,8",
+    points: "-18,-6 -26,0 -18,6",
   }));
   group.appendChild(svgEl("polygon", {
     class: "engine",
-    points: "-30,-10 -43,0 -30,10",
+    points: "-16,-7 -23,0 -16,7",
   }));
   group.appendChild(svgEl("polygon", {
     class: "hull",
-    points: "-30,-14 8,-16 31,-6 41,0 31,6 8,16 -30,14",
+    points: "-18,-11 6,-12 21,-5 28,0 21,5 6,12 -18,11",
   }));
   group.appendChild(svgEl("polygon", {
     class: "nose",
-    points: "30,-10 52,0 30,10",
+    points: "18,-7 28,0 18,7",
   }));
   group.appendChild(svgEl("ellipse", {
     class: "cockpit",
-    cx: "7",
+    cx: "4",
     cy: "0",
-    rx: "8",
-    ry: "4.8",
+    rx: "5",
+    ry: "3",
   }));
   group.appendChild(svgEl("circle", {
     class: "side-port",
     cx: "-5",
-    cy: "-10.5",
-    r: "3",
+    cy: "-7",
+    r: "2.2",
   }));
   group.appendChild(svgEl("circle", {
     class: "side-port",
     cx: "-5",
-    cy: "10.5",
-    r: "3",
+    cy: "7",
+    r: "2.2",
   }));
 
   const labelGroup = svgEl("g", {
-    transform: `scale(${1 / 1.28}) rotate(${-angle})`,
+    transform: `scale(${1 / SHIP_SCALE}) rotate(${-angle})`,
   });
   labelGroup.appendChild(svgText(agent.agent_id, 0, -40, "ship-label"));
   group.appendChild(labelGroup);
@@ -578,15 +618,7 @@ function hexPoints(cx, cy) {
 }
 
 function asteroidPoints(cx, cy) {
-  const points = [
-    [0, -24],
-    [18, -13],
-    [22, 7],
-    [8, 23],
-    [-15, 18],
-    [-25, -4],
-  ];
-  return points.map(([x, y]) => `${cx + x},${cy + y}`).join(" ");
+  return VISUAL_OBJECT_PROFILES.asteroid.map(([x, y]) => `${cx + x},${cy + y}`).join(" ");
 }
 
 function axialRangeRadius(fixture, weaponId) {
@@ -687,6 +719,69 @@ async function sha256Hex(text) {
   const bytes = new TextEncoder().encode(text);
   const digest = await crypto.subtle.digest("SHA-256", bytes);
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function verifyObjectsContainedInHex() {
+  const failures = [];
+  const objects = [...document.querySelectorAll("[data-visual-object]")];
+
+  for (const object of objects) {
+    const profileName = object.dataset.profile;
+    const profile = VISUAL_OBJECT_PROFILES[profileName] ?? [];
+    const scale = Number(object.dataset.scale ?? 1);
+    const angle = Number(object.dataset.angle ?? 0);
+    const transformedPoints = profile.map(([x, y]) => rotatePoint(x * scale, y * scale, angle));
+    const outsidePoints = transformedPoints.filter((point) => !pointInHex(point.x, point.y, HEX_SIZE - 2));
+
+    if (outsidePoints.length > 0) {
+      failures.push({
+        id: object.dataset.agentId || object.dataset.objectId || profileName,
+        type: object.dataset.visualObject,
+        profile: profileName,
+        outsidePoints,
+      });
+    }
+  }
+
+  return {
+    ok: failures.length === 0,
+    checked: objects.length,
+    hexSize: HEX_SIZE,
+    failures,
+  };
+}
+
+function rotatePoint(x, y, angleDegrees) {
+  const radians = (Math.PI / 180) * angleDegrees;
+  const cos = Math.cos(radians);
+  const sin = Math.sin(radians);
+  return {
+    x: x * cos - y * sin,
+    y: x * sin + y * cos,
+  };
+}
+
+function pointInHex(x, y, radius) {
+  const vertices = hexLocalVertices(radius);
+  let inside = false;
+  for (let i = 0, j = vertices.length - 1; i < vertices.length; j = i, i += 1) {
+    const a = vertices[i];
+    const b = vertices[j];
+    if ((a.y > y) !== (b.y > y) && x < ((b.x - a.x) * (y - a.y)) / (b.y - a.y) + a.x) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
+function hexLocalVertices(radius) {
+  return Array.from({ length: 6 }, (_, index) => {
+    const angle = (Math.PI / 180) * (60 * index - 30);
+    return {
+      x: radius * Math.cos(angle),
+      y: radius * Math.sin(angle),
+    };
+  });
 }
 
 function svgEl(tagName, attributes = {}) {

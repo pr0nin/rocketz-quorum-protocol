@@ -53,6 +53,7 @@ This repository is a docs-first bootstrap specification and fixture suite for th
   python3 -m http.server 8765 --bind 127.0.0.1
   ```
   Then open `http://127.0.0.1:8765/visualizer/`.
+  The visualizer exposes `window.__rqpVisualRules.verifyObjectsContainedInHex()` so Playwright can assert all rendered ships/map objects fit inside their current hex.
 
 ## High-level architecture
 

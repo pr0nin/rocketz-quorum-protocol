@@ -63,6 +63,8 @@ http://127.0.0.1:8765/visualizer/
 
 The visualizer loads the checked-in bootstrap fixtures, validates each round's world-state hash in the browser, and supports manual previous/next/slider stepping plus automatic Play/Pause replay. It can also load replay JSON files or a fixture folder through the upload control.
 
+The visualizer exposes `window.__rqpVisualRules.verifyObjectsContainedInHex()` for browser automation. It returns `{ ok, checked, failures }` and verifies that every rendered ship or map object stays within its assigned hex.
+
 ## Repository map
 
 | Path | Purpose | Status |
