@@ -89,6 +89,8 @@ Recommended reputation events:
 | Three missing reveals | `-10` |
 | Invalid reveal | `-15` |
 | Fuel overspend | `-25` |
+| Energy Flux mismatch | `-25` |
+| Pre-lock violation | `-25` |
 | Conflicting state vote | `-25` |
 
 ## 7. Sanctions
@@ -98,6 +100,10 @@ Recommended reputation events:
 | Commit mismatch | Round action invalidated |
 | Fuel overspend | Match disqualification |
 | Ledger mismatch | Match disqualification |
+| Energy Flux mismatch | Match disqualification or result reversal |
+| Simulated Deck entropy violation | Match disqualification and evidence review |
+| Thermal Debt mismatch | Match disqualification if it changes damage, elimination, or rewards |
+| Signal Flare pre-lock violation | Round action invalidated and disqualification eligible |
 | Conflicting state vote | Match disqualification and reputation penalty |
 | Serialization violation | Client quarantine until fixed |
 | Repeated missing reveals | Disqualification eligible |
@@ -134,6 +140,8 @@ Tournament broadcasts should use:
 1. Public live mode during active rounds.
 2. Match-end god-view replay after audit.
 3. Commentary overlays generated from audit data.
+
+If a match enables Signal Flares, the broadcast profile should expose canonical `bright` or `flaring` status and any publicly revealed future nonces at the same time they become available to competitors. Hidden actions, hidden fuel details, and Energy Flux decompositions should remain withheld until their normal reveal or audit disclosure unless the tournament explicitly chooses a delayed god-view mode.
 
 ## 10. Blacklisting
 
