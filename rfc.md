@@ -54,7 +54,7 @@ Implementations MAY define these layers independently as long as they preserve t
 | Creep | Deterministic environmental pressure that increases operating costs on the map. |
 | Hex Potential | Accumulated vote pressure on a hex coordinate before an environmental change is triggered. |
 | Commit | A one-way hash of an agent's intended action, fuel burn, vote, and nonce. |
-| Commit Nonce | The high-entropy per-agent, per-round secret value included in a commit payload and disclosed during reveal; represented by the `salt` field in the base JSON profile. |
+| Commit Nonce | The per-agent, per-round secret value included in a commit payload and disclosed during reveal; competitive profiles require high entropy, while local fixtures may use deterministic test salts. |
 | Reveal | The later disclosure of the committed action data so all nodes can execute the round. |
 | Energy Flux | A ruleset-defined public aggregate of per-round energy expenditure that can hide detailed resource allocation until audit. |
 | Simulated Deck | A ruleset-defined delayed deterministic randomness source derived from revealed commit nonces. |
@@ -533,8 +533,6 @@ Each round commit MUST bind:
 7. Fuel ledger hash.
 8. Commit Nonce, represented by the `salt` field in the base JSON profile.
 
-`Commit Nonce` is the conceptual security term. The `salt` field name remains the base JSON schema name for backwards compatibility with existing fixtures and test vectors.
-
 The commitment is:
 
 ```text
@@ -569,7 +567,7 @@ Local replay fixtures MAY use human-readable deterministic salts because they ar
 
 Implementations SHOULD keep fixture replay and competitive nonce generation on distinct code paths to avoid accidentally reusing deterministic test salts in production.
 
-The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for the commit nonce. A future profile MAY rename or separate nonce fields only by declaring a new canonical schema version and updating all affected test vectors and fixtures.
+`Commit Nonce` is the conceptual security term. The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for backwards compatibility with existing fixtures and test vectors. A future profile MAY rename or separate nonce fields only by declaring a new canonical schema version and updating all affected test vectors and fixtures.
 
 ## 8. Dynamic Environment
 
@@ -758,7 +756,7 @@ deck_seed[n+1] = SHA256(canonical(
 ))
 ```
 
-The seed derived from round `n` MUST NOT resolve events in round `n`. It MAY resolve events in round `n+1` or later, as declared by the ruleset, so all round `n` reveals and the round `n` state lock complete before any agent can observe outcomes resolved by the round `n` deck seed. For each probabilistic event class, the ruleset MUST identify the exact future round offset or seed-consumption rule before match start.
+The seed derived from round `n` MUST NOT resolve events in round `n`. It MAY resolve events in round `n+1` or later, as declared by the ruleset. This ensures all round `n` reveals and the round `n` state lock complete before any agent can observe outcomes resolved by the round `n` deck seed. For each probabilistic event class, the ruleset MUST identify the exact future round offset or seed-consumption rule before match start.
 
 No bootstrap fixture currently enables Simulated Deck; fixture-backed examples should be added with the first probabilistic ruleset profile.
 
@@ -906,7 +904,9 @@ Audit tooling SHOULD be able to emit a machine-readable report. The default repo
 }
 ```
 
-Required violation types are `commit_mismatch`, `fuel_overspend`, `ledger_mismatch`, `invalid_action`, `conflicting_state_vote`, and `serialization_violation`. Profiles that enable advanced resource or transparency extensions SHOULD also define `energy_flux_mismatch`, `deck_entropy_violation`, `thermal_debt_mismatch`, and `prelock_violation`.
+Required violation types are `commit_mismatch`, `fuel_overspend`, `ledger_mismatch`, `invalid_action`, `conflicting_state_vote`, and `serialization_violation`.
+
+Profiles that enable advanced resource or transparency extensions SHOULD also define `energy_flux_mismatch`, `deck_entropy_violation`, `thermal_debt_mismatch`, and `prelock_violation`.
 
 ### 13.3 Violations
 
