@@ -54,7 +54,7 @@ Implementations MAY define these layers independently as long as they preserve t
 | Creep | Deterministic environmental pressure that increases operating costs on the map. |
 | Hex Potential | Accumulated vote pressure on a hex coordinate before an environmental change is triggered. |
 | Commit | A one-way hash of an agent's intended action, fuel burn, vote, and nonce. |
-| Commit Nonce | The per-agent, per-round secret value included in a commit payload and disclosed during reveal; the base JSON profile calls this value `salt` for backwards compatibility. Competitive profiles require high entropy, while local fixtures may use deterministic test salts. |
+| Commit Nonce | The per-agent, per-round secret value included in a commit payload and disclosed during reveal. The base JSON profile calls this value `salt` for backwards compatibility. Competitive profiles require high entropy, while local fixtures may use deterministic test salts. |
 | Reveal | The later disclosure of the committed action data so all nodes can execute the round. |
 | Energy Flux | A ruleset-defined public aggregate of per-round energy expenditure that can hide detailed resource allocation until audit. |
 | Simulated Deck | A ruleset-defined delayed deterministic randomness source derived from revealed commit nonces. |
@@ -459,7 +459,7 @@ energy_flux[n] = sum(all visible and hidden energy expenditures for agent in rou
 
 The ruleset MUST define which costs are included in `energy_flux`, including movement, weapons, mining, charging, thermal management, tactical priority, environmental costs, and any hidden or delayed actions. `energy_flux` is public during the round. The detailed resource log that decomposes the aggregate into individual costs MAY remain hidden until audit.
 
-For profiles that enable `energy_flux-v1`, the live commit/reveal schema MUST be declared in the ruleset profile. The default `energy_flux-v1` schema replaces the base payload's live `fuel_burn` field with live `energy_flux`; consensus peers verify the round commitment against that public reveal payload using the same `SHA256(canonical(revealed_payload)) == commit_hash[n]` rule. The detailed `fuel_burn` sequence remains hidden until audit, while `fuel_ledger_hash` continues to commit to the actual audited resource transition.
+For profiles that enable `energy_flux-v1`, the live commit/reveal schema MUST be declared in the ruleset profile. The default `energy_flux-v1` schema replaces the base payload's live `fuel_burn` field with live `energy_flux`. Consensus peers verify the round commitment against that public reveal payload using the same `SHA256(canonical(revealed_payload)) == commit_hash[n]` rule. The detailed `fuel_burn` sequence remains hidden until audit, while `fuel_ledger_hash` continues to commit to the actual audited resource transition.
 
 Auditors MUST perform strict integer-sum replay of the disclosed detailed action log. If the sum of the hidden cost entries does not equal the revealed `energy_flux`, audit fails with deterministic `energy_flux_mismatch`. The post-game disclosure MUST prove that:
 
@@ -571,7 +571,11 @@ Local replay fixtures MAY use human-readable deterministic salts because they ar
 
 Implementations SHOULD keep fixture replay and competitive nonce generation on distinct code paths to avoid accidentally reusing deterministic test salts in production.
 
-`Commit Nonce` is the conceptual security term. The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for backwards compatibility with existing fixtures and test vectors. Competitive profiles MAY require the explicit field name `commit_nonce`, but only by using the extension negotiation process in Section 4.1, declaring a new canonical schema version, and updating all affected test vectors and fixtures.
+`Commit Nonce` is the conceptual security term. The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for backwards compatibility with existing fixtures and test vectors. Competitive profiles MAY require the explicit field name `commit_nonce`, but only when they:
+
+1. Use the extension negotiation process in Section 4.1.
+2. Declare a new canonical schema version.
+3. Update all affected test vectors and fixtures.
 
 ## 8. Dynamic Environment
 

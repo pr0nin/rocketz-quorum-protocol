@@ -143,11 +143,11 @@ Tournament broadcasts should use:
 
 If a match enables Signal Flares, the broadcast profile should define:
 
-1. Canonical `bright` or `flaring` status and publicly revealed future nonces.
-2. Whether spectator disclosure is simultaneous with competitor disclosure or delayed by a tournament-defined spectator-delay window.
+1. The profile MUST identify canonical `bright` or `flaring` status and publicly revealed future nonces as broadcast-relevant information.
+2. The profile MUST specify whether spectator disclosure is simultaneous with competitor disclosure or delayed by a tournament-defined spectator-delay window.
 3. A guarantee that spectators MUST NOT receive this information before competitors.
-4. Hidden actions, hidden fuel details, and Energy Flux decompositions that remain withheld until their normal reveal or audit disclosure.
-5. Any delayed god-view exception that reveals additional hidden data to spectators after a tournament-defined delay.
+4. Hidden actions, hidden fuel details, and Energy Flux decompositions SHOULD remain withheld until their normal reveal or audit disclosure.
+5. The profile MAY define a delayed god-view exception that reveals additional hidden data to spectators after a tournament-defined delay.
 
 ## 10. Blacklisting
 
