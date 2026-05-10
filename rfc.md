@@ -54,7 +54,7 @@ Implementations MAY define these layers independently as long as they preserve t
 | Creep | Deterministic environmental pressure that increases operating costs on the map. |
 | Hex Potential | Accumulated vote pressure on a hex coordinate before an environmental change is triggered. |
 | Commit | A one-way hash of an agent's intended action, fuel burn, vote, and nonce. |
-| Commit Nonce | The high-entropy per-agent, per-round secret value included in a commit payload. Existing JSON examples use the field name `salt`; in this RFC, `commit salt`, `commit nonce`, and reveal `salt` refer to the same committed value unless a future profile explicitly separates them. |
+| Commit Nonce | The high-entropy per-agent, per-round secret value included in a commit payload and disclosed during reveal. Existing JSON examples use the field name `salt`; in this RFC, `commit salt`, `commit nonce`, and the revealed `salt` field refer to the same committed value unless a future profile explicitly separates them. |
 | Reveal | The later disclosure of the committed action data so all nodes can execute the round. |
 | Energy Flux | A ruleset-defined public aggregate of per-round energy expenditure that can hide detailed resource allocation until audit. |
 | Simulated Deck | A ruleset-defined delayed deterministic randomness source derived from revealed commit nonces. |
@@ -561,7 +561,7 @@ Competitive and public-network profiles MUST require every commit nonce to be:
 4. Revealed under the declared profile no later than the matching action payload.
 5. Auditable after match end.
 
-Profiles SHOULD require at least 128 bits of unpredictable entropy for each nonce. Local replay fixtures MAY use human-readable deterministic salts only because they are non-competitive conformance vectors with fixed expected hashes.
+Profiles SHOULD require at least 128 bits of unpredictable entropy for each nonce. Local replay fixtures MAY use human-readable deterministic salts only because they are non-competitive conformance vectors with fixed expected hashes; those salts are valid for canonical test replay but MUST NOT be used as examples for competitive profiles.
 
 The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for the commit nonce. A future profile MAY rename or separate nonce fields only by declaring a new canonical schema version and updating all affected test vectors and fixtures.
 
@@ -752,7 +752,7 @@ deck_seed[n+1] = SHA256(canonical(
 ))
 ```
 
-The seed derived from round `n` MUST NOT resolve events in round `n`. It MAY resolve events in round `n+1` or later, as declared by the ruleset. This delay reduces last-revealer advantage because an agent cannot choose whether to reveal after seeing same-round random outcomes.
+The seed derived from round `n` MUST NOT resolve events in round `n`. It MAY resolve events in round `n+1` or later, as declared by the ruleset. For each probabilistic event class, the ruleset MUST identify the exact future round offset or seed-consumption rule before match start. This delay reduces last-revealer advantage because an agent cannot choose whether to reveal after seeing same-round random outcomes.
 
 If an agent fails to reveal, its missing nonce MUST be excluded or replaced only according to the declared profile. The base fault handling still applies: the action defaults to Level 0 Inertial, and the missing reveal is recorded for audit or tournament penalties. Delayed entropy reduces but does not eliminate reveal-withholding griefing, so competitive profiles SHOULD pair Simulated Deck with strict deadlines, signed messages, and sanctions.
 
@@ -1032,7 +1032,7 @@ Small discrete action spaces make unsalted commits vulnerable to brute-force enu
 
 ### 18.7 Deck Steering and Transparency Bluffing
 
-If a Signal Flare exposes future nonces, a still-dark opponent may try to grind its own nonce before committing in order to steer a future Simulated Deck seed. This is a ruleset and tournament risk, not a separate deterministic game rule.
+If a Signal Flare exposes future nonces, a still-dark opponent may try to grind its own nonce before committing in order to steer a future Simulated Deck seed. The core protocol does not prevent this attack by itself; rulesets and tournament profiles should address it through policy and mechanics such as deadlines, entropy requirements, and sanctions.
 
 Profiles that combine Simulated Deck with bright/dark visibility SHOULD consider nonce submission deadlines, minimum entropy requirements, anti-grinding commitments, delayed deck consumption windows, and penalties for reveal withholding. A bright agent's action commitment can remain hidden until reveal, so intentionally unexpected or sub-optimal physical actions are a legitimate strategic counter to opponents that overfit to known future entropy.
 

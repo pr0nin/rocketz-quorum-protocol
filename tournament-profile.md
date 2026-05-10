@@ -141,7 +141,11 @@ Tournament broadcasts should use:
 2. Match-end god-view replay after audit.
 3. Commentary overlays generated from audit data.
 
-If a match enables Signal Flares, the broadcast profile should expose canonical `bright` or `flaring` status and any publicly revealed future nonces at the same time they become available to competitors. Hidden actions, hidden fuel details, and Energy Flux decompositions should remain withheld until their normal reveal or audit disclosure unless the tournament explicitly chooses a delayed god-view mode.
+If a match enables Signal Flares, the broadcast profile should define:
+
+1. Canonical `bright` or `flaring` status and publicly revealed future nonces that are exposed at the same time they become available to competitors.
+2. Hidden actions, hidden fuel details, and Energy Flux decompositions that remain withheld until their normal reveal or audit disclosure.
+3. Any delayed god-view exception that reveals additional hidden data to spectators after a tournament-defined delay.
 
 ## 10. Blacklisting
 
