@@ -558,7 +558,7 @@ Competitive and public-network profiles MUST require every commit nonce to be:
 1. Generated from a cryptographically secure random source or an equivalent high-entropy agent-local secret process.
 2. Unique for the tuple `(match_id, agent_id, round)`.
 3. Bound inside the canonical commit payload before hashing.
-4. Revealed exactly once with the matching action payload.
+4. Revealed under the declared profile no later than the matching action payload.
 5. Auditable after match end.
 
 Profiles SHOULD require at least 128 bits of unpredictable entropy for each nonce. Local replay fixtures MAY use human-readable deterministic salts only because they are non-competitive conformance vectors with fixed expected hashes.
@@ -747,7 +747,7 @@ deck_seed[n+1] = SHA256(canonical(
   "rqp-simulated-deck-v1",
   match_id,
   n,
-  locked_world_state_hash[n-1],
+  locked_world_state_hash[n],
   ordered_revealed_commit_nonces[n]
 ))
 ```
