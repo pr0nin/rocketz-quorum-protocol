@@ -59,7 +59,7 @@ Implementations MAY define these layers independently as long as they preserve t
 | Energy Flux | A ruleset-defined public aggregate of per-round energy expenditure that can hide detailed resource allocation until audit. |
 | Simulated Deck | A ruleset-defined delayed deterministic randomness source derived from revealed commit nonces. |
 | Thermal Debt | A ruleset-defined risk state accumulated when an agent exceeds declared structural or energy capacity. |
-| Signal Flare | A ruleset-defined transparency state that forces some future entropy or intent commitments to become public. |
+| Signal Flare | A ruleset-defined transparency state that forces some future Commit Nonces, deck entropy inputs, or intent commitments to become public. |
 | Audit | Post-match verification of fuel balances, commitments, salts, and protocol compliance. |
 
 ## 4. System Overview
@@ -461,7 +461,7 @@ The ruleset MUST define which costs are included in `energy_flux`, including mov
 
 For profiles that enable `energy_flux-v1`, the live commit/reveal schema MUST be declared in the ruleset profile. The default `energy_flux-v1` schema replaces the base payload's live `fuel_burn` field with live `energy_flux`. Consensus peers verify the round commitment against that public reveal payload using the same `SHA256(canonical(revealed_payload)) == commit_hash[n]` rule. The detailed `fuel_burn` sequence remains hidden until audit, while `fuel_ledger_hash` continues to commit to the actual audited resource transition.
 
-Auditors MUST perform strict integer-sum replay of the disclosed detailed action log. If the sum of the hidden cost entries does not equal the revealed `energy_flux`, audit fails with deterministic `energy_flux_mismatch`. The post-game disclosure MUST prove that:
+Auditors MUST perform strict integer-sum replay of the complete disclosed detailed action log, including entries that were visible during live play and entries that remained hidden until audit. If the sum of those cost entries does not equal the revealed `energy_flux`, audit fails with deterministic `energy_flux_mismatch`. The post-game disclosure MUST prove that:
 
 1. The detailed action log sums exactly to the revealed `energy_flux`.
 2. The committed ledger hash matches the audited fuel burn and remaining fuel.
@@ -533,7 +533,7 @@ Each round commit MUST bind:
 5. Vote coordinate, if any.
 6. Fuel burn.
 7. Fuel ledger hash.
-8. Commit Nonce, represented by the `salt` field in the base JSON profile or by `commit_nonce` in a profile that explicitly negotiates that field name.
+8. Commit Nonce, represented by the `salt` field in the base JSON profile or by `commit_nonce` in a profile that explicitly negotiates that field name; see Section 7.4 for field name conventions.
 
 The base schema binds `fuel_burn` as item 6. Profiles such as `energy_flux-v1` MAY replace item 6 only by declaring an explicit commit/reveal schema override and preserving deterministic commit verification.
 
@@ -875,7 +875,7 @@ An agent is eliminated by default when:
 At match end, each agent MUST publish and disclose for audit:
 
 1. Initial loadout salt.
-2. All per-round Commit Nonces (`salt` values in the base JSON profile or `commit_nonce` values in profiles that negotiate that field name).
+2. All per-round Commit Nonces; see Section 7.4 for field name conventions.
 3. All per-round fuel ledger salts.
 4. Full fuel burn sequence.
 5. Any hidden data that the active ruleset requires disclosure for during audit, such as hidden action logs, Energy Flux decompositions, pre-locked nonce sequences, thermal state inputs, or hidden configuration.
