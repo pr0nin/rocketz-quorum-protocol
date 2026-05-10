@@ -54,7 +54,7 @@ Implementations MAY define these layers independently as long as they preserve t
 | Creep | Deterministic environmental pressure that increases operating costs on the map. |
 | Hex Potential | Accumulated vote pressure on a hex coordinate before an environmental change is triggered. |
 | Commit | A one-way hash of an agent's intended action, fuel burn, vote, and nonce. |
-| Commit Nonce | The per-agent, per-round secret value included in a commit payload and disclosed during reveal; competitive profiles require high entropy, while local fixtures may use deterministic test salts. |
+| Commit Nonce | The per-agent, per-round secret value included in a commit payload and disclosed during reveal; the base JSON profile calls this value `salt` for backwards compatibility. Competitive profiles require high entropy, while local fixtures may use deterministic test salts. |
 | Reveal | The later disclosure of the committed action data so all nodes can execute the round. |
 | Energy Flux | A ruleset-defined public aggregate of per-round energy expenditure that can hide detailed resource allocation until audit. |
 | Simulated Deck | A ruleset-defined delayed deterministic randomness source derived from revealed commit nonces. |
@@ -451,7 +451,7 @@ An agent MUST NOT spend more fuel than it has available. During the match, this 
 
 ### 6.5 Optional Energy Flux Extension
 
-Rulesets MAY enable an `energy_flux-v1` extension for competitive profiles that want public resource bluffing without exposing a full per-action fuel ledger during live play. When enabled, each agent commits to and reveals a single non-negative integer:
+Rulesets MAY enable an `energy_flux-v1` extension for competitive profiles that want to reveal aggregate energy expenditure while hiding detailed resource allocation during live play. When enabled, each agent commits to and reveals a single non-negative integer:
 
 ```text
 energy_flux[n] = sum(all visible and hidden energy expenditures for agent in round n)
@@ -571,7 +571,7 @@ Local replay fixtures MAY use human-readable deterministic salts because they ar
 
 Implementations SHOULD keep fixture replay and competitive nonce generation on distinct code paths to avoid accidentally reusing deterministic test salts in production.
 
-`Commit Nonce` is the conceptual security term. The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for backwards compatibility with existing fixtures and test vectors. Competitive profiles MAY require the explicit field name `commit_nonce`, but only by declaring a new canonical schema version and updating all affected test vectors and fixtures.
+`Commit Nonce` is the conceptual security term. The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for backwards compatibility with existing fixtures and test vectors. Competitive profiles MAY require the explicit field name `commit_nonce`, but only by using the extension negotiation process in Section 4.1, declaring a new canonical schema version, and updating all affected test vectors and fixtures.
 
 ## 8. Dynamic Environment
 
@@ -868,7 +868,7 @@ An agent is eliminated by default when:
 
 ### 13.1 Audit Disclosure
 
-At match end, each agent MUST publish:
+At match end, each agent MUST publish and disclose for audit:
 
 1. Initial loadout salt.
 2. All per-round Commit Nonces (`salt` values in the base JSON profile or `commit_nonce` values in profiles that negotiate that field name).
