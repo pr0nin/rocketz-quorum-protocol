@@ -54,7 +54,12 @@ Implementations MAY define these layers independently as long as they preserve t
 | Creep | Deterministic environmental pressure that increases operating costs on the map. |
 | Hex Potential | Accumulated vote pressure on a hex coordinate before an environmental change is triggered. |
 | Commit | A one-way hash of an agent's intended action, fuel burn, vote, and nonce. |
+| Commit Nonce | The per-agent, per-round secret value included in a commit payload and disclosed during reveal. The base JSON profile calls this value `salt` for backwards compatibility. Competitive profiles require high entropy, while local fixtures may use deterministic test salts. |
 | Reveal | The later disclosure of the committed action data so all nodes can execute the round. |
+| Energy Flux | A ruleset-defined public aggregate of per-round energy expenditure that can hide detailed resource allocation until audit. |
+| Simulated Deck | A ruleset-defined delayed deterministic randomness source derived from revealed commit nonces. |
+| Thermal Debt | A ruleset-defined risk state accumulated when an agent exceeds declared structural or energy capacity. |
+| Signal Flare | A ruleset-defined transparency state that forces some future Commit Nonces, deck entropy inputs, or intent commitments to become public. |
 | Audit | Post-match verification of fuel balances, commitments, salts, and protocol compliance. |
 
 ## 4. System Overview
@@ -68,6 +73,18 @@ An RQP match consists of a fixed set of registered agents, a deterministic map s
 5. If quorum agrees on the state hash, the round is locked and the match advances.
 
 No node is trusted as authoritative. A message hub MAY be used for transport, but the hub MUST NOT decide game outcomes. It only relays messages.
+
+### 4.1 Extension Negotiation and Layering
+
+RQP extensions MUST be negotiated explicitly through the genesis state, ruleset profile, or tournament profile. Implementations MUST NOT infer advanced behavior from field presence alone when that behavior affects canonical simulation or audit validity.
+
+Extensions are layered as follows:
+
+1. Core protocol requirements cover commit/reveal, nonce entropy, canonical serialization, audit replay, quorum locking, signatures where required, and fault handling.
+2. Ruleset-defined gameplay mechanics cover public energy aggregates, delayed deterministic randomness, thermal debt, signal flares, jump drives, mining, advanced weapons, or other balance-sensitive effects.
+3. Tournament and broadcast profiles cover sanctions, slashing, persistence, reputation, bright/dark information policy, delayed spectator disclosure, and public reporting.
+
+Bootstrap fixtures remain valid unless their genesis state deliberately opts into an extension profile and updates every affected canonical hash, audit disclosure, and fixture index entry.
 
 ## 5. Deterministic Simulation Requirements
 
@@ -432,6 +449,56 @@ fuel_burn =
 
 An agent MUST NOT spend more fuel than it has available. During the match, this is hidden by the fuel ledger. At audit time, overspending is a protocol violation.
 
+### 6.5 Optional Energy Flux Extension
+
+Rulesets MAY enable an `energy_flux-v1` extension for competitive profiles that want to reveal aggregate energy expenditure while hiding detailed resource allocation during live play. When enabled, each agent commits to and reveals a single non-negative integer:
+
+```text
+energy_flux[n] = sum(all visible and hidden energy expenditures for agent in round n)
+```
+
+The ruleset MUST define which costs are included in `energy_flux`, including movement, weapons, mining, charging, thermal management, tactical priority, environmental costs, and any hidden or delayed actions. `energy_flux` is public during the round. The detailed resource log that decomposes the aggregate into individual costs MAY remain hidden until audit.
+
+For profiles that enable `energy_flux-v1`, the live commit/reveal schema MUST be declared in the ruleset profile. The default `energy_flux-v1` schema replaces the base payload's live `fuel_burn` field with live `energy_flux`. Consensus peers verify the round commitment against that public reveal payload using the same `SHA256(canonical(revealed_payload)) == commit_hash[n]` rule. The detailed `fuel_burn` sequence remains hidden until audit, while `fuel_ledger_hash` continues to commit to the actual audited resource transition.
+
+Auditors MUST perform strict integer-sum replay of the complete disclosed detailed action log, including entries that were visible during live play and entries that remained hidden until audit. If the sum of those cost entries does not equal the revealed `energy_flux`, audit fails with deterministic `energy_flux_mismatch`. The post-game disclosure MUST prove that:
+
+1. The detailed action log sums exactly to the revealed `energy_flux`.
+2. The committed ledger hash matches the audited fuel burn and remaining fuel.
+3. The public world-state transition is consistent with all visible effects.
+4. Any hidden effects that were deferred until audit are permitted by the ruleset.
+
+Bootstrap and local replay profiles that do not enable `energy_flux-v1` continue to reveal `fuel_burn` as shown in the base examples.
+
+### 6.6 Optional Thermal Debt Extension
+
+Rulesets MAY define Thermal Debt for ships or objects that can exceed safe operating limits. A Thermal Debt profile MUST declare all capacity fields, thresholds, lookup tables, consequences, and integer rounding rules in the ruleset or genesis state.
+
+If enabled, each affected object SHOULD materialize a structural capacity field, for example `structural_capacity`, and any active debt state in canonical world state. A simple profile can define:
+
+```text
+thermal_excess[n] = max(0, energy_flux[n] - effective_structural_capacity[n])
+thermal_debt[n+1] = thermal_debt[n] + thermal_excess[n] - cooling[n]
+```
+
+The ruleset MUST define whether excess is caused by public `energy_flux`, detailed audited fuel burn, specific hidden actions, environmental hazards, jump-drive use, or a combination of these. It MUST also define deterministic consequences such as temporary capacity reduction, thrust or speed penalties, hull damage, subsystem damage, forced shutdown, elimination, or delayed recovery.
+
+Thermal outcomes MAY use the Simulated Deck extension only if that extension is enabled. In that case, the ruleset MUST identify the deck round used for each risk check and MUST specify the sampling order, domain separator, rejection rules, and consequence table.
+
+### 6.7 Optional Signal Flares and Pre-Locking
+
+Rulesets MAY define Signal Flares as a transparency penalty for catastrophic heat, extreme spacetime effects, jump drives, repeated Thermal Debt, or other high-power mechanics. If enabled, the ruleset MUST define canonical visibility states such as `dark`, `flaring`, and `bright`, and MUST materialize any state that affects commitments, deck entropy, targeting, sensors, or spectator disclosure.
+
+A pre-lock profile MUST declare:
+
+1. The trigger conditions that enter `flaring` or `bright` state.
+2. The number of future rounds affected.
+3. Whether future nonces are revealed immediately, hash-locked and later revealed, or bound through another canonical commitment.
+4. How pre-locked nonces interact with ordinary commit/reveal payloads and Simulated Deck entropy.
+5. The fallback and sanction when an agent fails to use the required pre-locked sequence.
+
+Breaking a pre-lock commitment is a protocol or tournament violation as declared by the active profile. A flaring agent's physical action can remain hidden until the normal reveal phase unless the ruleset explicitly makes action intent public.
+
 ## 7. Cryptographic Fuel Ledger
 
 RQP uses a hash-chain ledger to hide fuel balances during the match while preserving post-match verifiability.
@@ -466,7 +533,9 @@ Each round commit MUST bind:
 5. Vote coordinate, if any.
 6. Fuel burn.
 7. Fuel ledger hash.
-8. Commit salt.
+8. Commit Nonce, represented by the `salt` field in the base JSON profile or by `commit_nonce` in a profile that explicitly negotiates that field name; see Section 7.4 for field name conventions.
+
+The base schema binds `fuel_burn` as item 6. Profiles such as `energy_flux-v1` MAY replace item 6 only by declaring an explicit commit/reveal schema override and preserving deterministic commit verification.
 
 The commitment is:
 
@@ -483,6 +552,30 @@ SHA256(canonical(revealed_payload)) == commit_hash[n]
 ```
 
 If verification fails, the reveal is invalid.
+
+### 7.4 Commit Nonce Requirements
+
+The commit nonce is the foundation of action privacy. Because many RQP action spaces are small enough to brute-force, a commit payload that omits strong local entropy can leak the committed move before reveal.
+
+Competitive and public-network profiles MUST require every commit nonce to be:
+
+1. Generated from a cryptographically secure random source or an equivalent high-entropy agent-local secret process.
+2. Unique for the tuple `(match_id, agent_id, round)`.
+3. Bound inside the canonical commit payload before hashing.
+4. Revealed under the declared profile no later than the matching action payload.
+5. Auditable after match end.
+
+Profiles SHOULD require at least 128 bits of unpredictable entropy for each nonce.
+
+Local replay fixtures MAY use human-readable deterministic salts because they are non-competitive conformance vectors with fixed expected hashes. Those salts are valid for canonical test replay, as documented in `fixtures/bootstrap/README.md`, but MUST NOT be used as examples for competitive profiles.
+
+Implementations SHOULD keep fixture replay and competitive nonce generation on distinct code paths to avoid accidentally reusing deterministic test salts in production.
+
+`Commit Nonce` is the conceptual security term. The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for backwards compatibility with existing fixtures and test vectors. Competitive profiles MAY require the explicit field name `commit_nonce`, but only when they:
+
+1. Use the extension negotiation process in Section 4.1.
+2. Declare a new canonical schema version.
+3. Update all affected test vectors and fixtures.
 
 ## 8. Dynamic Environment
 
@@ -646,6 +739,37 @@ Each node publishes:
 
 If quorum agrees on the same state hash, the round is locked and the match advances.
 
+### 9.5 Optional Simulated Deck Entropy
+
+Rulesets MAY enable a Simulated Deck extension to resolve probabilistic events without an external oracle. The deck is deterministic once the relevant reveal phase has closed and MUST be derived only from canonical data.
+
+A profile that enables Simulated Deck MUST define:
+
+1. The participant set whose revealed nonces contribute entropy.
+2. The canonical ordering of those nonces.
+3. The domain-separated hash input.
+4. The first round in which a generated seed can be consumed.
+5. The sampling order for every probabilistic event.
+6. The behavior for missing commits, missing reveals, eliminated agents, and disqualified agents.
+
+The default recommendation is:
+
+```text
+deck_seed[n+1] = SHA256(canonical(
+  "rqp-simulated-deck-v1",
+  match_id,
+  n,
+  locked_world_state_hash[n],
+  ordered_revealed_commit_nonces[n]
+))
+```
+
+The seed derived from round `n` MUST NOT resolve events in round `n`. It MAY resolve events in round `n+1` or later, as declared by the ruleset. This ensures all round `n` reveals and the round `n` state lock complete before any agent can observe outcomes resolved by the round `n` deck seed. For each probabilistic event class, the ruleset MUST identify the exact future round offset or seed-consumption rule before match start.
+
+No bootstrap fixture currently enables Simulated Deck; fixture-backed examples should be added with the first probabilistic ruleset profile.
+
+If an agent fails to reveal, its missing nonce MUST be excluded or replaced only according to the declared profile. The base fault handling still applies: the action defaults to Level 0 Inertial, and the missing reveal is recorded for audit or tournament penalties. Delayed entropy reduces but does not eliminate reveal-withholding griefing, so competitive profiles SHOULD pair Simulated Deck with strict deadlines, signed messages, and sanctions.
+
 ## 10. Quorum and Fault Handling
 
 ### 10.1 Quorum Threshold
@@ -748,13 +872,13 @@ An agent is eliminated by default when:
 
 ### 13.1 Audit Disclosure
 
-At match end, each agent MUST publish:
+At match end, each agent MUST publish and disclose for audit:
 
 1. Initial loadout salt.
-2. All per-round commit salts.
+2. All per-round Commit Nonces; see Section 7.4 for field name conventions.
 3. All per-round fuel ledger salts.
 4. Full fuel burn sequence.
-5. Any ruleset-required hidden configuration.
+5. Any hidden data that the active ruleset requires disclosure for during audit, such as hidden action logs, Energy Flux decompositions, pre-locked nonce sequences, thermal state inputs, or hidden configuration.
 
 ### 13.2 Audit Verification
 
@@ -766,6 +890,7 @@ Auditors replay:
 4. Every fuel burn and fuel remaining value.
 5. Every world state transition.
 6. Every state hash quorum result.
+7. Any enabled Energy Flux, Simulated Deck, Thermal Debt, Signal Flare, or pre-lock rule.
 
 The audit passes only if all commitments, ledger hashes, fuel balances, and state transitions are valid.
 
@@ -789,6 +914,8 @@ Audit tooling SHOULD be able to emit a machine-readable report. The default repo
 
 Required violation types are `commit_mismatch`, `fuel_overspend`, `ledger_mismatch`, `invalid_action`, `conflicting_state_vote`, and `serialization_violation`.
 
+Profiles that enable advanced resource or transparency extensions SHOULD also define `energy_flux_mismatch`, `deck_entropy_violation`, `thermal_debt_mismatch`, and `prelock_violation`.
+
 ### 13.3 Violations
 
 The following are protocol violations:
@@ -799,6 +926,9 @@ The following are protocol violations:
 4. Voting or acting outside ruleset limits.
 5. Signing conflicting state votes for the same round.
 6. Tampering with canonical serialization or hash inputs.
+7. Declaring Energy Flux that does not match the audited detailed resource log.
+8. Steering, withholding, or substituting deck entropy outside the declared Simulated Deck profile.
+9. Failing to honor a required Signal Flare pre-lock sequence.
 
 ### 13.4 Sanctions
 
@@ -886,6 +1016,8 @@ During live play, spectators can see committed activity and revealed actions, bu
 
 The default competitive broadcast mode exposes public commits, reveals, state votes, public world state, and locked hashes. Delayed god-view broadcast MAY reveal hidden fuel and intent after a delay or after match end, but it is not part of canonical consensus.
 
+Profiles that enable Signal Flares MUST declare how `bright` or `flaring` visibility is exposed to spectators and opponents. Publicly revealed future nonces are live competitive information, while unrevealed physical actions remain hidden until the normal reveal phase unless the ruleset explicitly defines perfect-information flare behavior.
+
 ## 18. Security Considerations
 
 ### 18.1 Commit-Reveal Withholding
@@ -895,6 +1027,8 @@ Agents can grief by committing and refusing to reveal. RQP handles this by defau
 ### 18.2 Last-Revealer Advantage
 
 Agents revealing late may gain timing information. Implementations SHOULD use strict reveal deadlines and MAY use encrypted reveal transport or simultaneous disclosure mechanisms.
+
+When Simulated Deck is enabled, profiles SHOULD consume round `n` entropy only in round `n+1` or later. This delayed use reduces the value of revealing last but does not prevent an agent from withholding a reveal to grief or avoid a bad future seed.
 
 ### 18.3 Hash Collisions
 
@@ -907,6 +1041,18 @@ Serialization mismatch is a major consensus risk. Implementations MUST test cano
 ### 18.5 Transport Censorship
 
 A centralized pub/sub hub can censor or delay messages. Competitive deployments SHOULD use redundant relays or peer-to-peer gossip.
+
+### 18.6 Commit Sniffing
+
+Small discrete action spaces make unsalted commits vulnerable to brute-force enumeration. An observer can hash every plausible movement, weapon, vote, and fuel combination and compare those hashes against the public commit. High-entropy per-round commit nonces prevent this attack by making the search space infeasible.
+
+### 18.7 Deck Steering and Transparency Bluffing
+
+If a Signal Flare exposes future nonces, a still-dark opponent may try to grind its own nonce before committing in order to steer a future Simulated Deck seed. The core protocol does not prevent this attack by itself; rulesets and tournament profiles should address it through policy and mechanics such as deadlines, entropy requirements, and sanctions.
+
+Profiles that combine Simulated Deck with bright/dark visibility MUST declare whether nonce grinding against public bright-ship entropy is permitted. Profiles that forbid grinding MUST require all deck-contributing nonce commitments to be locked before any contributing nonce is revealed, or MUST use an equivalent nonce-chain or pre-commitment scheme. Such profiles SHOULD also define minimum entropy requirements, delayed deck consumption windows, and penalties for reveal withholding.
+
+Non-normative strategic note: a bright agent's action commitment can remain hidden until reveal, so intentionally unexpected physical actions are a legitimate counter to opponents that overfit to known future entropy.
 
 ## 19. Implementation Requirements
 
@@ -965,6 +1111,7 @@ The following topics are intentionally left for future RFCs or rulesets:
 6. Anti-collusion rules for multi-agent alliances.
 7. Optional zero-knowledge fuel proofs to reduce post-match information leakage.
 8. Advanced line-of-sight weapons, thick beams, cone weapons, dynamic real-time pruning, and post-game deep-audit fuel-mining mechanics beyond the simple bootstrap/default profile line-of-sight boundaries.
+9. Fixture-backed Energy Flux, Simulated Deck, Thermal Debt, Signal Flare, and pre-lock profiles.
 
 ## 22. Motto
 
