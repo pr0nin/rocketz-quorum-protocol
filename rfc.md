@@ -92,9 +92,11 @@ All protocol-valid implementations MUST produce byte-identical canonical world s
 
 ### 5.1 Numeric Model
 
-Implementations MUST NOT use floating-point arithmetic for canonical simulation. All canonical calculations MUST use signed 64-bit integers unless a ruleset explicitly defines a larger integer type.
+The quorum depends on cross-platform byte identity. Any value that can affect canonical world state, commitments, fuel ledgers, audits, state votes, or quorum locks MUST be produced by deterministic integer rules. Implementations MUST NOT use IEEE 754 `float`, `double`, GPU floating-point, host math-library results, wall-clock timing, or platform-dependent container iteration for canonical simulation.
 
-Fractional values MUST be represented with fixed-point integers or rational integer pairs. The fixed-point scale or rational encoding MUST be included in the ruleset. For example, a ruleset MAY define `SCALE = 1000`, where `1000` represents `1.0`, or encode `1.5x` as `multiplier_num = 3` and `multiplier_den = 2`.
+All base-profile canonical calculations MUST use signed 64-bit integers unless a ruleset explicitly defines a larger integer type. The bootstrap fixtures and `rqp-default-playable-v0` validate this integer model: positions, velocities, facing vectors, fuel burns, HP, weapon damage, collision damage, votes, hashes, and quorum diagnostics are all represented by canonical integer or string values.
+
+Fractional values MUST be represented with fixed-point integers or rational integer pairs. The fixed-point scale or rational encoding MUST be included in the ruleset or genesis state. RQP 1.0-draft.1 does not mandate one universal scale such as Q32.32 because the checked-in bootstrap and playable fixtures use integral hex coordinates. A ruleset that needs sub-hex physics MAY choose Q32.32 or another integer scale, but it MUST declare the scale, bounds, overflow behavior, rounding mode, path traversal, collision volume, and canonical serialization before any affected value enters quorum validation.
 
 When rational multipliers are used, the default calculation is:
 
@@ -103,6 +105,16 @@ effective_value = floor(base_value * multiplier_num / multiplier_den)
 ```
 
 Rulesets MUST define rounding for every fractional multiplier. The default rounding mode is floor toward zero.
+
+Deterministic math functions are required whenever a ruleset introduces operations beyond integer addition, subtraction, multiplication, division, modulo, absolute value, comparisons, or hashing:
+
+1. Trigonometry, inverse trigonometry, rotations outside the six axial unit directions, and angle tests MUST use fixture-backed lookup tables, CORDIC-style integer algorithms, or another fully specified integer algorithm.
+2. Square roots, normalization, distance approximations, and collision-volume tests MUST use deterministic integer algorithms with declared rounding and iteration bounds.
+3. Pseudo-randomness MUST come from a declared hash or PRNG, seed inputs, domain separators, sampling order, rejection rules, and canonical output ordering.
+4. Maps, sets, generated objects, simultaneous effects, and vote collections MUST be iterated in canonical order. Unless a ruleset defines a stricter order, object keys are lexicographic under `sorted-key-json-v1`, generated objects are ordered by canonical object ID, and collision/effect ties use the ordering rules in this section.
+5. The physics step is the discrete round. Render frame rate, local interpolation, browser animation timing, and transport latency MUST NOT affect canonical state.
+
+Non-canonical accelerators MAY be used for prediction, rendering, AI search, or local previews. If an implementation uses a GPU-bound or floating-point engine for any candidate canonical physics result, it MUST quantize, clamp, and re-validate the result against the declared integer rules before submitting a state hash. An implementation that cannot reproduce the declared integer result is non-compliant for that ruleset and SHOULD document the deviation outside the canonical match data.
 
 ### 5.2 Coordinate System
 

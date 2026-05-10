@@ -9,7 +9,7 @@
         "playable-default-campaign.json"
       ],
       "heading": "5.1 Numeric Model",
-      "notes": "All fixtures use integer-only canonical state, sorted-key JSON, SHA-256, integer fuel burns, integer HP, and integer coordinates. Thrust and weapon fixtures also exercise integer cost formulas. The playable campaign adds integer rotation costs, per-weapon fuel costs, fixed weapon damage, collision damage, and missing-reveal fallback accounting."
+      "notes": "All fixtures use integer-only canonical state, sorted-key JSON, SHA-256, integer fuel burns, integer HP, and integer coordinates. Thrust and weapon fixtures also exercise integer cost formulas. The playable campaign adds integer rotation costs, per-weapon fuel costs, fixed weapon damage, collision damage, and missing-reveal fallback accounting. These fixtures validate the base signed-64/integer model; no checked-in fixture requires Q32.32, floating-point, or transcendental math."
     },
     {
       "fixtures": [
