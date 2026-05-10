@@ -531,9 +531,9 @@ Each round commit MUST bind:
 5. Vote coordinate, if any.
 6. Fuel burn.
 7. Fuel ledger hash.
-8. Commit nonce, represented by the `salt` field in the base JSON profile.
+8. Commit Nonce, represented by the `salt` field in the base JSON profile.
 
-`commit nonce` is the conceptual security term. The `salt` field name remains the base JSON schema name for backwards compatibility with existing fixtures and test vectors.
+`Commit Nonce` is the conceptual security term. The `salt` field name remains the base JSON schema name for backwards compatibility with existing fixtures and test vectors.
 
 The commitment is:
 
@@ -565,7 +565,7 @@ Competitive and public-network profiles MUST require every commit nonce to be:
 
 Profiles SHOULD require at least 128 bits of unpredictable entropy for each nonce.
 
-Local replay fixtures MAY use human-readable deterministic salts only because they are non-competitive conformance vectors with fixed expected hashes. Those salts are valid for canonical test replay, as documented in `fixtures/bootstrap/README.md`, but MUST NOT be used as examples for competitive profiles.
+Local replay fixtures MAY use human-readable deterministic salts because they are non-competitive conformance vectors with fixed expected hashes. Those salts are valid for canonical test replay, as documented in `fixtures/bootstrap/README.md`, but MUST NOT be used as examples for competitive profiles.
 
 The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for the commit nonce. A future profile MAY rename or separate nonce fields only by declaring a new canonical schema version and updating all affected test vectors and fixtures.
 
@@ -760,6 +760,8 @@ The seed derived from round `n` MUST NOT resolve events in round `n`. It MAY res
 
 This delay reduces last-revealer advantage because all round `n` reveals and the round `n` state lock complete before any agent can observe outcomes resolved by the round `n` deck seed in round `n+1`.
 
+No bootstrap fixture currently enables Simulated Deck; fixture-backed examples should be added with the first probabilistic ruleset profile.
+
 If an agent fails to reveal, its missing nonce MUST be excluded or replaced only according to the declared profile. The base fault handling still applies: the action defaults to Level 0 Inertial, and the missing reveal is recorded for audit or tournament penalties. Delayed entropy reduces but does not eliminate reveal-withholding griefing, so competitive profiles SHOULD pair Simulated Deck with strict deadlines, signed messages, and sanctions.
 
 ## 10. Quorum and Fault Handling
@@ -870,7 +872,7 @@ At match end, each agent MUST publish:
 2. All per-round commit salts.
 3. All per-round fuel ledger salts.
 4. Full fuel burn sequence.
-5. Any hidden data that the active ruleset declares audit-required before match start, such as hidden action logs, Energy Flux decompositions, pre-locked nonce sequences, thermal state inputs, or hidden configuration.
+5. Any hidden data that the active ruleset requires disclosure for during audit, such as hidden action logs, Energy Flux decompositions, pre-locked nonce sequences, thermal state inputs, or hidden configuration.
 
 ### 13.2 Audit Verification
 
