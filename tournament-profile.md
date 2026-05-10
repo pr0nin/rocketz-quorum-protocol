@@ -90,7 +90,7 @@ Recommended reputation events:
 | Invalid reveal | `-15` |
 | Fuel overspend | `-25` |
 | Energy Flux mismatch | `-25` |
-| Pre-lock violation | `-25` |
+| Prelock violation (`prelock_violation`) | `-25` |
 | Conflicting state vote | `-25` |
 
 ## 7. Sanctions
@@ -103,7 +103,7 @@ Recommended reputation events:
 | Energy Flux mismatch | Match disqualification or result reversal |
 | Simulated Deck entropy violation | Match disqualification and evidence review |
 | Thermal Debt mismatch | Match disqualification if it changes damage, elimination, or rewards |
-| Signal Flare pre-lock violation | Round action invalidated and disqualification eligible |
+| Prelock violation (`prelock_violation`) | Round action invalidated and disqualification eligible |
 | Conflicting state vote | Match disqualification and reputation penalty |
 | Serialization violation | Client quarantine until fixed |
 | Repeated missing reveals | Disqualification eligible |

@@ -459,7 +459,9 @@ energy_flux[n] = sum(all visible and hidden energy expenditures for agent in rou
 
 The ruleset MUST define which costs are included in `energy_flux`, including movement, weapons, mining, charging, thermal management, tactical priority, environmental costs, and any hidden or delayed actions. `energy_flux` is public during the round. The detailed resource log that decomposes the aggregate into individual costs MAY remain hidden until audit.
 
-For profiles that enable `energy_flux-v1`, the public reveal payload SHOULD expose `energy_flux` instead of a detailed live `fuel_burn` value. The fuel ledger still commits to the actual audited resource transition, and the post-game disclosure MUST prove that:
+For profiles that enable `energy_flux-v1`, the live commit/reveal schema MUST be declared in the ruleset profile. The default `energy_flux-v1` schema replaces the base payload's live `fuel_burn` field with live `energy_flux`; consensus peers verify the round commitment against that public reveal payload using the same `SHA256(canonical(revealed_payload)) == commit_hash[n]` rule. The detailed `fuel_burn` sequence remains hidden until audit, while `fuel_ledger_hash` continues to commit to the actual audited resource transition.
+
+Auditors MUST perform strict integer-sum replay of the disclosed detailed action log. If the sum of the hidden cost entries does not equal the revealed `energy_flux`, audit fails with deterministic `energy_flux_mismatch`. The post-game disclosure MUST prove that:
 
 1. The detailed action log sums exactly to the revealed `energy_flux`.
 2. The committed ledger hash matches the audited fuel burn and remaining fuel.
@@ -531,7 +533,9 @@ Each round commit MUST bind:
 5. Vote coordinate, if any.
 6. Fuel burn.
 7. Fuel ledger hash.
-8. Commit Nonce, represented by the `salt` field in the base JSON profile.
+8. Commit Nonce, represented by the `salt` field in the base JSON profile or by `commit_nonce` in a profile that explicitly negotiates that field name.
+
+The base schema binds `fuel_burn` as item 6. Profiles such as `energy_flux-v1` MAY replace item 6 only by declaring an explicit commit/reveal schema override and preserving deterministic commit verification.
 
 The commitment is:
 
@@ -567,7 +571,7 @@ Local replay fixtures MAY use human-readable deterministic salts because they ar
 
 Implementations SHOULD keep fixture replay and competitive nonce generation on distinct code paths to avoid accidentally reusing deterministic test salts in production.
 
-`Commit Nonce` is the conceptual security term. The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for backwards compatibility with existing fixtures and test vectors. A future profile MAY rename or separate nonce fields only by declaring a new canonical schema version and updating all affected test vectors and fixtures.
+`Commit Nonce` is the conceptual security term. The base `rqp/1.0-draft.1` JSON examples use the field name `salt` for backwards compatibility with existing fixtures and test vectors. Competitive profiles MAY require the explicit field name `commit_nonce`, but only by declaring a new canonical schema version and updating all affected test vectors and fixtures.
 
 ## 8. Dynamic Environment
 
@@ -867,7 +871,7 @@ An agent is eliminated by default when:
 At match end, each agent MUST publish:
 
 1. Initial loadout salt.
-2. All per-round commit salts.
+2. All per-round Commit Nonces (`salt` values in the base JSON profile or `commit_nonce` values in profiles that negotiate that field name).
 3. All per-round fuel ledger salts.
 4. Full fuel burn sequence.
 5. Any hidden data that the active ruleset requires disclosure for during audit, such as hidden action logs, Energy Flux decompositions, pre-locked nonce sequences, thermal state inputs, or hidden configuration.
