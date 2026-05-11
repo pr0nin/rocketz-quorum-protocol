@@ -96,13 +96,13 @@ The quorum depends on cross-platform byte identity. Any value computed by canoni
 
 Inputs to canonical verification MAY include profile-valid entropy, such as competitive commit nonces. Once an input is present in a commit, reveal, ledger, audit, state vote, or quorum-lock payload, its serialization, hashing, validation, and state effects MUST be deterministic.
 
-All base-profile canonical calculations MUST use signed 64-bit integers unless a ruleset explicitly defines a larger integer type. The bootstrap fixtures and `rqp-default-playable-v0` validate this integer model: positions, velocities, facing vectors, fuel burns, HP, weapon damage, collision damage, votes, hashes, and quorum diagnostics are all represented by canonical integer or string values.
+All base-profile canonical calculations MUST use signed 64-bit integers unless a ruleset explicitly defines a larger integer type. For the base profile, the valid range is `-2^63` through `2^63 - 1` inclusive, and every canonical input, intermediate result, and final result MUST remain within that range. If any canonical arithmetic operation would overflow or underflow that range, the relevant genesis state, ruleset, fixture, or round input is protocol-invalid and verification MUST fail explicitly; implementations MUST NOT wrap, saturate, clamp, or silently widen to arbitrary-precision arithmetic for canonical results. The bootstrap fixtures and `rqp-default-playable-v0` validate this integer model: positions, velocities, facing vectors, fuel burns, HP, weapon damage, collision damage, votes, hashes, and quorum diagnostics are all represented by canonical integer or string values.
 
 Base-profile rulesets and inputs MUST keep every intermediate and final canonical integer within the signed 64-bit range `[-2^63, 2^63 - 1]`. Integer overflow is a protocol violation. Implementations MUST fail verification rather than wrap, saturate, truncate, or use host-language overflow behavior.
 
 Fractional values MUST be represented with fixed-point integers or rational integer pairs. The fixed-point scale or rational encoding MUST be included in the ruleset or genesis state. RQP 1.0-draft.1 does not mandate one universal scale such as Q32.32 because the checked-in bootstrap and playable fixtures use integral hex coordinates.
 
-A ruleset that needs sub-hex physics MAY choose Q32.32 or another integer scale. Before any affected value enters quorum validation, the ruleset MUST declare the scale, bounds, overflow behavior, rounding mode, path traversal, collision volume, and canonical serialization.
+A ruleset that needs sub-hex physics MAY choose Q32.32 or another integer scale. Before any affected value enters quorum validation, the ruleset MUST declare the scale, bounds, overflow behavior, rounding mode, path traversal, collision volume, and canonical serialization. If the ruleset does not explicitly define a different integer type and overflow rule, the base-profile signed-64-bit fail-on-overflow rule applies.
 
 When rational multipliers are used, the default calculation is:
 
